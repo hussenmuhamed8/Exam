@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+
+<html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>منصة الأستاذ الذكية - لإنشاء الأسئلة الامتحانية</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="manifest" href="/Exam/manifest.json">
-    <meta name="theme-color" content="#134e3a">
-    <link rel="icon" type="image/png" sizes="192x192" href="/Exam/icon-192.png">
-    <link rel="apple-touch-icon" href="/Exam/icon-192.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="منصة الأستاذ">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;700&family=Noto+Kufi+Arabic:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- HTML2Canvas & jsPDF for Direct Image & PDF Export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>منصة الأستاذ الذكية - لإنشاء الأسئلة الامتحانية</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="/Exam/manifest.json" rel="manifest"/>
+<meta content="#134e3a" name="theme-color"/>
+<link href="/Exam/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="/Exam/icon-192.png" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="منصة الأستاذ" name="apple-mobile-web-app-title"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&amp;family=Amiri:ital,wght@0,400;0,700;1,400&amp;family=Cairo:wght@400;600;700;800;900&amp;family=Inter:wght@400;600;700&amp;family=Noto+Kufi+Arabic:wght@400;600;700;800&amp;family=Tajawal:wght@400;500;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<!-- HTML2Canvas & jsPDF for Direct Image & PDF Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
         :root {
             --primary: #0f766e;
             --primary-light: #14b8a6;
@@ -44,7 +40,7 @@
             box-sizing: border-box;
         }
 
-        /* Allow typing inside inputs/textareas while keeping copy/paste blocked via JS */
+        /* Keep editor text selectable. */
         input, textarea, select {
             -webkit-user-select: text !important;
             -moz-user-select: text !important;
@@ -193,1217 +189,621 @@
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800">
-
-    <!-- 1. SPLASH SCREEN -->
-    <div id="splashScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center splash-bg-luxury text-white px-5 overflow-hidden transition-opacity duration-500">
-        
-        <!-- Top-Left Decorative Sweeping Curves (Gold & Emerald) -->
-        <svg class="absolute top-0 left-0 w-72 sm:w-96 h-72 sm:h-96 pointer-events-none opacity-80" viewBox="0 0 400 400" fill="none">
-            <path d="M-20 190 C 90 120, 160 50, 210 -20 L 0 -20 Z" fill="rgba(16, 185, 129, 0.08)"/>
-            <path d="M-10 195 C 95 125, 165 55, 215 -15" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.45"/>
-            <path d="M-10 265 C 120 180, 210 90, 275 -15" stroke="url(#goldGradTop)" stroke-width="1.6" stroke-opacity="0.75"/>
-            <defs>
-                <linearGradient id="goldGradTop" x1="0" y1="265" x2="275" y2="0" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.1"/>
-                    <stop offset="50%" stop-color="#f59e0b" stop-opacity="0.85"/>
-                    <stop offset="100%" stop-color="#fef08a" stop-opacity="0.2"/>
-                </linearGradient>
-            </defs>
-        </svg>
-
-        <!-- Bottom-Right Decorative Sweeping Curves (Gold & Emerald) -->
-        <svg class="absolute bottom-0 right-0 w-80 sm:w-[420px] h-80 sm:h-[420px] pointer-events-none opacity-85" viewBox="0 0 400 400" fill="none">
-            <path d="M 420 210 C 290 260, 210 330, 165 420 L 420 420 Z" fill="rgba(6, 95, 70, 0.35)"/>
-            <path d="M 415 175 C 275 230, 190 310, 140 415" stroke="url(#goldGradBot)" stroke-width="1.6" stroke-opacity="0.8"/>
-            <path d="M 415 225 C 295 270, 220 335, 175 415" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.5"/>
-            <defs>
-                <linearGradient id="goldGradBot" x1="415" y1="175" x2="140" y2="415" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"/>
-                    <stop offset="55%" stop-color="#f59e0b" stop-opacity="0.85"/>
-                    <stop offset="100%" stop-color="#fef08a" stop-opacity="0.15"/>
-                </linearGradient>
-            </defs>
-        </svg>
-
-        <!-- Center Content Wrapper -->
-        <div class="relative flex flex-col items-center justify-center max-w-md w-full text-center z-10">
-            
-            <!-- Floating Background Question Marks & Geometric Accents Around Icon -->
-            <div class="relative flex items-center justify-center mb-8">
-                
-                <!-- Left Question Mark "?" -->
-                <span class="absolute -left-20 sm:-left-24 -top-10 text-6xl sm:text-7xl font-extrabold text-emerald-300/20 select-none pointer-events-none animate-qmark" style="font-family: 'Inter', sans-serif;">?</span>
-                
-                <!-- Right Question Mark "?" -->
-                <span class="absolute -right-20 sm:-right-24 top-6 text-6xl sm:text-7xl font-extrabold text-emerald-300/20 select-none pointer-events-none animate-qmark" style="font-family: 'Inter', sans-serif; animation-delay: 1.5s;">?</span>
-
-                <!-- Diagonal Accent Lines & Diamonds (Left & Right) -->
-                <div class="absolute -left-14 top-4 w-12 h-[1px] bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent -rotate-45 pointer-events-none"></div>
-                <div class="absolute -left-16 bottom-6 w-14 h-[1px] bg-gradient-to-r from-transparent via-amber-300/50 to-transparent -rotate-45 pointer-events-none"></div>
-                <div class="absolute -right-16 -top-2 w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent -rotate-45 pointer-events-none"></div>
-
-                <!-- Left Hollow Gold Diamond -->
-                <div class="absolute -left-11 top-1/2 -translate-y-2 w-3.5 h-3.5 border-2 border-amber-300/85 rotate-45 animate-diamond pointer-events-none"></div>
-
-                <!-- Right Top Solid Gold Diamond -->
-                <div class="absolute -right-10 -top-1 w-3 h-3 bg-amber-200 rotate-45 shadow-[0_0_8px_#fde68a] animate-diamond pointer-events-none" style="animation-delay: 0.7s;"></div>
-
-                <!-- Right Bottom Solid Emerald Diamond -->
-                <div class="absolute -right-10 bottom-4 w-3 h-3 bg-emerald-400/70 rotate-45 animate-diamond pointer-events-none" style="animation-delay: 1.3s;"></div>
-
-                <!-- Top & Bottom Neon Rim Glows on Icon -->
-                <div class="absolute -top-2 w-28 h-3 bg-emerald-300/60 blur-md rounded-full pointer-events-none"></div>
-                <div class="absolute -bottom-2 w-28 h-3 bg-emerald-300/70 blur-md rounded-full pointer-events-none"></div>
-
-                <!-- Main 3D Glassmorphic App Icon -->
-                <div class="w-44 h-44 sm:w-48 sm:h-48 splash-glass-box flex items-center justify-center relative animate-splash-icon p-4">
-                    <!-- Inner Gloss Highlight -->
-                    <div class="absolute inset-1.5 rounded-[36px] border border-white/25 pointer-events-none" style="background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 45%);"></div>
-
-                    <!-- Detailed 3D-Style SVG Illustration -->
-                    <svg class="w-36 h-36 sm:w-40 sm:h-40 drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="44" y="48" width="96" height="122" rx="12" fill="rgba(0,0,0,0.22)" />
-                        <path d="M40 54 C40 47.3726 45.3726 42 52 42 H128 C134.627 42 140 47.3726 140 54 V142 L118 164 H52 C45.3726 164 40 158.627 40 152 V54 Z" fill="url(#paperGrad)"/>
-                        <path d="M118 164 V148 C118 144.686 120.686 142 124 142 H140 L118 164 Z" fill="#cbd5e1"/>
-
-                        <rect x="53" y="78" width="16" height="16" rx="4" fill="#047857"/>
-                        <path d="M57 86.5 L60 89.5 L65.5 83" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <rect x="76" y="80" width="46" height="4.5" rx="2.25" fill="#94a3b8"/>
-                        <rect x="76" y="88" width="34" height="4" rx="2" fill="#cbd5e1"/>
-
-                        <rect x="53" y="104" width="16" height="16" rx="4" fill="#047857"/>
-                        <path d="M57 112.5 L60 115.5 L65.5 109" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <rect x="76" y="106" width="46" height="4.5" rx="2.25" fill="#94a3b8"/>
-                        <rect x="76" y="114" width="38" height="4" rx="2" fill="#cbd5e1"/>
-
-                        <rect x="53" y="130" width="16" height="16" rx="4" fill="#047857"/>
-                        <path d="M57 138.5 L60 141.5 L65.5 135" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <rect x="76" y="132" width="40" height="4.5" rx="2.25" fill="#94a3b8"/>
-                        <rect x="76" y="140" width="28" height="4" rx="2" fill="#cbd5e1"/>
-
-                        <ellipse cx="90" cy="54" rx="34" ry="8" fill="rgba(0,0,0,0.22)"/>
-                        <path d="M68 42 V54 C68 60 112 60 112 54 V42 Z" fill="url(#capBaseGrad)"/>
-                        <polygon points="90,18 134,34 90,50 46,34" fill="url(#capTopGrad)" stroke="#34d399" stroke-width="0.8" stroke-opacity="0.5"/>
-                        <ellipse cx="90" cy="34" rx="4" ry="2.2" fill="#064e3b"/>
-                        <path d="M90 34 L123 38 V58" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M120 64 L123 55 L126 64 Z" fill="#f59e0b"/>
-                        <circle cx="123" cy="56" r="2.2" fill="#fde68a"/>
-
-                        <g transform="translate(136, 122) rotate(38)">
-                            <rect x="-5" y="-36" width="18" height="78" rx="4" fill="rgba(0,0,0,0.28)" transform="translate(-3, 4)"/>
-                            <rect x="-7" y="-32" width="14" height="62" fill="url(#pencilBodyGrad)"/>
-                            <rect x="-2" y="-32" width="4" height="62" fill="#059669" fill-opacity="0.6"/>
-                            <rect x="-7" y="-42" width="14" height="10" fill="url(#goldBandGrad)"/>
-                            <line x1="-7" y1="-37" x2="7" y2="-37" stroke="#b45309" stroke-width="1"/>
-                            <path d="M-7 -42 V-48 C-7 -51.5 7 -51.5 7 -48 V-42 Z" fill="#fde68a"/>
-                            <polygon points="-7,30 7,30 0,48" fill="#fcd34d"/>
-                            <polygon points="-2.8,41 2.8,41 0,48" fill="#064e3b"/>
-                        </g>
-
-                        <defs>
-                            <linearGradient id="paperGrad" x1="40" y1="42" x2="140" y2="164" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#ffffff"/>
-                                <stop offset="100%" stop-color="#e2e8f0"/>
-                            </linearGradient>
-                            <linearGradient id="capTopGrad" x1="46" y1="18" x2="134" y2="50" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#059669"/>
-                                <stop offset="50%" stop-color="#065f46"/>
-                                <stop offset="100%" stop-color="#022c22"/>
-                            </linearGradient>
-                            <linearGradient id="capBaseGrad" x1="68" y1="42" x2="112" y2="58" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#064e3b"/>
-                                <stop offset="50%" stop-color="#047857"/>
-                                <stop offset="100%" stop-color="#022c22"/>
-                            </linearGradient>
-                            <linearGradient id="pencilBodyGrad" x1="-7" y1="0" x2="7" y2="0" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#10b981"/>
-                                <stop offset="50%" stop-color="#047857"/>
-                                <stop offset="100%" stop-color="#064e3b"/>
-                            </linearGradient>
-                            <linearGradient id="goldBandGrad" x1="-7" y1="-37" x2="7" y2="-37" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stop-color="#fef08a"/>
-                                <stop offset="50%" stop-color="#f59e0b"/>
-                                <stop offset="100%" stop-color="#b45309"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
-
-            <!-- Main Arabic Title -->
-            <h1 class="text-3xl sm:text-4xl font-black tracking-wide text-[#fefce8] drop-shadow-[0_4px_10px_rgba(0,0,0,0.45)] mb-4">
+<!-- 1. SPLASH SCREEN -->
+<div class="fixed inset-0 z-50 flex flex-col items-center justify-center splash-bg-luxury text-white px-5 overflow-hidden transition-opacity duration-500" id="splashScreen">
+<!-- Top-Left Decorative Sweeping Curves (Gold & Emerald) -->
+<svg class="absolute top-0 left-0 w-72 sm:w-96 h-72 sm:h-96 pointer-events-none opacity-80" fill="none" viewbox="0 0 400 400">
+<path d="M-20 190 C 90 120, 160 50, 210 -20 L 0 -20 Z" fill="rgba(16, 185, 129, 0.08)"></path>
+<path d="M-10 195 C 95 125, 165 55, 215 -15" stroke="#10b981" stroke-opacity="0.45" stroke-width="1.5"></path>
+<path d="M-10 265 C 120 180, 210 90, 275 -15" stroke="url(#goldGradTop)" stroke-opacity="0.75" stroke-width="1.6"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="goldGradTop" x1="0" x2="275" y1="265" y2="0">
+<stop offset="0%" stop-color="#fbbf24" stop-opacity="0.1"></stop>
+<stop offset="50%" stop-color="#f59e0b" stop-opacity="0.85"></stop>
+<stop offset="100%" stop-color="#fef08a" stop-opacity="0.2"></stop>
+</lineargradient>
+</defs>
+</svg>
+<!-- Bottom-Right Decorative Sweeping Curves (Gold & Emerald) -->
+<svg class="absolute bottom-0 right-0 w-80 sm:w-[420px] h-80 sm:h-[420px] pointer-events-none opacity-85" fill="none" viewbox="0 0 400 400">
+<path d="M 420 210 C 290 260, 210 330, 165 420 L 420 420 Z" fill="rgba(6, 95, 70, 0.35)"></path>
+<path d="M 415 175 C 275 230, 190 310, 140 415" stroke="url(#goldGradBot)" stroke-opacity="0.8" stroke-width="1.6"></path>
+<path d="M 415 225 C 295 270, 220 335, 175 415" stroke="#10b981" stroke-opacity="0.5" stroke-width="1.5"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="goldGradBot" x1="415" x2="140" y1="175" y2="415">
+<stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"></stop>
+<stop offset="55%" stop-color="#f59e0b" stop-opacity="0.85"></stop>
+<stop offset="100%" stop-color="#fef08a" stop-opacity="0.15"></stop>
+</lineargradient>
+</defs>
+</svg>
+<!-- Center Content Wrapper -->
+<div class="relative flex flex-col items-center justify-center max-w-md w-full text-center z-10">
+<!-- Floating Background Question Marks & Geometric Accents Around Icon -->
+<div class="relative flex items-center justify-center mb-8">
+<!-- Left Question Mark "?" -->
+<span class="absolute -left-20 sm:-left-24 -top-10 text-6xl sm:text-7xl font-extrabold text-emerald-300/20 select-none pointer-events-none animate-qmark" style="font-family: 'Inter', sans-serif;">?</span>
+<!-- Right Question Mark "?" -->
+<span class="absolute -right-20 sm:-right-24 top-6 text-6xl sm:text-7xl font-extrabold text-emerald-300/20 select-none pointer-events-none animate-qmark" style="font-family: 'Inter', sans-serif; animation-delay: 1.5s;">?</span>
+<!-- Diagonal Accent Lines & Diamonds (Left & Right) -->
+<div class="absolute -left-14 top-4 w-12 h-[1px] bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent -rotate-45 pointer-events-none"></div>
+<div class="absolute -left-16 bottom-6 w-14 h-[1px] bg-gradient-to-r from-transparent via-amber-300/50 to-transparent -rotate-45 pointer-events-none"></div>
+<div class="absolute -right-16 -top-2 w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent -rotate-45 pointer-events-none"></div>
+<!-- Left Hollow Gold Diamond -->
+<div class="absolute -left-11 top-1/2 -translate-y-2 w-3.5 h-3.5 border-2 border-amber-300/85 rotate-45 animate-diamond pointer-events-none"></div>
+<!-- Right Top Solid Gold Diamond -->
+<div class="absolute -right-10 -top-1 w-3 h-3 bg-amber-200 rotate-45 shadow-[0_0_8px_#fde68a] animate-diamond pointer-events-none" style="animation-delay: 0.7s;"></div>
+<!-- Right Bottom Solid Emerald Diamond -->
+<div class="absolute -right-10 bottom-4 w-3 h-3 bg-emerald-400/70 rotate-45 animate-diamond pointer-events-none" style="animation-delay: 1.3s;"></div>
+<!-- Top & Bottom Neon Rim Glows on Icon -->
+<div class="absolute -top-2 w-28 h-3 bg-emerald-300/60 blur-md rounded-full pointer-events-none"></div>
+<div class="absolute -bottom-2 w-28 h-3 bg-emerald-300/70 blur-md rounded-full pointer-events-none"></div>
+<!-- Main 3D Glassmorphic App Icon -->
+<div class="w-44 h-44 sm:w-48 sm:h-48 splash-glass-box flex items-center justify-center relative animate-splash-icon p-4">
+<!-- Inner Gloss Highlight -->
+<div class="absolute inset-1.5 rounded-[36px] border border-white/25 pointer-events-none" style="background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 45%);"></div>
+<!-- Detailed 3D-Style SVG Illustration -->
+<svg class="w-36 h-36 sm:w-40 sm:h-40 drop-shadow-[0_12px_16px_rgba(0,0,0,0.4)]" fill="none" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<rect fill="rgba(0,0,0,0.22)" height="122" rx="12" width="96" x="44" y="48"></rect>
+<path d="M40 54 C40 47.3726 45.3726 42 52 42 H128 C134.627 42 140 47.3726 140 54 V142 L118 164 H52 C45.3726 164 40 158.627 40 152 V54 Z" fill="url(#paperGrad)"></path>
+<path d="M118 164 V148 C118 144.686 120.686 142 124 142 H140 L118 164 Z" fill="#cbd5e1"></path>
+<rect fill="#047857" height="16" rx="4" width="16" x="53" y="78"></rect>
+<path d="M57 86.5 L60 89.5 L65.5 83" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path>
+<rect fill="#94a3b8" height="4.5" rx="2.25" width="46" x="76" y="80"></rect>
+<rect fill="#cbd5e1" height="4" rx="2" width="34" x="76" y="88"></rect>
+<rect fill="#047857" height="16" rx="4" width="16" x="53" y="104"></rect>
+<path d="M57 112.5 L60 115.5 L65.5 109" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path>
+<rect fill="#94a3b8" height="4.5" rx="2.25" width="46" x="76" y="106"></rect>
+<rect fill="#cbd5e1" height="4" rx="2" width="38" x="76" y="114"></rect>
+<rect fill="#047857" height="16" rx="4" width="16" x="53" y="130"></rect>
+<path d="M57 138.5 L60 141.5 L65.5 135" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path>
+<rect fill="#94a3b8" height="4.5" rx="2.25" width="40" x="76" y="132"></rect>
+<rect fill="#cbd5e1" height="4" rx="2" width="28" x="76" y="140"></rect>
+<ellipse cx="90" cy="54" fill="rgba(0,0,0,0.22)" rx="34" ry="8"></ellipse>
+<path d="M68 42 V54 C68 60 112 60 112 54 V42 Z" fill="url(#capBaseGrad)"></path>
+<polygon fill="url(#capTopGrad)" points="90,18 134,34 90,50 46,34" stroke="#34d399" stroke-opacity="0.5" stroke-width="0.8"></polygon>
+<ellipse cx="90" cy="34" fill="#064e3b" rx="4" ry="2.2"></ellipse>
+<path d="M90 34 L123 38 V58" stroke="#fbbf24" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M120 64 L123 55 L126 64 Z" fill="#f59e0b"></path>
+<circle cx="123" cy="56" fill="#fde68a" r="2.2"></circle>
+<g transform="translate(136, 122) rotate(38)">
+<rect fill="rgba(0,0,0,0.28)" height="78" rx="4" transform="translate(-3, 4)" width="18" x="-5" y="-36"></rect>
+<rect fill="url(#pencilBodyGrad)" height="62" width="14" x="-7" y="-32"></rect>
+<rect fill="#059669" fill-opacity="0.6" height="62" width="4" x="-2" y="-32"></rect>
+<rect fill="url(#goldBandGrad)" height="10" width="14" x="-7" y="-42"></rect>
+<line stroke="#b45309" stroke-width="1" x1="-7" x2="7" y1="-37" y2="-37"></line>
+<path d="M-7 -42 V-48 C-7 -51.5 7 -51.5 7 -48 V-42 Z" fill="#fde68a"></path>
+<polygon fill="#fcd34d" points="-7,30 7,30 0,48"></polygon>
+<polygon fill="#064e3b" points="-2.8,41 2.8,41 0,48"></polygon>
+</g>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paperGrad" x1="40" x2="140" y1="42" y2="164">
+<stop offset="0%" stop-color="#ffffff"></stop>
+<stop offset="100%" stop-color="#e2e8f0"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="capTopGrad" x1="46" x2="134" y1="18" y2="50">
+<stop offset="0%" stop-color="#059669"></stop>
+<stop offset="50%" stop-color="#065f46"></stop>
+<stop offset="100%" stop-color="#022c22"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="capBaseGrad" x1="68" x2="112" y1="42" y2="58">
+<stop offset="0%" stop-color="#064e3b"></stop>
+<stop offset="50%" stop-color="#047857"></stop>
+<stop offset="100%" stop-color="#022c22"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="pencilBodyGrad" x1="-7" x2="7" y1="0" y2="0">
+<stop offset="0%" stop-color="#10b981"></stop>
+<stop offset="50%" stop-color="#047857"></stop>
+<stop offset="100%" stop-color="#064e3b"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="goldBandGrad" x1="-7" x2="7" y1="-37" y2="-37">
+<stop offset="0%" stop-color="#fef08a"></stop>
+<stop offset="50%" stop-color="#f59e0b"></stop>
+<stop offset="100%" stop-color="#b45309"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<!-- Main Arabic Title -->
+<h1 class="text-3xl sm:text-4xl font-black tracking-wide text-[#fefce8] drop-shadow-[0_4px_10px_rgba(0,0,0,0.45)] mb-4">
                 منصة الأستاذ الذكية
             </h1>
-
-            <!-- Golden Glowing Divider Line with Center Diamond -->
-            <div class="relative w-64 sm:w-72 h-5 flex items-center justify-center mb-3 animate-gold-glow">
-                <div class="w-full h-[2px] bg-gradient-to-r from-transparent via-amber-300 to-transparent"></div>
-                <div class="absolute w-3.5 h-3.5 bg-amber-300 rotate-45 shadow-[0_0_12px_#fde047]"></div>
-            </div>
-
-            <!-- Subtitle -->
-            <p class="text-[#fef9c3]/95 text-lg sm:text-xl font-bold tracking-wide drop-shadow">
+<!-- Golden Glowing Divider Line with Center Diamond -->
+<div class="relative w-64 sm:w-72 h-5 flex items-center justify-center mb-3 animate-gold-glow">
+<div class="w-full h-[2px] bg-gradient-to-r from-transparent via-amber-300 to-transparent"></div>
+<div class="absolute w-3.5 h-3.5 bg-amber-300 rotate-45 shadow-[0_0_12px_#fde047]"></div>
+</div>
+<!-- Subtitle -->
+<p class="text-[#fef9c3]/95 text-lg sm:text-xl font-bold tracking-wide drop-shadow">
                 أنشئ أسئلتك بسهولة
             </p>
-        </div>
-    </div>
+</div>
+</div>
+<!-- 2. AUTHENTICATION SCREEN -->
 
-    <!-- 2. AUTHENTICATION SCREEN -->
-    <div id="authScreen" class="hidden min-h-screen w-full py-8 px-4 flex flex-col items-center justify-center bg-gradient-to-b from-teal-50/60 via-slate-50 to-slate-100">
-        <div class="w-full max-w-3xl my-auto">
-            <!-- Header -->
-            <div class="text-center mb-5">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-teal-700 text-white shadow-md shadow-teal-700/20 mb-2">
-                    <i class="fa-solid fa-graduation-cap text-xl"></i>
-                </div>
-                <h2 class="text-lg sm:text-xl font-extrabold text-slate-800">بوابة الأساتذة المعتمدة</h2>
-                <p class="text-slate-500 text-xs mt-0.5">سجّل دخولك أو أنشئ حساباً جديداً للبدء بتصميم الأسئلة الامتحانية</p>
-                
-                <!-- Mobile Mode Switcher Pill -->
-                <div class="inline-flex sm:hidden bg-slate-200/80 p-1 rounded-xl mt-3">
-                    <button onclick="switchAuthTab('login')" id="tabBtnLogin" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-teal-800 shadow-xs transition">
-                        تسجيل الدخول
-                    </button>
-                    <button onclick="switchAuthTab('register')" id="tabBtnRegister" class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 transition">
-                        إنشاء حساب
-                    </button>
-                </div>
-            </div>
+<!-- 3. MAIN APPLICATION CONTAINER -->
+<div class="hidden min-h-screen flex flex-col pb-24" id="appContainer">
+<!-- Compact Top App Header -->
+<header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3 sm:px-5 py-2.5 shadow-2xs">
+<div class="max-w-4xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-700 to-emerald-600 text-white flex items-center justify-center shadow-2xs">
+<i class="fa-solid fa-file-pen text-sm"></i>
+</div>
+<div>
+<h1 class="text-xs sm:text-sm font-extrabold text-slate-800 leading-tight">منصة الأستاذ الذكية</h1>
+<p class="text-[11px] text-slate-500 font-semibold" id="headerSubStatus">مرحباً بك أستاذنا الفاضل</p>
+</div>
+</div>
+<div class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200" id="accessBadgeTop">جميع الميزات متاحة</div>
+</div>
+</header>
+<!-- MOVING ORANGE TICKER BAR (يظهر أسفل رأس الصفحة في الأقسام الثلاثة: نوع الأسئلة / سجل الأسئلة / حسابي) -->
 
-            <!-- Two Distinct Windows Side-by-Side on Desktop, Tabbed on Mobile -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
-                
-                <!-- Window 1: Login -->
-                <div id="loginWindow" class="bg-white rounded-2xl shadow-md border border-slate-200/80 p-5 flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-teal-600 to-emerald-500"></div>
-                    <div>
-                        <div class="flex items-center gap-2.5 mb-4">
-                            <div class="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-sm">
-                                <i class="fa-solid fa-right-to-bracket"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-base font-extrabold text-slate-800">تسجيل الدخول</h3>
-                                <p class="text-[11px] text-slate-500">لديّ حساب مسجل مسبقاً</p>
-                            </div>
-                        </div>
+<!-- MAIN CONTENT AREA -->
+<main class="flex-1 max-w-4xl w-full mx-auto p-3 sm:p-5 pb-16">
+<!-- SECTION 1: EXAM TYPES SELECTION -->
+<section class="space-y-3" id="sectionExamTypes">
+<div class="flex items-center justify-between px-1 mb-1">
+<h2 class="text-sm sm:text-base font-extrabold text-slate-800">اختر نوع الأسئلة الامتحانية</h2>
+</div>
+<!-- 4 Equal-Sized Clean Buttons -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<!-- Type 1: Daily Exam -->
+<button class="group h-14 bg-white hover:bg-teal-50/50 rounded-xl px-4 border border-slate-200 hover:border-teal-500 shadow-2xs transition-all flex items-center justify-between gap-3" onclick="openExamBuilder('daily')">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center text-sm font-bold shrink-0 group-hover:scale-105 transition">
+<i class="fa-solid fa-calendar-day"></i>
+</div>
+<span class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">امتحان يومي</span>
+</div>
+<span class="exam-lock-badge text-xs text-emerald-700">متاح</span>
+</button>
+<!-- Type 2: Weekly Exam -->
+<button class="group h-14 bg-white hover:bg-teal-50/50 rounded-xl px-4 border border-slate-200 hover:border-teal-500 shadow-2xs transition-all flex items-center justify-between gap-3" onclick="openExamBuilder('weekly')">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold shrink-0 group-hover:scale-105 transition">
+<i class="fa-solid fa-calendar-week"></i>
+</div>
+<span class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">امتحان أسبوعي</span>
+</div>
+<span class="exam-lock-badge text-xs text-emerald-700">متاح</span>
+</button>
+<!-- Type 3: Monthly Exam -->
+<button class="group h-14 bg-white hover:bg-indigo-50/50 rounded-xl px-4 border border-slate-200 hover:border-indigo-500 shadow-2xs transition-all flex items-center justify-between gap-3" onclick="openExamBuilder('monthly')">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-bold shrink-0 group-hover:scale-105 transition">
+<i class="fa-solid fa-calendar-check"></i>
+</div>
+<span class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">امتحان شهري</span>
+</div>
+<span class="exam-lock-badge text-xs text-emerald-700">متاح</span>
+</button>
+<!-- Type 4: Comprehensive Exam -->
+<button class="group h-14 bg-gradient-to-r from-amber-50/60 via-white to-amber-50/40 hover:from-amber-50 rounded-xl px-4 border border-amber-300 hover:border-amber-500 shadow-2xs transition-all flex items-center justify-between gap-3" onclick="openExamBuilder('comprehensive')">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-sm font-bold shadow-2xs shrink-0 group-hover:scale-105 transition">
+<i class="fa-solid fa-crown"></i>
+</div>
+<span class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">امتحان شامل / نصف ونهاية السنة</span>
+</div>
+<span class="exam-lock-badge text-xs text-emerald-700">متاح</span>
+</button>
+</div>
+</section>
+<!-- SECTION: TUTORIALS & APP INSTALL LINKS PAGE (تفتح عند الضغط على الشريط البرتقالي المتحرك) -->
 
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
-                                <div class="relative">
-                                    <input type="email" id="loginEmail" placeholder="example@gmail.com" dir="ltr"
-                                        class="w-full px-3 py-2 pr-8 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:border-teal-600 outline-none transition text-xs text-left">
-                                    <i class="fa-regular fa-envelope absolute right-3 top-2.5 text-xs text-slate-400"></i>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">الرمز السري</label>
-                                <div class="relative">
-                                    <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr"
-                                        class="w-full px-3 py-2 pr-8 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:border-teal-600 outline-none transition text-xs text-left">
-                                    <i class="fa-solid fa-lock absolute right-3 top-2.5 text-xs text-slate-400"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5">
-                        <button onclick="handleLogin()" id="btnLoginSubmit"
-                            class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold text-xs shadow-sm active:scale-[0.99] transition flex items-center justify-center gap-2">
-                            <span>تسجيل الدخول للحساب</span>
-                            <i class="fa-solid fa-arrow-left text-[10px]"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Window 2: Register -->
-                <div id="registerWindow" class="hidden sm:flex bg-white rounded-2xl shadow-md border border-slate-200/80 p-5 flex-col justify-between relative overflow-hidden">
-                    <div class="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-amber-500 to-orange-500"></div>
-                    <div>
-                        <div class="flex items-center gap-2.5 mb-3.5">
-                            <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-sm">
-                                <i class="fa-solid fa-user-plus"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-base font-extrabold text-slate-800">إنشاء حساب جديد</h3>
-                                <p class="text-[11px] text-slate-500">تسجيل أستاذ جديد في المنصة</p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-2.5">
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">اسم الأستاذ الثلاثي أو اللقب العلمي</label>
-                                <div class="relative">
-                                    <input type="text" id="regName" placeholder="مثال: محمد علي الكوفي"
-                                        class="w-full px-3 py-2 pr-8 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:border-amber-500 outline-none transition text-xs">
-                                    <i class="fa-regular fa-user absolute right-3 top-2.5 text-xs text-slate-400"></i>
-                                </div>
-                            </div>
-
-                            <!-- اختيار الصفة: معلم أو مدرس -->
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">هل أنت معلم أم مدرس؟</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button type="button" id="regRoleMudarris" onclick="selectRegisterRole('مدرس')"
-                                        class="py-2 px-3 rounded-xl border-2 border-amber-500 bg-amber-50 text-amber-900 font-extrabold text-xs transition flex items-center justify-center gap-1.5">
-                                        <i class="fa-solid fa-chalkboard-user"></i>
-                                        <span>مدرس</span>
-                                    </button>
-                                    <button type="button" id="regRoleMuallim" onclick="selectRegisterRole('معلم')"
-                                        class="py-2 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 font-bold text-xs transition flex items-center justify-center gap-1.5">
-                                        <i class="fa-solid fa-user-graduate"></i>
-                                        <span>معلم</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
-                                <div class="relative">
-                                    <input type="email" id="regEmail" placeholder="teacher@gmail.com" dir="ltr"
-                                        class="w-full px-3 py-2 pr-8 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:border-amber-500 outline-none transition text-xs text-left">
-                                    <i class="fa-regular fa-envelope absolute right-3 top-2.5 text-xs text-slate-400"></i>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">الرمز السري</label>
-                                <div class="relative">
-                                    <input type="password" id="regPassword" placeholder="6 رموز أو أكثر" dir="ltr"
-                                        class="w-full px-3 py-2 pr-8 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:border-amber-500 outline-none transition text-xs text-left">
-                                    <i class="fa-solid fa-key absolute right-3 top-2.5 text-xs text-slate-400"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <button onclick="handleRegister()" id="btnRegSubmit"
-                            class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-xs shadow-sm active:scale-[0.99] transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-sparkles text-[11px]"></i>
-                            <span>إنشاء حساب جديد</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. MAIN APPLICATION CONTAINER -->
-    <div id="appContainer" class="hidden min-h-screen flex flex-col pb-24">
-        
-        <!-- Compact Top App Header -->
-        <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3 sm:px-5 py-2.5 shadow-2xs">
-            <div class="max-w-4xl mx-auto flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-700 to-emerald-600 text-white flex items-center justify-center shadow-2xs">
-                        <i class="fa-solid fa-file-pen text-sm"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-xs sm:text-sm font-extrabold text-slate-800 leading-tight">منصة الأستاذ الذكية</h1>
-                        <p id="headerSubStatus" class="text-[11px] text-slate-500 font-semibold">مرحباً بك أستاذنا الفاضل</p>
-                    </div>
-                </div>
-                <div id="accessBadgeTop" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
-                    غير مشترك
-                </div>
-            </div>
-        </header>
-
-        <!-- MOVING ORANGE TICKER BAR (يظهر أسفل رأس الصفحة في الأقسام الثلاثة: نوع الأسئلة / سجل الأسئلة / حسابي) -->
-        <div id="orangeTickerBar" onclick="openTutorialsViewerPage()"
-            class="w-full bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 hover:from-orange-700 hover:to-orange-700 text-white py-2 px-3 shadow-sm cursor-pointer overflow-hidden border-b border-orange-700/30 select-none transition">
-            <div class="max-w-4xl mx-auto overflow-hidden whitespace-nowrap">
-                <div class="orange-ticker-track text-xs sm:text-sm font-extrabold tracking-wide">
-                    <span>( لتثبيت الموقع ك تطبيق اضغط على الشريط البرتقالي )</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 max-w-4xl w-full mx-auto p-3 sm:p-5 pb-16">
-
-            <!-- SECTION 1: EXAM TYPES SELECTION -->
-            <section id="sectionExamTypes" class="space-y-3">
-                <div class="flex items-center justify-between px-1 mb-1">
-                    <h2 class="text-sm sm:text-base font-extrabold text-slate-800">اختر نوع الأسئلة الامتحانية</h2>
-                </div>
-
-                <!-- 4 Equal-Sized Clean Buttons -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    
-                    <!-- Type 1: Daily Exam -->
-                    <button onclick="openExamBuilder('daily')" class="group h-14 bg-white hover:bg-teal-50/50 rounded-xl px-4 border border-slate-200 hover:border-teal-500 shadow-2xs transition-all flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-9 h-9 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center text-sm font-bold shrink-0 group-hover:scale-105 transition">
-                                <i class="fa-solid fa-calendar-day"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">امتحان يومي</span>
-                        </div>
-                        <span class="exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 flex items-center gap-1 shrink-0">
-                            <i class="fa-solid fa-lock text-amber-600"></i> مقفل
-                        </span>
-                    </button>
-
-                    <!-- Type 2: Weekly Exam -->
-                    <button onclick="openExamBuilder('weekly')" class="group h-14 bg-white hover:bg-teal-50/50 rounded-xl px-4 border border-slate-200 hover:border-teal-500 shadow-2xs transition-all flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-9 h-9 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold shrink-0 group-hover:scale-105 transition">
-                                <i class="fa-solid fa-calendar-week"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">امتحان أسبوعي</span>
-                        </div>
-                        <span class="exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 flex items-center gap-1 shrink-0">
-                            <i class="fa-solid fa-lock text-amber-600"></i> مقفل
-                        </span>
-                    </button>
-
-                    <!-- Type 3: Monthly Exam -->
-                    <button onclick="openExamBuilder('monthly')" class="group h-14 bg-white hover:bg-indigo-50/50 rounded-xl px-4 border border-slate-200 hover:border-indigo-500 shadow-2xs transition-all flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-bold shrink-0 group-hover:scale-105 transition">
-                                <i class="fa-solid fa-calendar-check"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">امتحان شهري</span>
-                        </div>
-                        <span class="exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 flex items-center gap-1 shrink-0">
-                            <i class="fa-solid fa-lock text-amber-600"></i> مقفل
-                        </span>
-                    </button>
-
-                    <!-- Type 4: Comprehensive Exam -->
-                    <button onclick="openExamBuilder('comprehensive')" class="group h-14 bg-gradient-to-r from-amber-50/60 via-white to-amber-50/40 hover:from-amber-50 rounded-xl px-4 border border-amber-300 hover:border-amber-500 shadow-2xs transition-all flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center text-sm font-bold shadow-2xs shrink-0 group-hover:scale-105 transition">
-                                <i class="fa-solid fa-crown"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">امتحان شامل / نصف ونهاية السنة</span>
-                        </div>
-                        <span class="exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 flex items-center gap-1 shrink-0">
-                            <i class="fa-solid fa-lock text-amber-600"></i> مقفل
-                        </span>
-                    </button>
-                </div>
-            </section>
-
-            <!-- SECTION: TUTORIALS & APP INSTALL LINKS PAGE (تفتح عند الضغط على الشريط البرتقالي المتحرك) -->
-            <section id="sectionTutorialsViewer" class="hidden space-y-3">
-                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
-                    <button onclick="showSection('examTypes')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-                        <i class="fa-solid fa-arrow-right"></i>
-                        <span>رجوع</span>
-                    </button>
-                    <span class="px-2.5 py-1 rounded-lg bg-orange-100 text-orange-800 text-xs font-extrabold">
-                        <i class="fa-solid fa-circle-play ml-1"></i> الشروحات وتثبيت التطبيق
-                    </span>
-                </div>
-
-                <div id="tutorialsButtonsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
-            </section>
-
-            <!-- SECTION: EXAM HISTORY -->
-            <section id="sectionExamHistory" class="hidden space-y-3">
-                <div class="bg-white rounded-2xl p-3.5 border border-slate-200 shadow-2xs space-y-3">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-sm font-bold">
-                                <i class="fa-solid fa-clock-rotate-left"></i>
-                            </div>
-                            <h2 class="text-sm sm:text-base font-extrabold text-slate-800">سجل الأسئلة المحفوظة</h2>
-                        </div>
-                        <span id="historyCountBadge" class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-extrabold">0</span>
-                    </div>
-
-                    <!-- Search & Filter by Exam Type Bar -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div class="relative">
-                            <input type="text" id="historySearchInput" oninput="renderExamHistoryList()" placeholder="ابحث حسب نوع الامتحان أو المادة أو المدرسة..."
-                                class="w-full px-3 py-2 pr-8 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-bold">
-                            <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-xs text-slate-400"></i>
-                        </div>
-                        <div>
-                            <select id="historyTypeFilter" onchange="renderExamHistoryList()"
-                                class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-extrabold text-slate-700">
-                                <option value="all">جميع أنواع الامتحانات</option>
-                                <option value="daily">امتحان يومي</option>
-                                <option value="weekly">امتحان أسبوعي</option>
-                                <option value="monthly">امتحان شهري</option>
-                                <option value="comprehensive">امتحان شامل / نصف ونهاية السنة</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Saved Exams List Container -->
-                <div id="examHistoryContainer" class="space-y-2.5"></div>
-            </section>
-
-            <!-- SECTION: EXAM BUILDER -->
-            <section id="sectionExamBuilder" class="hidden space-y-4">
-                <!-- Top Navigation & Direction Toggle -->
-                <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
-                    <button onclick="closeExamBuilder()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                        <span>رجوع</span>
-                    </button>
-
-                    <span id="builderExamTypeBadge" class="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-800 border border-teal-200 text-xs font-extrabold">
+<!-- SECTION: EXAM HISTORY -->
+<section class="hidden space-y-3" id="sectionExamHistory">
+<div class="bg-white rounded-2xl p-3.5 border border-slate-200 shadow-2xs space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center text-sm font-bold">
+<i class="fa-solid fa-clock-rotate-left"></i>
+</div>
+<h2 class="text-sm sm:text-base font-extrabold text-slate-800">سجل الأسئلة المحفوظة</h2>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-extrabold" id="historyCountBadge">0</span>
+</div>
+<!-- Search & Filter by Exam Type Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+<div class="relative">
+<input class="w-full px-3 py-2 pr-8 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-bold" id="historySearchInput" oninput="renderExamHistoryList()" placeholder="ابحث حسب نوع الامتحان أو المادة أو المدرسة..." type="text"/>
+<i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-xs text-slate-400"></i>
+</div>
+<div>
+<select class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-extrabold text-slate-700" id="historyTypeFilter" onchange="renderExamHistoryList()">
+<option value="all">جميع أنواع الامتحانات</option>
+<option value="daily">امتحان يومي</option>
+<option value="weekly">امتحان أسبوعي</option>
+<option value="monthly">امتحان شهري</option>
+<option value="comprehensive">امتحان شامل / نصف ونهاية السنة</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Saved Exams List Container -->
+<div class="space-y-2.5" id="examHistoryContainer"></div>
+</section>
+<!-- SECTION: EXAM BUILDER -->
+<section class="hidden space-y-4" id="sectionExamBuilder">
+<!-- Top Navigation & Direction Toggle -->
+<div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition" onclick="closeExamBuilder()">
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+<span>رجوع</span>
+</button>
+<span class="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-800 border border-teal-200 text-xs font-extrabold" id="builderExamTypeBadge">
                         امتحان شهري
                     </span>
-
-                    <!-- Direction Switcher: Arabic RTL vs English LTR -->
-                    <div class="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
-                        <button onclick="setExamDirection('rtl')" id="dirBtnRtl" class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-700 text-white shadow-2xs transition">
+<!-- Direction Switcher: Arabic RTL vs English LTR -->
+<div class="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+<button class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-700 text-white shadow-2xs transition" id="dirBtnRtl" onclick="setExamDirection('rtl')">
                             عربي (RTL)
                         </button>
-                        <button onclick="setExamDirection('ltr')" id="dirBtnLtr" class="px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-600 hover:text-slate-900 transition">
+<button class="px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-600 hover:text-slate-900 transition" id="dirBtnLtr" onclick="setExamDirection('ltr')">
                             English (LTR)
                         </button>
-                    </div>
-                </div>
-
-                <!-- TOP 3 HEADER FIELDS + EXAM NOTE BELOW STUDENT NAME LINE -->
-                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
-                    <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
-                        <span class="w-6 h-6 rounded-md bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs">1</span>
-                        <div>
-                            <h3 class="text-xs sm:text-sm font-extrabold text-slate-800">بيانات ترويسة الورقة الامتحانية (أعلى الورقة)</h3>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <!-- Field 1: School Name -->
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
-                            <label class="block text-[11px] font-extrabold text-teal-800">
-                                <i class="fa-solid fa-school ml-1"></i> الحقل الأول: اسم المدرسة
+</div>
+</div>
+<!-- TOP 3 HEADER FIELDS + EXAM NOTE BELOW STUDENT NAME LINE -->
+<div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
+<div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+<span class="w-6 h-6 rounded-md bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs">1</span>
+<div>
+<h3 class="text-xs sm:text-sm font-extrabold text-slate-800">بيانات ترويسة الورقة الامتحانية (أعلى الورقة)</h3>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- Field 1: School Name -->
+<div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
+<label class="block text-[11px] font-extrabold text-teal-800">
+<i class="fa-solid fa-school ml-1"></i> الحقل الأول: اسم المدرسة
                             </label>
-                            <input type="text" id="headerSchoolName" placeholder="مثال: ثانوية الرافدين للبنين / للبنات"
-                                class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-xs font-bold">
-                        </div>
-
-                        <!-- Field 2: Exam Title & Academic Year -->
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
-                            <label class="block text-[11px] font-extrabold text-teal-800">
-                                <i class="fa-solid fa-award ml-1"></i> الحقل الثاني: عنوان الامتحان والعام الدراسي
+<input class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-xs font-bold" id="headerSchoolName" placeholder="مثال: ثانوية الرافدين للبنين / للبنات" type="text"/>
+</div>
+<!-- Field 2: Exam Title & Academic Year -->
+<div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
+<label class="block text-[11px] font-extrabold text-teal-800">
+<i class="fa-solid fa-award ml-1"></i> الحقل الثاني: عنوان الامتحان والعام الدراسي
                             </label>
-                            <div class="grid grid-cols-2 gap-1.5">
-                                <input type="text" id="headerExamTitle" placeholder="امتحان نصف السنة"
-                                    class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-xs font-bold">
-                                <input type="text" id="headerAcademicYear" value="للعام الدراسي ٢٠٢٦ - ٢٠٢٧" placeholder="للعام الدراسي..."
-                                    class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-xs font-bold">
-                            </div>
-                        </div>
-
-                        <!-- Field 3: Class / Subject / Time / Total Mark -->
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
-                            <label class="block text-[11px] font-extrabold text-teal-800">
-                                <i class="fa-solid fa-layer-group ml-1"></i> الحقل الثالث: (الصف / المادة / الوقت / الدرجة)
+<div class="grid grid-cols-2 gap-1.5">
+<input class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-xs font-bold" id="headerExamTitle" placeholder="امتحان نصف السنة" type="text"/>
+<input class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-xs font-bold" id="headerAcademicYear" placeholder="للعام الدراسي..." type="text" value="للعام الدراسي ٢٠٢٦ - ٢٠٢٧"/>
+</div>
+</div>
+<!-- Field 3: Class / Subject / Time / Total Mark -->
+<div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
+<label class="block text-[11px] font-extrabold text-teal-800">
+<i class="fa-solid fa-layer-group ml-1"></i> الحقل الثالث: (الصف / المادة / الوقت / الدرجة)
                             </label>
-                            <div class="grid grid-cols-2 gap-1.5">
-                                <input type="text" id="headerClass" placeholder="الصف (السادس العلمي)"
-                                    class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold">
-                                <input type="text" id="headerSubject" placeholder="المادة (التربية الإسلامية)"
-                                    class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold">
-                                <input type="text" id="headerTime" placeholder="الوقت (ساعتان)"
-                                    class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold">
-                                <input type="text" id="headerTotalMark" placeholder="الدرجة الكلية (١٠٠)"
-                                    class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Exam Note Field -->
-                    <div class="bg-amber-50/60 p-3 rounded-xl border border-amber-200/90">
-                        <label class="block text-[11px] font-extrabold text-amber-900 mb-1">
-                            <i class="fa-solid fa-circle-info ml-1 text-amber-600"></i> ملاحظة أسفل خط اسم الطالب (تظهر بحجم صغير ومرتب قبل السؤال الأول)
+<div class="grid grid-cols-2 gap-1.5">
+<input class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold" id="headerClass" placeholder="الصف (السادس العلمي)" type="text"/>
+<input class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold" id="headerSubject" placeholder="المادة (التربية الإسلامية)" type="text"/>
+<input class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold" id="headerTime" placeholder="الوقت (ساعتان)" type="text"/>
+<input class="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none text-[11px] font-bold" id="headerTotalMark" placeholder="الدرجة الكلية (١٠٠)" type="text"/>
+</div>
+</div>
+</div>
+<!-- Exam Note Field -->
+<div class="bg-amber-50/60 p-3 rounded-xl border border-amber-200/90">
+<label class="block text-[11px] font-extrabold text-amber-900 mb-1">
+<i class="fa-solid fa-circle-info ml-1 text-amber-600"></i> ملاحظة أسفل خط اسم الطالب (تظهر بحجم صغير ومرتب قبل السؤال الأول)
                         </label>
-                        <input type="text" id="headerExamNote" value="ملاحظة: الإجابة عن خمسة أسئلة فقط" placeholder="مثال: ملاحظة: الإجابة عن خمسة أسئلة فقط (اتركه فارغاً لإخفائه)"
-                            class="w-full px-3 py-1.5 rounded-lg border border-amber-300 bg-white focus:border-teal-600 outline-none text-xs font-bold text-slate-800">
-                    </div>
-                </div>
-
-                <!-- QUESTIONS LIST SECTION -->
-                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
-                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-md bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs">2</span>
-                            <div>
-                                <h3 class="text-xs sm:text-sm font-extrabold text-slate-800">حقول الأسئلة الامتحانية</h3>
-                                <p class="text-[11px] text-slate-500">اضغط على أي حقل سؤال لفتح <b>محرر السؤال الكامل</b> بملء الشاشة</p>
-                            </div>
-                        </div>
-                        <span id="questionsCountBadge" class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">
+<input class="w-full px-3 py-1.5 rounded-lg border border-amber-300 bg-white focus:border-teal-600 outline-none text-xs font-bold text-slate-800" id="headerExamNote" placeholder="مثال: ملاحظة: الإجابة عن خمسة أسئلة فقط (اتركه فارغاً لإخفائه)" type="text" value="ملاحظة: الإجابة عن خمسة أسئلة فقط"/>
+</div>
+</div>
+<!-- QUESTIONS LIST SECTION -->
+<div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
+<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs">2</span>
+<div>
+<h3 class="text-xs sm:text-sm font-extrabold text-slate-800">حقول الأسئلة الامتحانية</h3>
+<p class="text-[11px] text-slate-500">اضغط على أي حقل سؤال لفتح <b>محرر السؤال الكامل</b> بملء الشاشة</p>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold" id="questionsCountBadge">
                             5 أسئلة
                         </span>
-                    </div>
+</div>
+<!-- Dynamic Questions Container -->
+<div class="space-y-2.5" id="questionsContainer"></div>
+<!-- Add Question Button -->
+<div class="pt-1">
+<button class="w-full py-2.5 px-4 rounded-xl border border-dashed border-teal-500 bg-teal-50/50 hover:bg-teal-50 text-teal-800 font-extrabold text-xs transition flex items-center justify-center gap-1.5" onclick="addNewQuestionField()">
+<i class="fa-solid fa-circle-plus text-sm text-teal-600"></i>
+<span>إضافة حقل سؤال جديد</span>
+</button>
+</div>
+</div>
+<!-- BOTTOM TEACHER NAME, ASSISTANT TEACHER NAME & SAVE BUTTON -->
+<div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
+<div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+<span class="w-6 h-6 rounded-md bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">3</span>
+<div>
+<h3 class="text-xs sm:text-sm font-extrabold text-slate-800">تذييل الورقة الامتحانية ومعاينة A4</h3>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block text-[11px] font-extrabold text-slate-700 mb-1" id="footerTeacherLabel">اسم مدرس المادة (الجهة اليسرى أسفل الورقة)</label>
+<input class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-bold" id="footerTeacherName" placeholder="مثال: أ. زينب عبد الله" type="text"/>
+</div>
+<div>
+<label class="block text-[11px] font-extrabold text-slate-700 mb-1" id="footerAssistantLabel">اسم مساعد الأستاذ (الجهة اليمنى المقابلة - اختياري)</label>
+<input class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-bold" id="footerAssistantName" placeholder="اتركه فارغاً إذا لم يوجد مساعد" type="text"/>
+</div>
+</div>
+<div class="pt-1">
+<button class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-extrabold text-xs shadow-md shadow-teal-700/20 transition flex items-center justify-center gap-2" onclick="saveAndGenerateExam()">
+<i class="fa-solid fa-file-circle-check"></i>
+<span>حفظ ومعاينة ورقة الأسئلة (A4)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- GENERATED EXAM PREVIEW & DOWNLOAD VIEW -->
+<section class="hidden space-y-3" id="sectionExamPreview">
+<!-- Top Preview Header Bar -->
+<div class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+<div class="p-3 sm:px-4 flex items-center justify-between border-b border-slate-100">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition" onclick="backToBuilderFromPreview()">
+<i class="fa-solid fa-arrow-right"></i>
+<span>تعديل الأسئلة</span>
+</button>
+<div class="text-left">
+<h3 class="text-sm sm:text-base font-extrabold text-slate-800">معاينة الورقة</h3>
+<p class="text-[11px] text-slate-500">١ صفحة A4 – جاهزة للتنزيل والحفظ</p>
+</div>
+</div>
+<!-- Auto-Fit Single Page Toggle Bar -->
+<div class="px-3 sm:px-4 py-2 bg-teal-50/50 flex items-center justify-between gap-2">
+<label class="inline-flex items-center cursor-pointer gap-2">
+<input class="sr-only peer" id="autoFitSinglePageToggle" onchange="toggleAutoFitPaper(this.checked)" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all relative peer-checked:bg-teal-700"></div>
+</label>
+<div class="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+<span>ورقة واحدة – صغّر الخط إلى ١١.٥ لتكفي</span>
+<i class="fa-regular fa-file-lines text-teal-700"></i>
+</div>
+</div>
+</div>
+<!-- Scaled A4 Sheet Viewport -->
+<div class="a4-preview-viewport bg-slate-200/70 rounded-2xl p-2 sm:p-4 border border-slate-300/80" id="a4PreviewViewport">
+<div class="a4-scale-container" id="a4ScaleContainer">
+<div class="exam-paper-base shadow-xl" id="printableExamSheet">
+<!-- Populated dynamically by saveAndGenerateExam() -->
+</div>
+</div>
+</div>
+<!-- Bottom Action Buttons (حفظ صورة | حفظ PDF فقط بدون زر طباعة) -->
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-2 gap-2.5">
+<button class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold transition flex items-center justify-center gap-1.5" id="btnDownloadImg" onclick="downloadExamAsImage()">
+<i class="fa-solid fa-image text-teal-700"></i>
+<span>حفظ صورة</span>
+</button>
+<button class="py-2.5 px-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-extrabold shadow-sm transition flex items-center justify-center gap-1.5" id="btnDownloadPdf" onclick="downloadExamAsPDF()">
+<i class="fa-solid fa-download"></i>
+<span>حفظ PDF</span>
+</button>
+</div>
+</section>
+<!-- SECTION 2: MY ACCOUNT -->
+<section class="hidden space-y-3" id="sectionAccount"><div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-4"><h2 class="font-bold text-teal-900" id="profileNameDisplay">إعدادات المدرّس</h2><p class="text-sm text-slate-600">الأسئلة محفوظة في هذا المتصفح على هذا الجهاز. نزّل نسخة PDF قبل حذف بيانات المتصفح.</p><button class="px-4 py-2 rounded-xl bg-teal-700 text-white" onclick="openEditNameModal()">تعديل الاسم</button><label class="block">الصفة <select class="border rounded-lg p-2" id="profileRoleSelect" onchange="saveLocalRole(this.value)"><option>مدرس</option><option>معلم</option></select></label></div></section>
+<!-- OWNER CONTROL PANEL MAIN (مع إضافة زر "إضافة شرح") -->
 
-                    <!-- Dynamic Questions Container -->
-                    <div id="questionsContainer" class="space-y-2.5"></div>
+<!-- OWNER SUB-PAGE 1: FREE TRIAL REQUESTS -->
 
-                    <!-- Add Question Button -->
-                    <div class="pt-1">
-                        <button onclick="addNewQuestionField()" class="w-full py-2.5 px-4 rounded-xl border border-dashed border-teal-500 bg-teal-50/50 hover:bg-teal-50 text-teal-800 font-extrabold text-xs transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-circle-plus text-sm text-teal-600"></i>
-                            <span>إضافة حقل سؤال جديد</span>
-                        </button>
-                    </div>
-                </div>
+<!-- OWNER SUB-PAGE 2: SUBSCRIPTION CODES -->
 
-                <!-- BOTTOM TEACHER NAME, ASSISTANT TEACHER NAME & SAVE BUTTON -->
-                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
-                    <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
-                        <span class="w-6 h-6 rounded-md bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">3</span>
-                        <div>
-                            <h3 class="text-xs sm:text-sm font-extrabold text-slate-800">تذييل الورقة الامتحانية ومعاينة A4</h3>
-                        </div>
-                    </div>
+<!-- OWNER SUB-PAGE 3: ADD TUTORIAL / EXPLANATION BUTTONS (إضافة شرح) -->
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label id="footerTeacherLabel" class="block text-[11px] font-extrabold text-slate-700 mb-1">اسم مدرس المادة (الجهة اليسرى أسفل الورقة)</label>
-                            <input type="text" id="footerTeacherName" placeholder="مثال: أ. زينب عبد الله"
-                                class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-bold">
-                        </div>
-                        <div>
-                            <label id="footerAssistantLabel" class="block text-[11px] font-extrabold text-slate-700 mb-1">اسم مساعد الأستاذ (الجهة اليمنى المقابلة - اختياري)</label>
-                            <input type="text" id="footerAssistantName" placeholder="اتركه فارغاً إذا لم يوجد مساعد"
-                                class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-xs font-bold">
-                        </div>
-                    </div>
-
-                    <div class="pt-1">
-                        <button onclick="saveAndGenerateExam()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-extrabold text-xs shadow-md shadow-teal-700/20 transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-file-circle-check"></i>
-                            <span>حفظ ومعاينة ورقة الأسئلة (A4)</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- GENERATED EXAM PREVIEW & DOWNLOAD VIEW -->
-            <section id="sectionExamPreview" class="hidden space-y-3">
-                <!-- Top Preview Header Bar -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
-                    <div class="p-3 sm:px-4 flex items-center justify-between border-b border-slate-100">
-                        <button onclick="backToBuilderFromPreview()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-                            <i class="fa-solid fa-arrow-right"></i>
-                            <span>تعديل الأسئلة</span>
-                        </button>
-                        <div class="text-left">
-                            <h3 class="text-sm sm:text-base font-extrabold text-slate-800">معاينة الورقة</h3>
-                            <p class="text-[11px] text-slate-500">١ صفحة A4 – جاهزة للتنزيل والحفظ</p>
-                        </div>
-                    </div>
-
-                    <!-- Auto-Fit Single Page Toggle Bar -->
-                    <div class="px-3 sm:px-4 py-2 bg-teal-50/50 flex items-center justify-between gap-2">
-                        <label class="inline-flex items-center cursor-pointer gap-2">
-                            <input type="checkbox" id="autoFitSinglePageToggle" onchange="toggleAutoFitPaper(this.checked)" class="sr-only peer">
-                            <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all relative peer-checked:bg-teal-700"></div>
-                        </label>
-                        <div class="flex items-center gap-1.5 text-xs font-bold text-slate-700">
-                            <span>ورقة واحدة – صغّر الخط إلى ١١.٥ لتكفي</span>
-                            <i class="fa-regular fa-file-lines text-teal-700"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Scaled A4 Sheet Viewport -->
-                <div id="a4PreviewViewport" class="a4-preview-viewport bg-slate-200/70 rounded-2xl p-2 sm:p-4 border border-slate-300/80">
-                    <div id="a4ScaleContainer" class="a4-scale-container">
-                        <div id="printableExamSheet" class="exam-paper-base shadow-xl">
-                            <!-- Populated dynamically by saveAndGenerateExam() -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bottom Action Buttons (حفظ صورة | حفظ PDF فقط بدون زر طباعة) -->
-                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-2 gap-2.5">
-                    <button onclick="downloadExamAsImage()" id="btnDownloadImg" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold transition flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-image text-teal-700"></i>
-                        <span>حفظ صورة</span>
+</main>
+<!-- COMPACT 3-BUTTON BOTTOM NAVIGATION BAR (نوع الأسئلة | سجل الأسئلة | حسابي) -->
+<nav class="fixed bottom-0 right-0 left-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 shadow-md">
+<div class="max-w-md mx-auto grid grid-cols-3 gap-1.5 px-3 py-1.5">
+<button class="py-1.5 px-2 rounded-xl flex items-center justify-center gap-1.5 bg-teal-50 text-teal-800 font-extrabold transition" id="navBtnExams" onclick="showSection('examTypes')">
+<i class="fa-solid fa-layer-group text-xs sm:text-sm"></i>
+<span class="text-[11px] sm:text-xs">نوع الأسئلة</span>
+</button>
+<button class="py-1.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50 font-bold transition" id="navBtnHistory" onclick="showSection('examHistory')">
+<i class="fa-solid fa-clock-rotate-left text-xs sm:text-sm"></i>
+<span class="text-[11px] sm:text-xs">سجل الأسئلة</span>
+</button>
+<button class="py-1.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50 font-bold transition" id="navBtnAccount" onclick="showSection('account')">
+<i class="fa-solid fa-circle-user text-xs sm:text-sm"></i>
+<span class="text-[11px] sm:text-xs">الإعدادات</span>
+</button>
+</div>
+</nav>
+</div>
+<!-- 4. FULL-SCREEN WORD-LIKE QUESTION EDITOR MODAL -->
+<div class="hidden fixed inset-0 z-50 bg-slate-100 flex flex-col" id="fullScreenQuestionEditorModal">
+<!-- Top Bar: Question Title + Done ("تم") Button -->
+<div class="bg-slate-900 text-white px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2 shadow-sm shrink-0">
+<div class="flex items-center gap-2">
+<span class="w-7 h-7 rounded-lg bg-teal-500/20 border border-teal-400/40 text-teal-300 flex items-center justify-center text-xs font-extrabold">
+<i class="fa-solid fa-pen-nib"></i>
+</span>
+<div>
+<h3 class="text-xs sm:text-sm font-extrabold text-white" id="fsEditorTitle">محرر السؤال الأول (س1)</h3>
+<p class="text-[10px] text-slate-300">اضغط على أي أداة بالأسفل لفتح نافذتها، واضغط عليها مرة ثانية لإخفائها</p>
+</div>
+</div>
+<button class="px-5 py-1.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white text-xs sm:text-sm font-extrabold shadow-sm transition flex items-center gap-1.5" onclick="closeFullScreenQuestionEditor()" type="button">
+<i class="fa-solid fa-check"></i>
+<span>تم</span>
+</button>
+</div>
+<!-- Clean 4-Button Toggle Bar -->
+<div class="bg-white border-b border-slate-200 px-2.5 sm:px-5 py-2 shadow-2xs shrink-0 relative z-20">
+<div class="max-w-4xl mx-auto grid grid-cols-4 gap-1.5 sm:gap-2.5">
+<!-- Button 1: Font Family Toggle -->
+<button class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-teal-50/60 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5" id="btnToolFont" onclick="toggleEditorToolPanel('font')" type="button">
+<i class="fa-solid fa-font text-teal-700"></i>
+<span class="truncate">نوع الخط</span>
+<i class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform" id="iconChevronFont"></i>
+</button>
+<!-- Button 2: Font Color Toggle -->
+<button class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-teal-50/60 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5" id="btnToolColor" onclick="toggleEditorToolPanel('color')" type="button">
+<span class="w-3.5 h-3.5 rounded-full border border-slate-300 shrink-0" id="activeColorIndicatorDot" style="background-color: #0f172a;"></span>
+<span class="truncate">لون الخط</span>
+<i class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform" id="iconChevronColor"></i>
+</button>
+<!-- Button 3: Symbols & Branches Toggle -->
+<button class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-amber-50/70 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5" id="btnToolSymbols" onclick="toggleEditorToolPanel('symbols')" type="button">
+<i class="fa-solid fa-square-root-variable text-amber-600"></i>
+<span class="truncate">الرموز والأفرع</span>
+<i class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform" id="iconChevronSymbols"></i>
+</button>
+<!-- Button 4: Grade & Section Heading Toggle -->
+<button class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-teal-50/60 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5" id="btnToolMeta" onclick="toggleEditorToolPanel('meta')" type="button">
+<i class="fa-solid fa-award text-teal-700"></i>
+<span class="truncate">الدرجة والعنوان</span>
+<i class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform" id="iconChevronMeta"></i>
+</button>
+</div>
+<!-- COLLAPSIBLE PANEL 1: FONT FAMILY -->
+<div class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-teal-200 shadow-md" id="panelToolFont">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-extrabold text-teal-800">اختر نوع خط السؤال (يُطبق فوراً أمامك):</span>
+<button class="text-[11px] font-bold text-slate-400 hover:text-rose-600" onclick="toggleEditorToolPanel('font')" type="button">
+<i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
                     </button>
-                    <button onclick="downloadExamAsPDF()" id="btnDownloadPdf" class="py-2.5 px-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-extrabold shadow-sm transition flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-download"></i>
-                        <span>حفظ PDF</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-5 gap-2" id="fsFontButtonsGrid"></div>
+</div>
+<!-- COLLAPSIBLE PANEL 2: FONT COLOR -->
+<div class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-teal-200 shadow-md" id="panelToolColor">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-extrabold text-teal-800">اختر لون خط السؤال (يُطبق فوراً أمامك):</span>
+<button class="text-[11px] font-bold text-slate-400 hover:text-rose-600" onclick="toggleEditorToolPanel('color')" type="button">
+<i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
                     </button>
-                </div>
-            </section>
-
-            <!-- SECTION 2: MY ACCOUNT -->
-            <section id="sectionAccount" class="hidden space-y-3">
-                
-                <!-- Compact Profile Card -->
-                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div class="flex items-center gap-3 text-center sm:text-right flex-col sm:flex-row">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-teal-700 to-emerald-500 text-white flex items-center justify-center text-lg font-extrabold shadow-xs">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
-                                <h2 id="profileNameDisplay" class="text-base font-extrabold text-slate-800">الأستاذ</h2>
-                                <!-- زر القلم لتعديل اسم الأستاذ -->
-                                <button onclick="openEditNameModal()" title="تعديل الاسم" class="w-6 h-6 rounded-lg bg-slate-100 hover:bg-teal-100 text-slate-600 hover:text-teal-700 flex items-center justify-center text-xs transition">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-                                <span id="profileRoleBadge" class="px-2 py-0.5 rounded-full bg-teal-50 text-teal-800 text-[10px] font-extrabold border border-teal-200">
-                                    مدرس
-                                </span>
-                                <span id="ownerCrownBadge" class="hidden px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-extrabold border border-amber-300">
-                                    <i class="fa-solid fa-crown text-amber-600 ml-0.5"></i>المالك
-                                </span>
-                            </div>
-                            <p id="profileEmailDisplay" class="text-xs text-slate-500 font-medium mt-0.5" dir="ltr">teacher@gmail.com</p>
-                            <div class="mt-1 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 text-[11px] font-bold border border-teal-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse"></span>
-                                <span id="profileStatusText">حالة الحساب: غير مشترك</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4 Compact Equal-Sized Action Buttons -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    
-                    <!-- Button 1: Request 1 Free Trial -->
-                    <button onclick="handleFreeTrialButtonClick()" class="h-13 bg-white hover:bg-teal-50/40 px-4 py-3 rounded-xl border border-slate-200 hover:border-teal-500 shadow-2xs transition flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-sm shrink-0">
-                                <i class="fa-solid fa-gift"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-800">طلب تجربة مجانية واحدة</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-slate-400 text-xs"></i>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-3">
+<div class="flex flex-wrap items-center gap-2" id="fsEditorColorSwatches"></div>
+<label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 cursor-pointer text-xs font-bold text-slate-700">
+<input class="w-6 h-6 rounded cursor-pointer border-0 bg-transparent" id="fsEditorCustomColor" oninput="applyFsEditorColor(this.value)" type="color"/>
+<span>لون مخصص</span>
+</label>
+</div>
+</div>
+<!-- COLLAPSIBLE PANEL 3: SYMBOLS & QUICK BRANCHES -->
+<div class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-amber-200 shadow-md space-y-2.5" id="panelToolSymbols">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex flex-wrap items-center gap-1">
+<span class="text-[10px] font-extrabold text-slate-500 ml-1">إدراج سريع:</span>
+<button class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition" onclick="insertSymbolIntoFsEditor('\nأ/ ')" type="button">فرع أ/</button>
+<button class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition" onclick="insertSymbolIntoFsEditor('\nب/ ')" type="button">فرع ب/</button>
+<button class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition" onclick="insertSymbolIntoFsEditor('\nج/ ')" type="button">فرع ج/</button>
+<button class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition" onclick="insertSymbolIntoFsEditor('\n١- ')" type="button">١-</button>
+<button class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition" onclick="insertSymbolIntoFsEditor('\n٢- ')" type="button">٢-</button>
+<button class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition" onclick="insertSymbolIntoFsEditor(' ﴿  ﴾ ')" type="button">﴿ آية ﴾</button>
+<button class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition" onclick="insertSymbolIntoFsEditor(' (            ) ')" type="button">( فراغ )</button>
+</div>
+<button class="text-[11px] font-bold text-slate-400 hover:text-rose-600" onclick="toggleEditorToolPanel('symbols')" type="button">
+<i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
                     </button>
-
-                    <!-- Button 2: Subscribe with Code -->
-                    <button onclick="openSubscriptionModal()" class="h-13 bg-white hover:bg-amber-50/40 px-4 py-3 rounded-xl border border-slate-200 hover:border-amber-500 shadow-2xs transition flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm shrink-0">
-                                <i class="fa-solid fa-key"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-800">اشتراك</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-slate-400 text-xs"></i>
+</div>
+<!-- Scientific Categories Tabs -->
+<div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-200/80">
+<button class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-teal-700 text-white transition" id="symTabMath" onclick="switchSymbolsTab('math')" type="button">
+<i class="fa-solid fa-calculator ml-1"></i> الرياضيات
                     </button>
-
-                    <!-- Button 3: Owner Control Panel -->
-                    <button id="btnOwnerDashboard" onclick="openOwnerDashboard()" class="hidden h-13 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white px-4 py-3 rounded-xl border border-amber-400/80 shadow-sm transition items-center justify-between gap-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-400/40 flex items-center justify-center text-sm shrink-0">
-                                <i class="fa-solid fa-sliders"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-amber-300">لوحة تحكم المالك</span>
-                            <span id="ownerPendingCounter" class="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px] font-bold">0</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-amber-300 text-xs"></i>
+<button class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" id="symTabChem" onclick="switchSymbolsTab('chem')" type="button">
+<i class="fa-solid fa-flask ml-1"></i> الكيمياء
                     </button>
-
-                    <!-- Button 4: Logout -->
-                    <button onclick="handleLogout()" class="h-13 bg-white hover:bg-rose-50/50 px-4 py-3 rounded-xl border border-slate-200 hover:border-rose-400 shadow-2xs transition flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center text-sm shrink-0">
-                                <i class="fa-solid fa-power-off"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-rose-700">تسجيل الخروج</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-rose-400 text-xs"></i>
+<button class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" id="symTabPhys" onclick="switchSymbolsTab('phys')" type="button">
+<i class="fa-solid fa-atom ml-1"></i> الفيزياء
                     </button>
-                </div>
-            </section>
-
-            <!-- OWNER CONTROL PANEL MAIN (مع إضافة زر "إضافة شرح") -->
-            <section id="sectionOwnerHub" class="hidden space-y-4">
-                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
-                    <button onclick="showSection('account')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-                        <i class="fa-solid fa-arrow-right"></i>
-                        <span>رجوع إلى حسابي</span>
+<button class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition" id="symTabArabic" onclick="switchSymbolsTab('arabic')" type="button">
+<i class="fa-solid fa-book-quran ml-1"></i> رموز عربية وأقواس
                     </button>
-                    <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 text-xs font-extrabold">
-                        <i class="fa-solid fa-user-shield ml-1"></i> لوحة تحكم المالك
-                    </span>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <!-- Square 1: Free Trial Requests -->
-                    <button onclick="openOwnerRequestsPage()" class="bg-white hover:bg-teal-50/40 rounded-2xl p-6 border border-slate-200 hover:border-teal-600 shadow-xs transition flex flex-col items-center justify-center text-center group">
-                        <div class="w-14 h-14 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center text-2xl mb-3 group-hover:scale-105 transition relative">
-                            <i class="fa-solid fa-inbox"></i>
-                            <span id="hubPendingBadge" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-rose-600 text-white text-[10px] font-extrabold flex items-center justify-center shadow">0</span>
-                        </div>
-                        <h3 class="text-base font-extrabold text-slate-800">الطلبات المجانية</h3>
+</div>
+<!-- Symbols Grid -->
+<div class="flex flex-wrap items-center gap-1.5 max-h-32 overflow-y-auto p-1.5 bg-white rounded-xl border border-slate-200" dir="ltr" id="symbolsGridContainer"></div>
+</div>
+<!-- COLLAPSIBLE PANEL 4: GRADE & SECTION HEADING -->
+<div class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-teal-200 shadow-md" id="panelToolMeta">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-extrabold text-teal-800">تخصيص درجة السؤال والعنوان الفرعي (اختياري):</span>
+<button class="text-[11px] font-bold text-slate-400 hover:text-rose-600" onclick="toggleEditorToolPanel('meta')" type="button">
+<i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
                     </button>
-
-                    <!-- Square 2: Create Subscription Code -->
-                    <button onclick="openOwnerCodesPage()" class="bg-white hover:bg-amber-50/40 rounded-2xl p-6 border border-slate-200 hover:border-amber-600 shadow-xs transition flex flex-col items-center justify-center text-center group">
-                        <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3 group-hover:scale-105 transition">
-                            <i class="fa-solid fa-key"></i>
-                        </div>
-                        <h3 class="text-base font-extrabold text-slate-800">إنشاء كود اشتراك</h3>
-                    </button>
-
-                    <!-- Square 3: Add Tutorial / Explanation Link (إضافة شرح) -->
-                    <button onclick="openOwnerTutorialsPage()" class="bg-white hover:bg-orange-50/40 rounded-2xl p-6 border border-slate-200 hover:border-orange-500 shadow-xs transition flex flex-col items-center justify-center text-center group">
-                        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-2xl mb-3 group-hover:scale-105 transition">
-                            <i class="fa-solid fa-circle-play"></i>
-                        </div>
-                        <h3 class="text-base font-extrabold text-slate-800">إضافة شرح</h3>
-                    </button>
-                </div>
-            </section>
-
-            <!-- OWNER SUB-PAGE 1: FREE TRIAL REQUESTS -->
-            <section id="sectionOwnerRequests" class="hidden space-y-3">
-                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
-                    <button onclick="openOwnerDashboard()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-                        <i class="fa-solid fa-arrow-right"></i>
-                        <span>رجوع للوحة المالك</span>
-                    </button>
-                    <h3 class="text-xs sm:text-sm font-extrabold text-slate-800">إدارة الطلبات المجانية للأساتذة</h3>
-                </div>
-
-                <div id="ownerRequestsList" class="space-y-2.5"></div>
-            </section>
-
-            <!-- OWNER SUB-PAGE 2: SUBSCRIPTION CODES -->
-            <section id="sectionOwnerCodes" class="hidden space-y-3">
-                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
-                    <button onclick="openOwnerDashboard()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-                        <i class="fa-solid fa-arrow-right"></i>
-                        <span>رجوع للوحة المالك</span>
-                    </button>
-                    <h3 class="text-xs sm:text-sm font-extrabold text-slate-800">إنشاء وإدارة أكواد الاشتراك</h3>
-                </div>
-
-                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div>
-                        <h4 class="text-sm font-extrabold text-slate-800">توليد كود اشتراك جديد</h4>
-                        <p class="text-[11px] text-slate-500 mt-0.5">الكود صالح لحساب واحد فقط ويفعّل الاشتراك للأبد</p>
-                    </div>
-                    <button onclick="generateNewSubscriptionCode()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-extrabold text-xs shadow-sm transition flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-plus-circle"></i>
-                        <span>إنشاء كود اشتراك جديد</span>
-                    </button>
-                </div>
-
-                <div id="ownerCodesList" class="space-y-2.5"></div>
-            </section>
-
-            <!-- OWNER SUB-PAGE 3: ADD TUTORIAL / EXPLANATION BUTTONS (إضافة شرح) -->
-            <section id="sectionOwnerTutorials" class="hidden space-y-3">
-                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
-                    <button onclick="openOwnerDashboard()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-                        <i class="fa-solid fa-arrow-right"></i>
-                        <span>رجوع للوحة المالك</span>
-                    </button>
-                    <h3 class="text-xs sm:text-sm font-extrabold text-slate-800">إضافة شرح للشريط البرتقالي</h3>
-                </div>
-
-                <!-- Two Fields Form: Button Name & Button Link + Save -->
-                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
-                    <div>
-                        <label class="block text-[11px] font-extrabold text-slate-700 mb-1">الحقل الأول: اسم الزر</label>
-                        <input type="text" id="tutorialBtnNameInput" placeholder="مثال: شرح تثبيت التطبيق على الآيفون والأندرويد"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-orange-500 outline-none text-xs font-bold">
-                    </div>
-
-                    <div>
-                        <label class="block text-[11px] font-extrabold text-slate-700 mb-1">الحقل الثاني: رابط الزر</label>
-                        <input type="url" id="tutorialBtnUrlInput" placeholder="https://youtube.com/..." dir="ltr"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-orange-500 outline-none text-xs font-bold text-left">
-                    </div>
-
-                    <div class="pt-1">
-                        <button onclick="saveNewTutorialButton()" id="btnSaveTutorial"
-                            class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-extrabold text-xs shadow-sm transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-floppy-disk"></i>
-                            <span>حفظ</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Existing Tutorial Buttons List for Owner Management -->
-                <div id="ownerTutorialsList" class="space-y-2.5"></div>
-            </section>
-
-        </main>
-
-        <!-- COMPACT 3-BUTTON BOTTOM NAVIGATION BAR (نوع الأسئلة | سجل الأسئلة | حسابي) -->
-        <nav class="fixed bottom-0 right-0 left-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 shadow-md">
-            <div class="max-w-md mx-auto grid grid-cols-3 gap-1.5 px-3 py-1.5">
-                <button onclick="showSection('examTypes')" id="navBtnExams" class="py-1.5 px-2 rounded-xl flex items-center justify-center gap-1.5 bg-teal-50 text-teal-800 font-extrabold transition">
-                    <i class="fa-solid fa-layer-group text-xs sm:text-sm"></i>
-                    <span class="text-[11px] sm:text-xs">نوع الأسئلة</span>
-                </button>
-                <button onclick="showSection('examHistory')" id="navBtnHistory" class="py-1.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50 font-bold transition">
-                    <i class="fa-solid fa-clock-rotate-left text-xs sm:text-sm"></i>
-                    <span class="text-[11px] sm:text-xs">سجل الأسئلة</span>
-                </button>
-                <button onclick="showSection('account')" id="navBtnAccount" class="py-1.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50 font-bold transition">
-                    <i class="fa-solid fa-circle-user text-xs sm:text-sm"></i>
-                    <span class="text-[11px] sm:text-xs">حسابي</span>
-                </button>
-            </div>
-        </nav>
-    </div>
-
-    <!-- 4. FULL-SCREEN WORD-LIKE QUESTION EDITOR MODAL -->
-    <div id="fullScreenQuestionEditorModal" class="hidden fixed inset-0 z-50 bg-slate-100 flex flex-col">
-        
-        <!-- Top Bar: Question Title + Done ("تم") Button -->
-        <div class="bg-slate-900 text-white px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2 shadow-sm shrink-0">
-            <div class="flex items-center gap-2">
-                <span class="w-7 h-7 rounded-lg bg-teal-500/20 border border-teal-400/40 text-teal-300 flex items-center justify-center text-xs font-extrabold">
-                    <i class="fa-solid fa-pen-nib"></i>
-                </span>
-                <div>
-                    <h3 id="fsEditorTitle" class="text-xs sm:text-sm font-extrabold text-white">محرر السؤال الأول (س1)</h3>
-                    <p class="text-[10px] text-slate-300">اضغط على أي أداة بالأسفل لفتح نافذتها، واضغط عليها مرة ثانية لإخفائها</p>
-                </div>
-            </div>
-
-            <button type="button" onclick="closeFullScreenQuestionEditor()"
-                class="px-5 py-1.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white text-xs sm:text-sm font-extrabold shadow-sm transition flex items-center gap-1.5">
-                <i class="fa-solid fa-check"></i>
-                <span>تم</span>
-            </button>
-        </div>
-
-        <!-- Clean 4-Button Toggle Bar -->
-        <div class="bg-white border-b border-slate-200 px-2.5 sm:px-5 py-2 shadow-2xs shrink-0 relative z-20">
-            <div class="max-w-4xl mx-auto grid grid-cols-4 gap-1.5 sm:gap-2.5">
-                
-                <!-- Button 1: Font Family Toggle -->
-                <button type="button" id="btnToolFont" onclick="toggleEditorToolPanel('font')"
-                    class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-teal-50/60 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-font text-teal-700"></i>
-                    <span class="truncate">نوع الخط</span>
-                    <i id="iconChevronFont" class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform"></i>
-                </button>
-
-                <!-- Button 2: Font Color Toggle -->
-                <button type="button" id="btnToolColor" onclick="toggleEditorToolPanel('color')"
-                    class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-teal-50/60 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5">
-                    <span id="activeColorIndicatorDot" class="w-3.5 h-3.5 rounded-full border border-slate-300 shrink-0" style="background-color: #0f172a;"></span>
-                    <span class="truncate">لون الخط</span>
-                    <i id="iconChevronColor" class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform"></i>
-                </button>
-
-                <!-- Button 3: Symbols & Branches Toggle -->
-                <button type="button" id="btnToolSymbols" onclick="toggleEditorToolPanel('symbols')"
-                    class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-amber-50/70 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-square-root-variable text-amber-600"></i>
-                    <span class="truncate">الرموز والأفرع</span>
-                    <i id="iconChevronSymbols" class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform"></i>
-                </button>
-
-                <!-- Button 4: Grade & Section Heading Toggle -->
-                <button type="button" id="btnToolMeta" onclick="toggleEditorToolPanel('meta')"
-                    class="py-2 px-2 sm:px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-teal-50/60 text-slate-700 font-extrabold text-[11px] sm:text-xs transition flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-award text-teal-700"></i>
-                    <span class="truncate">الدرجة والعنوان</span>
-                    <i id="iconChevronMeta" class="fa-solid fa-chevron-down text-[9px] text-slate-400 transition-transform"></i>
-                </button>
-            </div>
-
-            <!-- COLLAPSIBLE PANEL 1: FONT FAMILY -->
-            <div id="panelToolFont" class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-teal-200 shadow-md">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-extrabold text-teal-800">اختر نوع خط السؤال (يُطبق فوراً أمامك):</span>
-                    <button type="button" onclick="toggleEditorToolPanel('font')" class="text-[11px] font-bold text-slate-400 hover:text-rose-600">
-                        <i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
-                    </button>
-                </div>
-                <div id="fsFontButtonsGrid" class="grid grid-cols-1 sm:grid-cols-5 gap-2"></div>
-            </div>
-
-            <!-- COLLAPSIBLE PANEL 2: FONT COLOR -->
-            <div id="panelToolColor" class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-teal-200 shadow-md">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-extrabold text-teal-800">اختر لون خط السؤال (يُطبق فوراً أمامك):</span>
-                    <button type="button" onclick="toggleEditorToolPanel('color')" class="text-[11px] font-bold text-slate-400 hover:text-rose-600">
-                        <i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
-                    </button>
-                </div>
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                    <div id="fsEditorColorSwatches" class="flex flex-wrap items-center gap-2"></div>
-                    <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 cursor-pointer text-xs font-bold text-slate-700">
-                        <input type="color" id="fsEditorCustomColor" oninput="applyFsEditorColor(this.value)"
-                            class="w-6 h-6 rounded cursor-pointer border-0 bg-transparent">
-                        <span>لون مخصص</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- COLLAPSIBLE PANEL 3: SYMBOLS & QUICK BRANCHES -->
-            <div id="panelToolSymbols" class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-amber-200 shadow-md space-y-2.5">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex flex-wrap items-center gap-1">
-                        <span class="text-[10px] font-extrabold text-slate-500 ml-1">إدراج سريع:</span>
-                        <button type="button" onclick="insertSymbolIntoFsEditor('\nأ/ ')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition">فرع أ/</button>
-                        <button type="button" onclick="insertSymbolIntoFsEditor('\nب/ ')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition">فرع ب/</button>
-                        <button type="button" onclick="insertSymbolIntoFsEditor('\nج/ ')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition">فرع ج/</button>
-                        <button type="button" onclick="insertSymbolIntoFsEditor('\n١- ')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition">١-</button>
-                        <button type="button" onclick="insertSymbolIntoFsEditor('\n٢- ')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition">٢-</button>
-                        <button type="button" onclick="insertSymbolIntoFsEditor(' ﴿  ﴾ ')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition">﴿ آية ﴾</button>
-                        <button type="button" onclick="insertSymbolIntoFsEditor(' (            ) ')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-teal-600 hover:text-white text-slate-700 text-[11px] font-extrabold border border-slate-200 transition">( فراغ )</button>
-                    </div>
-                    <button type="button" onclick="toggleEditorToolPanel('symbols')" class="text-[11px] font-bold text-slate-400 hover:text-rose-600">
-                        <i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
-                    </button>
-                </div>
-
-                <!-- Scientific Categories Tabs -->
-                <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-200/80">
-                    <button type="button" onclick="switchSymbolsTab('math')" id="symTabMath" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-teal-700 text-white transition">
-                        <i class="fa-solid fa-calculator ml-1"></i> الرياضيات
-                    </button>
-                    <button type="button" onclick="switchSymbolsTab('chem')" id="symTabChem" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">
-                        <i class="fa-solid fa-flask ml-1"></i> الكيمياء
-                    </button>
-                    <button type="button" onclick="switchSymbolsTab('phys')" id="symTabPhys" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">
-                        <i class="fa-solid fa-atom ml-1"></i> الفيزياء
-                    </button>
-                    <button type="button" onclick="switchSymbolsTab('arabic')" id="symTabArabic" class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition">
-                        <i class="fa-solid fa-book-quran ml-1"></i> رموز عربية وأقواس
-                    </button>
-                </div>
-
-                <!-- Symbols Grid -->
-                <div id="symbolsGridContainer" class="flex flex-wrap items-center gap-1.5 max-h-32 overflow-y-auto p-1.5 bg-white rounded-xl border border-slate-200" dir="ltr"></div>
-            </div>
-
-            <!-- COLLAPSIBLE PANEL 4: GRADE & SECTION HEADING -->
-            <div id="panelToolMeta" class="hidden max-w-4xl mx-auto mt-2 p-3 rounded-2xl bg-slate-50 border border-teal-200 shadow-md">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-extrabold text-teal-800">تخصيص درجة السؤال والعنوان الفرعي (اختياري):</span>
-                    <button type="button" onclick="toggleEditorToolPanel('meta')" class="text-[11px] font-bold text-slate-400 hover:text-rose-600">
-                        <i class="fa-solid fa-xmark ml-0.5"></i> إغلاق
-                    </button>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <div>
-                        <label class="block text-[10px] font-extrabold text-slate-600 mb-1">درجة السؤال (تظهر مقابل السؤال بالورقة)</label>
-                        <input type="text" id="fsEditorGrade" placeholder="مثال: ٢٠ درجة"
-                            oninput="liveSyncFromFullScreenEditor()"
-                            class="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-xs font-extrabold outline-none focus:border-teal-600">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-extrabold text-slate-600 mb-1">عنوان فرعي فوق السؤال (اختياري: التلاوة / الحديث / الإنشاء)</label>
-                        <input type="text" id="fsEditorSectionTitle" placeholder="اتركه فارغاً إذا لم يكن هناك عنوان فرعي"
-                            oninput="liveSyncFromFullScreenEditor()"
-                            class="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-xs font-bold outline-none focus:border-teal-600">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Spacious Word-Style Writing Canvas -->
-        <div class="flex-1 p-2.5 sm:p-5 overflow-y-auto flex justify-center bg-slate-200/60" onclick="closeAllEditorToolPanelsOnCanvasClick()">
-            <div class="w-full max-w-4xl bg-white rounded-2xl shadow-md border border-slate-300 flex flex-col overflow-hidden" onclick="event.stopPropagation()">
-                <div class="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs font-bold text-slate-600">
-                    <div class="flex items-center gap-2">
-                        <span id="fsCanvasQuestionPrefix" class="text-teal-800 font-extrabold text-sm">س1/</span>
-                        <span id="fsCanvasLiveSecPreview" class="hidden px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[11px] font-extrabold"></span>
-                    </div>
-                    <button type="button" onclick="toggleEditorToolPanel('meta')" class="hover:text-teal-700 transition flex items-center gap-1">
-                        <span id="fsCanvasLiveGradePreview" class="text-slate-800 font-extrabold">(٢٠ درجة)</span>
-                        <i class="fa-solid fa-pen text-[10px] text-slate-400"></i>
-                    </button>
-                </div>
-
-                <textarea id="fsEditorTextarea"
-                    onfocus="closeAllEditorToolPanelsOnCanvasClick()"
-                    oninput="liveSyncFromFullScreenEditor()"
-                    placeholder="اكتب نص السؤال وفروعه هنا بكل راحة... اضغط على الأزرار في الأعلى لتغيير الخط أو اللون أو إدراج الرموز وسيتم تطبيقها فوراً أمامك."
-                    class="flex-1 w-full p-4 sm:p-6 outline-none resize-none text-xl sm:text-2xl font-bold leading-relaxed font-amiri"></textarea>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. EDIT TEACHER NAME MODAL -->
-    <div id="editNameModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 text-center space-y-3">
-            <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-xl mx-auto">
-                <i class="fa-solid fa-user-pen"></i>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-800">تعديل الاسم</h3>
-            <div>
-                <input type="text" id="editNameInput" placeholder="اكتب اسمك الجديد..."
-                    class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-center text-xs font-extrabold">
-            </div>
-            <div class="flex items-center gap-2 pt-1">
-                <button onclick="saveEditedTeacherName()" class="flex-1 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-xs shadow-sm transition">
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<div>
+<label class="block text-[10px] font-extrabold text-slate-600 mb-1">درجة السؤال (تظهر مقابل السؤال بالورقة)</label>
+<input class="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-xs font-extrabold outline-none focus:border-teal-600" id="fsEditorGrade" oninput="liveSyncFromFullScreenEditor()" placeholder="مثال: ٢٠ درجة" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-extrabold text-slate-600 mb-1">عنوان فرعي فوق السؤال (اختياري: التلاوة / الحديث / الإنشاء)</label>
+<input class="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-xs font-bold outline-none focus:border-teal-600" id="fsEditorSectionTitle" oninput="liveSyncFromFullScreenEditor()" placeholder="اتركه فارغاً إذا لم يكن هناك عنوان فرعي" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Spacious Word-Style Writing Canvas -->
+<div class="flex-1 p-2.5 sm:p-5 overflow-y-auto flex justify-center bg-slate-200/60" onclick="closeAllEditorToolPanelsOnCanvasClick()">
+<div class="w-full max-w-4xl bg-white rounded-2xl shadow-md border border-slate-300 flex flex-col overflow-hidden" onclick="event.stopPropagation()">
+<div class="px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs font-bold text-slate-600">
+<div class="flex items-center gap-2">
+<span class="text-teal-800 font-extrabold text-sm" id="fsCanvasQuestionPrefix">س1/</span>
+<span class="hidden px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-[11px] font-extrabold" id="fsCanvasLiveSecPreview"></span>
+</div>
+<button class="hover:text-teal-700 transition flex items-center gap-1" onclick="toggleEditorToolPanel('meta')" type="button">
+<span class="text-slate-800 font-extrabold" id="fsCanvasLiveGradePreview">(٢٠ درجة)</span>
+<i class="fa-solid fa-pen text-[10px] text-slate-400"></i>
+</button>
+</div>
+<textarea class="flex-1 w-full p-4 sm:p-6 outline-none resize-none text-xl sm:text-2xl font-bold leading-relaxed font-amiri" id="fsEditorTextarea" onfocus="closeAllEditorToolPanelsOnCanvasClick()" oninput="liveSyncFromFullScreenEditor()" placeholder="اكتب نص السؤال وفروعه هنا بكل راحة... اضغط على الأزرار في الأعلى لتغيير الخط أو اللون أو إدراج الرموز وسيتم تطبيقها فوراً أمامك."></textarea>
+</div>
+</div>
+</div>
+<!-- 5. EDIT TEACHER NAME MODAL -->
+<div class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4" id="editNameModal">
+<div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 text-center space-y-3">
+<div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-xl mx-auto">
+<i class="fa-solid fa-user-pen"></i>
+</div>
+<h3 class="text-base font-extrabold text-slate-800">تعديل الاسم</h3>
+<div>
+<input class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none text-center text-xs font-extrabold" id="editNameInput" placeholder="اكتب اسمك الجديد..." type="text"/>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-xs shadow-sm transition" onclick="saveEditedTeacherName()">
                     حفظ الاسم
                 </button>
-                <button onclick="closeEditNameModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+<button class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition" onclick="closeEditNameModal()">
                     إلغاء
                 </button>
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+</div>
+<!-- 6. TEACHER ROLE SELECTION MODAL FOR EXISTING ACCOUNTS -->
 
-    <!-- 6. TEACHER ROLE SELECTION MODAL FOR EXISTING ACCOUNTS -->
-    <div id="rolePromptModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 text-center space-y-4">
-            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mx-auto">
-                <i class="fa-solid fa-chalkboard-user"></i>
-            </div>
-            <div>
-                <h3 class="text-base font-extrabold text-slate-800">تحديد الصفة التربوية</h3>
-                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                    يرجى اختيار صفتك التربوية ليتم اعتمادها تلقائياً أسفل أوراق الأسئلة الامتحانية:
-                </p>
-            </div>
-            <div class="grid grid-cols-2 gap-2.5">
-                <button onclick="saveMissingTeacherRole('مدرس')" class="py-3 px-4 rounded-xl border-2 border-teal-600 bg-teal-50 hover:bg-teal-600 hover:text-white text-teal-900 font-extrabold text-xs transition flex flex-col items-center gap-1.5">
-                    <i class="fa-solid fa-chalkboard-user text-lg"></i>
-                    <span>مدرس (مدرس المادة)</span>
-                </button>
-                <button onclick="saveMissingTeacherRole('معلم')" class="py-3 px-4 rounded-xl border-2 border-amber-500 bg-amber-50 hover:bg-amber-500 hover:text-white text-amber-900 font-extrabold text-xs transition flex flex-col items-center gap-1.5">
-                    <i class="fa-solid fa-user-graduate text-lg"></i>
-                    <span>معلم (معلم المادة)</span>
-                </button>
-            </div>
-        </div>
-    </div>
+<!-- 7. FREE TRIAL CONFIRMATION MODAL -->
 
-    <!-- 7. FREE TRIAL CONFIRMATION MODAL -->
-    <div id="freeTrialModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 text-center space-y-3">
-            <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-xl mx-auto">
-                <i class="fa-solid fa-gift"></i>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-800">طلب تجربة مجانية</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-                هل ترغب في تجربة أنواع الأسئلة لمرة واحدة مجاناً؟
-            </p>
-            <div class="flex items-center gap-2 pt-1">
-                <button onclick="confirmFreeTrialRequest()" class="flex-1 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-xs shadow-sm transition">
-                    تأكيد الطلب
-                </button>
-                <button onclick="closeFreeTrialModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
-                    إلغاء
-                </button>
-            </div>
-        </div>
-    </div>
+<!-- 8. SUBSCRIPTION CODE MODAL -->
 
-    <!-- 8. SUBSCRIPTION CODE MODAL -->
-    <div id="subscriptionModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 text-center space-y-3">
-            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mx-auto">
-                <i class="fa-solid fa-key"></i>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-800">تفعيل كود الاشتراك الدائم</h3>
-            <p class="text-[11px] text-slate-500 leading-relaxed">
-                أدخل الكود الذي حصلت عليه من مالك التطبيق لتفعيل اشتراكك الدائم وفتح جميع أنواع الأسئلة
-            </p>
-            <div>
-                <input type="text" id="subscriptionCodeInput" placeholder="EXM-XXXX-XXXX" dir="ltr"
-                    class="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 bg-slate-50 focus:bg-white focus:border-amber-500 outline-none text-center font-mono text-sm font-extrabold tracking-widest uppercase">
-            </div>
-            <div class="flex items-center gap-2 pt-1">
-                <button onclick="activateSubscriptionCode()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-extrabold text-xs shadow-sm transition">
-                    اشتراك وتفعيل
-                </button>
-                <button onclick="closeSubscriptionModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
-                    إغلاق
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 9. CUSTOM MESSAGE / ALERT MODAL -->
-    <div id="customMessageModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-2xl border border-slate-200 text-center space-y-3">
-            <div id="msgModalIcon" class="w-11 h-11 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-lg mx-auto">
-                <i class="fa-solid fa-circle-info"></i>
-            </div>
-            <h3 id="msgModalTitle" class="text-sm font-extrabold text-slate-800">تنبيه</h3>
-            <p id="msgModalBody" class="text-xs text-slate-600 leading-relaxed"></p>
-            <button onclick="closeCustomMessage()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-xs transition">
+<!-- 9. CUSTOM MESSAGE / ALERT MODAL -->
+<div class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4" id="customMessageModal">
+<div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-2xl border border-slate-200 text-center space-y-3">
+<div class="w-11 h-11 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-lg mx-auto" id="msgModalIcon">
+<i class="fa-solid fa-circle-info"></i>
+</div>
+<h3 class="text-sm font-extrabold text-slate-800" id="msgModalTitle">تنبيه</h3>
+<p class="text-xs text-slate-600 leading-relaxed" id="msgModalBody"></p>
+<button class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-xs transition" onclick="closeCustomMessage()">
                 حسناً، فهمت
             </button>
-        </div>
-    </div>
-
-    <!-- APPLICATION LOGIC & FIREBASE INTEGRATION -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // ============================================================================
-        // 1. ANTI-COPY / ANTI-PASTE / ANTI-TAMPER PROTECTION (With Free Scrolling)
-        // ============================================================================
-        const OWNER_EMAIL = "mslmalmyaly223@gmail.com";
-        let allowInternalCopy = false;
-
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        document.addEventListener('copy', (e) => {
-            if (!allowInternalCopy) {
-                e.preventDefault();
-                showCustomMessage("ممنوع النسخ", "نظام الحماية يمنع النسخ واللصق داخل التطبيق للحفاظ على حقوق المنصة.", "warning");
-            }
-        });
-        document.addEventListener('cut', (e) => e.preventDefault());
-        document.addEventListener('paste', (e) => {
-            e.preventDefault();
-            showCustomMessage("ممنوع اللصق", "الرجاء كتابة الأسئلة أو الكود يدوياً؛ خاصية النسخ واللصق معطلة لأغراض الأمان.", "warning");
-        });
-        document.addEventListener('dragstart', (e) => e.preventDefault());
-
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0', 'c', 'v', 'x', 'u', 's'].includes(e.key.toLowerCase())) {
-                e.preventDefault();
-            }
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase()))) {
-                e.preventDefault();
-            }
-        });
-
-        // ============================================================================
-        // 2. FIREBASE INITIALIZATION
-        // ============================================================================
-        const fallbackFirebaseConfig = {
-            apiKey: "AIzaSyC-aOdWkAcL5MB_7rBnme_7eFqXJd1RBaU",
-            authDomain: "travel-company-699a5.firebaseapp.com",
-            projectId: "travel-company-699a5",
-            storageBucket: "travel-company-699a5.firebasestorage.app",
-            messagingSenderId: "503808638609",
-            appId: "1:503808638609:web:55213354ee692cad1b0930",
-            measurementId: "G-LECHXHH49C"
-        };
-
-        const activeConfig = typeof __firebase_config !== 'undefined'
-            ? JSON.parse(__firebase_config)
-            : fallbackFirebaseConfig;
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'exam-builder-pro-v1';
-        const app = initializeApp(activeConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // LocalStorage Keys for Persistent Auto-Login on the Same Device
-        const LS_SAVED_EMAIL_KEY = 'smart_teacher_saved_email_v2';
-        const LS_DEVICE_FP_KEY = 'smart_teacher_hw_fp_v2';
-
-        // State Variables
-        let firebaseUser = null;
-        let currentTeacher = null;
-        let currentHardwareFingerprint = null;
-        let selectedRegisterRole = 'مدرس';
-        let unsubscribeTeacherDoc = null;
-        let unsubscribeOwnerUsers = null;
-        let unsubscribeOwnerCodes = null;
-        let unsubscribeTutorials = null;
-
-        let allUsersCache = [];
-        let allCodesCache = [];
-        let allTutorialsCache = [];
-
+</div>
+</div>
+<!-- LOCAL APPLICATION LOGIC -->
+<script type="module">
         // Exam Builder State
         let selectedExamType = 'daily';
         let examDirection = 'rtl';
@@ -1414,36 +814,6 @@
         let activeEditorToolPanel = null;
         let autoFitSinglePage = false;
 
-        // ============================================================================
-        // 3. HARDWARE-LEVEL DEVICE FINGERPRINTING
-        // ============================================================================
-        async function getHardwareDeviceFingerprint() {
-            const screenW = Math.max(window.screen.width || 0, window.screen.height || 0);
-            const screenH = Math.min(window.screen.width || 0, window.screen.height || 0);
-            const dpr = Number(window.devicePixelRatio || 1).toFixed(2);
-            const touchPoints = navigator.maxTouchPoints || 0;
-            const colorDepth = window.screen.colorDepth || 24;
-            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
-
-            const ua = navigator.userAgent || '';
-            let osFamily = 'OtherOS';
-            if (/iPhone|iPad|iPod/i.test(ua)) osFamily = 'iOS';
-            else if (/Android/i.test(ua)) osFamily = 'Android';
-            else if (/Mac OS X|Macintosh/i.test(ua)) osFamily = 'MacOS';
-            else if (/Windows/i.test(ua)) osFamily = 'Windows';
-            else if (/Linux/i.test(ua)) osFamily = 'Linux';
-
-            const rawHardwareString = `HW_${osFamily}_${screenW}x${screenH}_DPR${dpr}_TP${touchPoints}_CD${colorDepth}_TZ${tz}`;
-            const fpHash = await hashString(rawHardwareString);
-            try {
-                localStorage.setItem(LS_DEVICE_FP_KEY, fpHash);
-            } catch (e) {}
-            return fpHash;
-        }
-
-        // ============================================================================
-        // 4. SCIENTIFIC & ACADEMIC SYMBOLS DICTIONARY
-        // ============================================================================
         const SCIENTIFIC_SYMBOLS = {
             math: [
                 '√', '∛', '²', '³', '⁴', 'ⁿ', 'π', '∞',
@@ -1496,51 +866,6 @@
         // ============================================================================
         // 5. HELPER UTILITIES & CRYPTOGRAPHIC HASHING
         // ============================================================================
-        async function hashString(str) {
-            const msgBuffer = new TextEncoder().encode(str + "_SMART_SALT_2026");
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        function emailToDocId(email) {
-            return email.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
-        }
-
-        function getUsersCollection() {
-            return collection(db, 'artifacts', appId, 'public', 'data', 'exam_app_users');
-        }
-
-        function getUserDocRef(email) {
-            return doc(db, 'artifacts', appId, 'public', 'data', 'exam_app_users', emailToDocId(email));
-        }
-
-        function getCodesCollection() {
-            return collection(db, 'artifacts', appId, 'public', 'data', 'exam_app_codes');
-        }
-
-        function getCodeDocRef(codeStr) {
-            return doc(db, 'artifacts', appId, 'public', 'data', 'exam_app_codes', normalizeSubscriptionCode(codeStr));
-        }
-
-        function getTutorialsCollection() {
-            return collection(db, 'artifacts', appId, 'public', 'data', 'exam_app_tutorials');
-        }
-
-        function getTutorialDocRef(tutId) {
-            return doc(db, 'artifacts', appId, 'public', 'data', 'exam_app_tutorials', tutId);
-        }
-
-        function normalizeSubscriptionCode(raw) {
-            if (!raw) return '';
-            let clean = String(raw).trim().toUpperCase().replace(/\s+/g, '').replace(/[ـ–—−]/g, '-');
-            const alnumOnly = clean.replace(/[^A-Z0-9]/g, '');
-            if (alnumOnly.length === 11 && alnumOnly.startsWith('EXM')) {
-                clean = `EXM-${alnumOnly.slice(3, 7)}-${alnumOnly.slice(7, 11)}`;
-            }
-            return clean;
-        }
-
         window.showCustomMessage = function(title, body, type = 'info') {
             const modal = document.getElementById('customMessageModal');
             const iconBox = document.getElementById('msgModalIcon');
@@ -1571,461 +896,48 @@
         // ============================================================================
         // 6. BOOTSTRAP, SPLASH SCREEN & AUTOMATIC PERSISTENT LOGIN
         // ============================================================================
-        async function initAppAuth() {
-            currentHardwareFingerprint = await getHardwareDeviceFingerprint();
 
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                firebaseUser = auth.currentUser;
-            } catch (err) {
-                console.error("Auth init error:", err);
+        const LOCAL_DATA_KEY = 'exam_local_workspace_v1';
+        let currentTeacher = { name: '', teacherRole: 'مدرس', savedExams: [] };
+        try {
+            const saved = JSON.parse(localStorage.getItem(LOCAL_DATA_KEY) || 'null');
+            if (saved && typeof saved === 'object') {
+                currentTeacher.name = typeof saved.name === 'string' ? saved.name : '';
+                currentTeacher.teacherRole = saved.teacherRole === 'معلم' ? 'معلم' : 'مدرس';
+                currentTeacher.savedExams = Array.isArray(saved.savedExams) ? saved.savedExams : [];
             }
-
-            let autoLoggedUser = null;
-            try {
-                const savedEmail = localStorage.getItem(LS_SAVED_EMAIL_KEY);
-                if (savedEmail && firebaseUser) {
-                    const userRef = getUserDocRef(savedEmail);
-                    const snap = await getDoc(userRef);
-                    if (snap.exists()) {
-                        const userData = snap.data();
-                        if (!userData.activeDeviceFingerprint || userData.activeDeviceFingerprint === currentHardwareFingerprint) {
-                            if (userData.activeDeviceFingerprint !== currentHardwareFingerprint) {
-                                await updateDoc(userRef, { activeDeviceFingerprint: currentHardwareFingerprint });
-                                userData.activeDeviceFingerprint = currentHardwareFingerprint;
-                            }
-                            autoLoggedUser = userData;
-                        } else {
-                            localStorage.removeItem(LS_SAVED_EMAIL_KEY);
-                        }
-                    }
-                }
-            } catch (e) {
-                console.error("Auto-login check error:", e);
-            }
-
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                splash.classList.add('opacity-0');
-                setTimeout(() => {
-                    splash.classList.add('hidden');
-                    if (autoLoggedUser) {
-                        enterApplication(autoLoggedUser);
-                    } else {
-                        document.getElementById('authScreen').classList.remove('hidden');
-                    }
-                }, 500);
-            }, 2400);
-        }
-
-        onAuthStateChanged(auth, (u) => {
-            if (u) firebaseUser = u;
-        });
-
-        window.addEventListener('load', initAppAuth);
-        window.addEventListener('resize', adjustA4PreviewScale);
-
-        // ============================================================================
-        // 7. TEACHER LOGIN, REGISTRATION, ROLE SELECTION & DEVICE GUARD
-        // ============================================================================
-        window.selectRegisterRole = function(role) {
-            selectedRegisterRole = role;
-            const btnMudarris = document.getElementById('regRoleMudarris');
-            const btnMuallim = document.getElementById('regRoleMuallim');
-
-            if (role === 'مدرس') {
-                btnMudarris.className = "py-2 px-3 rounded-xl border-2 border-amber-500 bg-amber-50 text-amber-900 font-extrabold text-xs transition flex items-center justify-center gap-1.5";
-                btnMuallim.className = "py-2 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 font-bold text-xs transition flex items-center justify-center gap-1.5";
-            } else {
-                btnMuallim.className = "py-2 px-3 rounded-xl border-2 border-amber-500 bg-amber-50 text-amber-900 font-extrabold text-xs transition flex items-center justify-center gap-1.5";
-                btnMudarris.className = "py-2 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 font-bold text-xs transition flex items-center justify-center gap-1.5";
-            }
-        };
-
-        window.switchAuthTab = function(mode) {
-            const loginWin = document.getElementById('loginWindow');
-            const regWin = document.getElementById('registerWindow');
-            const btnLogin = document.getElementById('tabBtnLogin');
-            const btnReg = document.getElementById('tabBtnRegister');
-
-            if (mode === 'login') {
-                loginWin.classList.remove('hidden');
-                regWin.classList.add('hidden');
-                btnLogin.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-teal-800 shadow-xs transition";
-                btnReg.className = "px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 transition";
-            } else {
-                loginWin.classList.add('hidden');
-                regWin.classList.remove('hidden');
-                regWin.classList.add('flex');
-                btnReg.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-amber-700 shadow-xs transition";
-                btnLogin.className = "px-4 py-1.5 rounded-lg text-xs font-bold text-slate-600 transition";
-            }
-        };
-
-        window.handleRegister = async function() {
-            if (!firebaseUser) {
-                showCustomMessage("يرجى الانتظار", "جاري الاتصال بقاعدة البيانات الآمنة...", "info");
-                return;
-            }
-
-            const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim().toLowerCase();
-            const password = document.getElementById('regPassword').value;
-
-            if (!name || !email || !password) {
-                showCustomMessage("حقول مطلوبة", "يرجى كتابة الاسم والبريد الإلكتروني والرمز السري لإتمام إنشاء الحساب.", "error");
-                return;
-            }
-            if (!email.includes('@') || password.length < 6) {
-                showCustomMessage("بيانات غير صالحة", "يرجى إدخال بريد إلكتروني صحيح ورمز سري لا يقل عن 6 مراتب.", "error");
-                return;
-            }
-
-            const btn = document.getElementById('btnRegSubmit');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إنشاء الحساب...';
-
-            try {
-                const userRef = getUserDocRef(email);
-                const snap = await getDoc(userRef);
-
-                if (snap.exists()) {
-                    showCustomMessage("الحساب موجود مسبقاً", "هذا البريد الإلكتروني مسجل بالفعل! يرجى تسجيل الدخول من نافذة تسجيل الدخول.", "warning");
-                    btn.disabled = false;
-                    btn.innerHTML = '<span>إنشاء حساب جديد</span>';
-                    return;
-                }
-
-                if (!currentHardwareFingerprint) {
-                    currentHardwareFingerprint = await getHardwareDeviceFingerprint();
-                }
-
-                const passwordHash = await hashString(password);
-                const isOwnerAccount = (email === OWNER_EMAIL.toLowerCase());
-
-                const newUserObj = {
-                    name: name,
-                    email: email,
-                    teacherRole: selectedRegisterRole || 'مدرس',
-                    passwordHash: passwordHash,
-                    activeDeviceFingerprint: currentHardwareFingerprint,
-                    isSubscribed: isOwnerAccount ? true : false,
-                    subscriptionCode: isOwnerAccount ? 'OWNER-MASTER' : '',
-                    trialStatus: 'none',
-                    trialRequestedAt: 0,
-                    savedExams: [],
-                    createdAt: Date.now()
-                };
-
-                await setDoc(userRef, newUserObj);
-                try {
-                    localStorage.setItem(LS_SAVED_EMAIL_KEY, email);
-                } catch (e) {}
-
-                enterApplication(newUserObj);
-            } catch (err) {
-                console.error("Register error:", err);
-                showCustomMessage("خطأ في الاتصال", "تعذر إنشاء الحساب حالياً، يرجى المحاولة مرة أخرى.", "error");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-sparkles text-[11px]"></i><span>إنشاء حساب جديد</span>';
-            }
-        };
-
-        window.handleLogin = async function() {
-            if (!firebaseUser) {
-                showCustomMessage("يرجى الانتظار", "جاري الاتصال بقاعدة البيانات الآمنة...", "info");
-                return;
-            }
-
-            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-            const password = document.getElementById('loginPassword').value;
-
-            if (!email || !password) {
-                showCustomMessage("بيانات ناقصة", "يرجى إدخال البريد الإلكتروني والرمز السري لتسجيل الدخول.", "error");
-                return;
-            }
-
-            const btn = document.getElementById('btnLoginSubmit');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحقق...';
-
-            try {
-                const userRef = getUserDocRef(email);
-                const snap = await getDoc(userRef);
-
-                if (!snap.exists()) {
-                    showCustomMessage("الحساب غير موجود", "لا يوجد حساب مسجل بهذا البريد الإلكتروني. يمكنك إنشاء حساب جديد من النافذة المجاورة.", "error");
-                    btn.disabled = false;
-                    btn.innerHTML = '<span>تسجيل الدخول للحساب</span>';
-                    return;
-                }
-
-                const userData = snap.data();
-                const inputHash = await hashString(password);
-
-                if (userData.passwordHash !== inputHash) {
-                    showCustomMessage("خطأ في الرمز السري", "الرمز السري الذي أدخلته غير صحيح، يرجى التأكد والمحاولة مجدداً.", "error");
-                    btn.disabled = false;
-                    btn.innerHTML = '<span>تسجيل الدخول للحساب</span>';
-                    return;
-                }
-
-                if (!currentHardwareFingerprint) {
-                    currentHardwareFingerprint = await getHardwareDeviceFingerprint();
-                }
-
-                const isOwnerAccount = (email === OWNER_EMAIL.toLowerCase());
-                const updatedFields = {
-                    activeDeviceFingerprint: currentHardwareFingerprint,
-                    ...(isOwnerAccount ? { isSubscribed: true } : {})
-                };
-
-                await updateDoc(userRef, updatedFields);
-                try {
-                    localStorage.setItem(LS_SAVED_EMAIL_KEY, email);
-                } catch (e) {}
-
-                enterApplication({ ...userData, ...updatedFields });
-            } catch (err) {
-                console.error("Login error:", err);
-                showCustomMessage("خطأ في الدخول", "حدث خطأ أثناء تسجيل الدخول، يرجى المحاولة مرة أخرى.", "error");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<span>تسجيل الدخول للحساب</span><i class="fa-solid fa-arrow-left text-[10px]"></i>';
-            }
-        };
-
-        function enterApplication(userObj) {
-            currentTeacher = userObj;
-
-            document.getElementById('authScreen').classList.add('hidden');
-            document.getElementById('appContainer').classList.remove('hidden');
-
-            const cleanName = userObj.name.startsWith('أ.') ? userObj.name : `أ. ${userObj.name}`;
-            document.getElementById('footerTeacherName').value = cleanName;
-
-            if (!userObj.teacherRole) {
-                document.getElementById('rolePromptModal').classList.remove('hidden');
-            }
-
-            if (unsubscribeTeacherDoc) unsubscribeTeacherDoc();
-            const userRef = getUserDocRef(userObj.email);
-
-            unsubscribeTeacherDoc = onSnapshot(userRef, (docSnap) => {
-                if (!docSnap.exists()) return;
-                const liveData = docSnap.data();
-
-                if (
-                    liveData.activeDeviceFingerprint &&
-                    currentHardwareFingerprint &&
-                    liveData.activeDeviceFingerprint !== currentHardwareFingerprint
-                ) {
-                    forceLogoutDueToAnotherDevice();
-                    return;
-                }
-
-                currentTeacher = liveData;
-                refreshAccountUI();
-                renderExamHistoryList();
-            }, (err) => {
-                console.error("Live teacher listener error:", err);
-            });
-
-            // Start real-time tutorials listener for all users (for the orange ticker bar page)
-            startTutorialsRealtimeListener();
-
-            if (userObj.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
-                startOwnerRealtimeListeners();
-            }
-
-            refreshAccountUI();
-            renderExamHistoryList();
-            showSection('examTypes');
-        }
-
-        window.saveMissingTeacherRole = async function(chosenRole) {
-            if (!currentTeacher) return;
-            document.getElementById('rolePromptModal').classList.add('hidden');
-            currentTeacher.teacherRole = chosenRole;
-            refreshAccountUI();
-
-            try {
-                const userRef = getUserDocRef(currentTeacher.email);
-                await updateDoc(userRef, { teacherRole: chosenRole });
-            } catch (err) {
-                console.error("Save role error:", err);
-            }
-        };
-
-        function forceLogoutDueToAnotherDevice() {
-            if (unsubscribeTeacherDoc) { unsubscribeTeacherDoc(); unsubscribeTeacherDoc = null; }
-            if (unsubscribeOwnerUsers) { unsubscribeOwnerUsers(); unsubscribeOwnerUsers = null; }
-            if (unsubscribeOwnerCodes) { unsubscribeOwnerCodes(); unsubscribeOwnerCodes = null; }
-            if (unsubscribeTutorials) { unsubscribeTutorials(); unsubscribeTutorials = null; }
-
-            currentTeacher = null;
-            try {
-                localStorage.removeItem(LS_SAVED_EMAIL_KEY);
-            } catch (e) {}
-
-            document.getElementById('fullScreenQuestionEditorModal').classList.add('hidden');
-            document.getElementById('appContainer').classList.add('hidden');
-            document.getElementById('authScreen').classList.remove('hidden');
-
-            showCustomMessage(
-                "تم تسجيل الدخول من جهاز آخر!",
-                "تم فتح حسابك على جهاز آخر مختلف، وبموجب نظام الحماية تم تسجيل خروجك تلقائياً من هذا الجهاز.",
-                "warning"
-            );
-        }
-
-        window.handleLogout = async function() {
-            if (unsubscribeTeacherDoc) { unsubscribeTeacherDoc(); unsubscribeTeacherDoc = null; }
-            if (unsubscribeOwnerUsers) { unsubscribeOwnerUsers(); unsubscribeOwnerUsers = null; }
-            if (unsubscribeOwnerCodes) { unsubscribeOwnerCodes(); unsubscribeOwnerCodes = null; }
-            if (unsubscribeTutorials) { unsubscribeTutorials(); unsubscribeTutorials = null; }
-
-            currentTeacher = null;
-            try {
-                localStorage.removeItem(LS_SAVED_EMAIL_KEY);
-            } catch (e) {}
-
-            document.getElementById('loginPassword').value = '';
-            document.getElementById('fullScreenQuestionEditorModal').classList.add('hidden');
-            document.getElementById('appContainer').classList.add('hidden');
-            document.getElementById('authScreen').classList.remove('hidden');
-        };
-
-        // Edit Teacher Name Functions
-        window.openEditNameModal = function() {
-            if (!currentTeacher) return;
-            document.getElementById('editNameInput').value = currentTeacher.name || '';
-            document.getElementById('editNameModal').classList.remove('hidden');
-            setTimeout(() => document.getElementById('editNameInput').focus(), 60);
-        };
-
-        window.closeEditNameModal = function() {
-            document.getElementById('editNameModal').classList.add('hidden');
-        };
-
-        window.saveEditedTeacherName = async function() {
-            if (!currentTeacher) return;
-            const newName = document.getElementById('editNameInput').value.trim();
-            if (!newName) {
-                showCustomMessage("تنبيه", "يرجى كتابة الاسم قبل الحفظ.", "warning");
-                return;
-            }
-
-            closeEditNameModal();
-            try {
-                const userRef = getUserDocRef(currentTeacher.email);
-                await updateDoc(userRef, { name: newName });
-                currentTeacher.name = newName;
-                const cleanName = newName.startsWith('أ.') ? newName : `أ. ${newName}`;
-                document.getElementById('footerTeacherName').value = cleanName;
-                refreshAccountUI();
-                showCustomMessage("تم التحديث", "تم تعديل اسمك وحفظه بنجاح.", "success");
-            } catch (err) {
-                console.error("Update name error:", err);
-                showCustomMessage("خطأ", "تعذر تحديث الاسم حالياً، حاول مرة أخرى.", "error");
-            }
-        };
-
-        // ============================================================================
-        // 8. ACCESS CONTROL & ACCOUNT STATUS REFRESH
-        // ============================================================================
-        function hasExamAccess() {
-            if (!currentTeacher) return false;
-            if (currentTeacher.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) return true;
-            if (currentTeacher.isSubscribed === true) return true;
-            if (currentTeacher.trialStatus === 'approved') return true;
-            return false;
-        }
-
-        function getTeacherRoleTitle() {
-            if (currentTeacher && currentTeacher.teacherRole === 'معلم') {
-                return 'معلم المادة';
-            }
-            return 'مدرس المادة';
-        }
-
+        } catch (e) { console.warn('Local storage unavailable', e); }
+        function persistLocalData() { localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify(currentTeacher)); }
+        function getTeacherRoleTitle() { return currentTeacher.teacherRole === 'معلم' ? 'معلم المادة' : 'مدرس المادة'; }
         function refreshAccountUI() {
-            if (!currentTeacher) return;
-
-            const isOwner = currentTeacher.email.toLowerCase() === OWNER_EMAIL.toLowerCase();
-            const roleWord = currentTeacher.teacherRole === 'معلم' ? 'معلم' : 'مدرس';
-
-            document.getElementById('profileNameDisplay').textContent = currentTeacher.name;
-            document.getElementById('profileEmailDisplay').textContent = currentTeacher.email;
-            document.getElementById('headerSubStatus').textContent = `أهلاً بك، ${currentTeacher.name}`;
-            document.getElementById('profileRoleBadge').textContent = roleWord;
-
-            const footerLabel = document.getElementById('footerTeacherLabel');
-            if (footerLabel) {
-                footerLabel.textContent = `اسم ${getTeacherRoleTitle()} (الجهة اليسرى أسفل الورقة)`;
-            }
-
-            const ownerBtn = document.getElementById('btnOwnerDashboard');
-            const ownerCrown = document.getElementById('ownerCrownBadge');
-            if (isOwner) {
-                ownerBtn.classList.remove('hidden');
-                ownerBtn.classList.add('flex');
-                ownerCrown.classList.remove('hidden');
-            } else {
-                ownerBtn.classList.add('hidden');
-                ownerBtn.classList.remove('flex');
-                ownerCrown.classList.add('hidden');
-            }
-
-            const topBadge = document.getElementById('accessBadgeTop');
-            const profileStatus = document.getElementById('profileStatusText');
-            const lockBadges = document.querySelectorAll('.exam-lock-badge');
-
-            if (isOwner || currentTeacher.isSubscribed) {
-                topBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300";
-                topBadge.innerHTML = '<i class="fa-solid fa-circle-check ml-1"></i> اشتراك دائمي';
-                profileStatus.textContent = isOwner ? "حالة الحساب: مالك المنصة (وصول كامل)" : "حالة الحساب: مشترك دائمي مفعل";
-
-                lockBadges.forEach(b => {
-                    b.className = "exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1 shrink-0";
-                    b.innerHTML = '<i class="fa-solid fa-lock-open text-emerald-600"></i> متاح';
-                });
-            } else if (currentTeacher.trialStatus === 'approved') {
-                topBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-amber-100 text-amber-800 border border-amber-300";
-                topBadge.innerHTML = '<i class="fa-solid fa-gift ml-1"></i> تجربة مجانية (1)';
-                profileStatus.textContent = "حالة الحساب: لديك تجربة مجانية واحدة متاحة الآن";
-
-                lockBadges.forEach(b => {
-                    b.className = "exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 text-teal-800 flex items-center gap-1 shrink-0";
-                    b.innerHTML = '<i class="fa-solid fa-unlock text-teal-600"></i> متاح (1)';
-                });
-            } else {
-                topBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200";
-                topBadge.innerHTML = '<i class="fa-solid fa-lock ml-1"></i> غير مشترك';
-
-                if (currentTeacher.trialStatus === 'pending') {
-                    profileStatus.textContent = "حالة الحساب: بانتظار موافقة الإدارة على التجربة المجانية";
-                } else if (currentTeacher.trialStatus === 'used') {
-                    profileStatus.textContent = "حالة الحساب: انتهت التجربة المجانية (يتطلب اشتراك)";
-                } else {
-                    profileStatus.textContent = "حالة الحساب: غير مشترك";
-                }
-
-                lockBadges.forEach(b => {
-                    b.className = "exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 flex items-center gap-1 shrink-0";
-                    b.innerHTML = '<i class="fa-solid fa-lock text-amber-600"></i> مقفل';
-                });
-            }
+            document.getElementById('profileNameDisplay').textContent = currentTeacher.name || 'إعدادات المدرّس';
+            document.getElementById('headerSubStatus').textContent = 'إنشاء الأسئلة بدون تسجيل أو تفعيل';
+            document.getElementById('profileRoleSelect').value = currentTeacher.teacherRole;
+            document.getElementById('footerTeacherLabel').textContent = `اسم ${getTeacherRoleTitle()}`;
         }
-
-        // ============================================================================
-        // 9. NAVIGATION & FREE TRIAL / SUBSCRIPTION CODE FLOWS
-        // ============================================================================
+        window.saveLocalRole = function(role) {
+            currentTeacher.teacherRole = role;
+            try { persistLocalData(); } catch(e) { showCustomMessage('تعذر الحفظ', 'التخزين المحلي غير متاح.', 'warning'); }
+            refreshAccountUI();
+        };
+        window.openEditNameModal = function() {
+            document.getElementById('editNameInput').value = currentTeacher.name;
+            document.getElementById('editNameModal').classList.remove('hidden');
+        };
+        window.closeEditNameModal = function() { document.getElementById('editNameModal').classList.add('hidden'); };
+        window.saveEditedTeacherName = function() {
+            currentTeacher.name = document.getElementById('editNameInput').value.trim();
+            try { persistLocalData(); } catch(e) { showCustomMessage('تعذر الحفظ', 'التخزين المحلي غير متاح.', 'warning'); }
+            document.getElementById('footerTeacherName').value = currentTeacher.name;
+            refreshAccountUI(); closeEditNameModal();
+        };
+        window.addEventListener('load', () => {
+            document.getElementById('splashScreen').classList.add('hidden');
+            document.getElementById('appContainer').classList.remove('hidden');
+            document.getElementById('footerTeacherName').value = currentTeacher.name;
+            refreshAccountUI(); showSection('examTypes');
+        });
+        window.addEventListener('resize', adjustA4PreviewScale);
         function hideAllMainSections() {
             const sections = [
                 'sectionExamTypes',
@@ -2086,506 +998,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        window.handleFreeTrialButtonClick = function() {
-            if (!currentTeacher) return;
-
-            if (currentTeacher.isSubscribed) {
-                showCustomMessage("حسابك مشترك بالفعل", "أنت تملك اشتراكاً دائمياً مفعلاً، جميع أنواع الأسئلة مفتوحة لك دائماً!", "success");
-                return;
-            }
-            if (currentTeacher.trialStatus === 'pending') {
-                showCustomMessage("الطلب قيد المراجعة", "تم إرسال طلبك للإدارة، انتظر الموافقة على التجربة المجانية.", "info");
-                return;
-            }
-            if (currentTeacher.trialStatus === 'approved') {
-                showCustomMessage("التجربة متاحة الآن!", "تمت الموافقة على طلبك! يمكنك الذهاب إلى قسم (نوع الأسئلة) وتجربة إنشاء الأسئلة لمرة واحدة مجاناً.", "success");
-                return;
-            }
-            if (currentTeacher.trialStatus === 'used') {
-                showCustomMessage("انتهت التجربة المجانية", "لقد استخدمت محاولتك المجانية الواحدة مسبقاً. يرجى الضغط على زر (اشتراك) وإدخال كود التفعيل.", "warning");
-                return;
-            }
-
-            document.getElementById('freeTrialModal').classList.remove('hidden');
-        };
-
-        window.closeFreeTrialModal = function() {
-            document.getElementById('freeTrialModal').classList.add('hidden');
-        };
-
-        window.confirmFreeTrialRequest = async function() {
-            if (!currentTeacher) return;
-            closeFreeTrialModal();
-
-            try {
-                const userRef = getUserDocRef(currentTeacher.email);
-                await updateDoc(userRef, {
-                    trialStatus: 'pending',
-                    trialRequestedAt: Date.now()
-                });
-                showCustomMessage("تم إرسال الطلب بنجاح", "تم إرسال طلبك للإدارة، انتظر الموافقة على التجربة المجانية.", "success");
-            } catch (err) {
-                console.error("Trial request error:", err);
-                showCustomMessage("خطأ", "تعذر إرسال الطلب حالياً، حاول مرة أخرى.", "error");
-            }
-        };
-
-        window.openSubscriptionModal = function() {
-            document.getElementById('subscriptionCodeInput').value = '';
-            document.getElementById('subscriptionModal').classList.remove('hidden');
-        };
-
-        window.closeSubscriptionModal = function() {
-            document.getElementById('subscriptionModal').classList.add('hidden');
-        };
-
-        window.activateSubscriptionCode = async function() {
-            if (!currentTeacher) return;
-            const rawCode = normalizeSubscriptionCode(document.getElementById('subscriptionCodeInput').value);
-
-            if (!rawCode) {
-                showCustomMessage("أدخل الكود", "يرجى كتابة كود الاشتراك في الحقل المخصص.", "warning");
-                return;
-            }
-
-            try {
-                const codeRef = getCodeDocRef(rawCode);
-                const codeSnap = await getDoc(codeRef);
-
-                if (!codeSnap.exists()) {
-                    showCustomMessage("الكود غير موجود", "يرجى التأكد من كتابة أحرف وأرقام الكود بشكل صحيح.", "error");
-                    return;
-                }
-
-                const codeData = codeSnap.data();
-
-                if (codeData.status === 'disabled') {
-                    showCustomMessage("منتهي الصلاحية", "هذا الكود تم إلغاؤه من قبل الإدارة.", "error");
-                    return;
-                }
-
-                const usedBy = (codeData.usedByEmail || '').trim().toLowerCase();
-                const myEmail = (currentTeacher.email || '').trim().toLowerCase();
-
-                if (codeData.status === 'active' && usedBy && usedBy !== myEmail) {
-                    showCustomMessage("مستخدم مسبقاً", "هذا الكود مستخدم مسبقاً لحساب أستاذ آخر (الكود صالح لحساب واحد فقط).", "error");
-                    return;
-                }
-
-                await updateDoc(codeRef, {
-                    status: 'active',
-                    usedByEmail: currentTeacher.email,
-                    usedByName: currentTeacher.name,
-                    activatedAt: Date.now()
-                });
-
-                const userRef = getUserDocRef(currentTeacher.email);
-                await updateDoc(userRef, {
-                    isSubscribed: true,
-                    subscriptionCode: rawCode
-                });
-
-                closeSubscriptionModal();
-                showCustomMessage("تم تفعيل الاشتراك الدائم!", "مبارك لك! تم تفعيل كود الاشتراك بنجاح وفتحت جميع أنواع الأسئلة لحسابك للأبد.", "success");
-            } catch (err) {
-                console.error("Code activation error:", err);
-                showCustomMessage("خطأ", "حدث خطأ أثناء التحقق من الكود، يرجى المحاولة مرة أخرى.", "error");
-            }
-        };
-
-        // ============================================================================
-        // 10. TUTORIALS / EXPLANATIONS SYSTEM (الشريط البرتقالي + إضافة شرح للمالك)
-        // ============================================================================
-        function startTutorialsRealtimeListener() {
-            if (unsubscribeTutorials) unsubscribeTutorials();
-            unsubscribeTutorials = onSnapshot(getTutorialsCollection(), (snap) => {
-                allTutorialsCache = [];
-                snap.forEach(d => allTutorialsCache.push(d.data()));
-                allTutorialsCache.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-                renderTutorialsViewerUI();
-                renderOwnerTutorialsUI();
-            }, (err) => console.error("Tutorials listener error:", err));
-        }
-
-        window.openTutorialsViewerPage = function() {
-            hideAllMainSections();
-            setOrangeTickerVisible(false);
-            document.getElementById('sectionTutorialsViewer').classList.remove('hidden');
-            renderTutorialsViewerUI();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        function formatExternalUrl(rawUrl) {
-            if (!rawUrl) return '#';
-            const trimmed = String(rawUrl).trim();
-            if (/^https?:\/\//i.test(trimmed)) return trimmed;
-            return 'https://' + trimmed;
-        }
-
-        window.openExternalTutorialLink = function(url) {
-            const finalUrl = formatExternalUrl(url);
-            window.open(finalUrl, '_blank', 'noopener,noreferrer');
-        };
-
-        function renderTutorialsViewerUI() {
-            const container = document.getElementById('tutorialsButtonsContainer');
-            if (!container) return;
-
-            if (allTutorialsCache.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-full bg-white rounded-2xl p-8 text-center border border-slate-200">
-                        <i class="fa-solid fa-circle-play text-3xl text-slate-300 mb-2"></i>
-                        <p class="text-xs sm:text-sm font-extrabold text-slate-600">لا توجد أزرار شروحات مضافة حالياً</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = allTutorialsCache.map(item => `
-                <button onclick="openExternalTutorialLink('${escapeHtml(item.url)}')"
-                    class="group h-14 bg-white hover:bg-orange-50/60 rounded-xl px-4 border border-slate-200 hover:border-orange-500 shadow-2xs transition-all flex items-center justify-between gap-3">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-amber-600 text-white flex items-center justify-center text-sm font-bold shrink-0 group-hover:scale-105 transition">
-                            <i class="fa-solid fa-play"></i>
-                        </div>
-                        <span class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">${escapeHtml(item.title)}</span>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-orange-600 text-xs shrink-0"></i>
-                </button>
-            `).join('');
-        }
-
-        window.openOwnerTutorialsPage = function() {
-            if (!currentTeacher || currentTeacher.email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) return;
-            hideAllMainSections();
-            setOrangeTickerVisible(false);
-            document.getElementById('sectionOwnerTutorials').classList.remove('hidden');
-            renderOwnerTutorialsUI();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        window.saveNewTutorialButton = async function() {
-            if (!currentTeacher || currentTeacher.email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) return;
-
-            const btnName = document.getElementById('tutorialBtnNameInput').value.trim();
-            const btnUrl = document.getElementById('tutorialBtnUrlInput').value.trim();
-
-            if (!btnName || !btnUrl) {
-                showCustomMessage("حقول مطلوبة", "يرجى ملء اسم الزر ورابط الزر قبل الضغط على حفظ.", "warning");
-                return;
-            }
-
-            const saveBtn = document.getElementById('btnSaveTutorial');
-            saveBtn.disabled = true;
-            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
-
-            try {
-                const newId = 'tut_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
-                const tutRef = getTutorialDocRef(newId);
-
-                await setDoc(tutRef, {
-                    id: newId,
-                    title: btnName,
-                    url: formatExternalUrl(btnUrl),
-                    createdAt: Date.now()
-                });
-
-                document.getElementById('tutorialBtnNameInput').value = '';
-                document.getElementById('tutorialBtnUrlInput').value = '';
-                showCustomMessage("تم الحفظ بنجاح", "تمت إضافة الزر بنجاح وسيظهر لجميع الأساتذة عند الضغط على الشريط البرتقالي.", "success");
-            } catch (err) {
-                console.error("Save tutorial error:", err);
-                showCustomMessage("خطأ", "تعذر حفظ الزر حالياً، يرجى المحاولة مرة أخرى.", "error");
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i><span>حفظ</span>';
-            }
-        };
-
-        window.deleteTutorialButton = async function(tutId) {
-            try {
-                const tutRef = getTutorialDocRef(tutId);
-                await deleteDoc(tutRef);
-            } catch (err) {
-                console.error("Delete tutorial error:", err);
-            }
-        };
-
-        function renderOwnerTutorialsUI() {
-            const container = document.getElementById('ownerTutorialsList');
-            if (!container) return;
-
-            if (allTutorialsCache.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-white rounded-2xl p-6 text-center border border-slate-200">
-                        <p class="text-xs font-extrabold text-slate-500">لم تقم بإضافة أي أزرار شروحات بعد</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = allTutorialsCache.map(item => `
-                <div class="bg-white rounded-2xl p-3.5 border border-slate-200 shadow-2xs flex items-center justify-between gap-3">
-                    <div class="min-w-0 flex-1">
-                        <h4 class="text-xs sm:text-sm font-extrabold text-slate-800 truncate">${escapeHtml(item.title)}</h4>
-                        <p class="text-[11px] text-slate-500 font-mono truncate mt-0.5" dir="ltr">${escapeHtml(item.url)}</p>
-                    </div>
-                    <button onclick="deleteTutorialButton('${escapeHtml(item.id)}')"
-                        class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white text-xs font-extrabold transition flex items-center gap-1 shrink-0">
-                        <i class="fa-solid fa-trash-can"></i>
-                        <span>حذف</span>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // ============================================================================
-        // 11. OWNER CONTROL PANEL (الطلبات المجانية + أكواد الاشتراك)
-        // ============================================================================
-        function startOwnerRealtimeListeners() {
-            if (unsubscribeOwnerUsers) unsubscribeOwnerUsers();
-            if (unsubscribeOwnerCodes) unsubscribeOwnerCodes();
-
-            unsubscribeOwnerUsers = onSnapshot(getUsersCollection(), (snap) => {
-                allUsersCache = [];
-                snap.forEach(d => allUsersCache.push(d.data()));
-                renderOwnerRequestsUI();
-            }, (err) => console.error("Owner users listener error:", err));
-
-            unsubscribeOwnerCodes = onSnapshot(getCodesCollection(), (snap) => {
-                allCodesCache = [];
-                snap.forEach(d => {
-                    const data = d.data();
-                    if (data.status === 'disabled') {
-                        deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'exam_app_codes', d.id)).catch(() => {});
-                    } else {
-                        allCodesCache.push(data);
-                    }
-                });
-                renderOwnerCodesUI();
-            }, (err) => console.error("Owner codes listener error:", err));
-        }
-
-        window.openOwnerDashboard = function() {
-            if (!currentTeacher || currentTeacher.email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) {
-                showCustomMessage("غير مصرح", "هذه اللوحة مخصصة لمالك التطبيق فقط.", "error");
-                return;
-            }
-            hideAllMainSections();
-            setOrangeTickerVisible(false);
-            document.getElementById('sectionOwnerHub').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        window.openOwnerRequestsPage = function() {
-            if (!currentTeacher || currentTeacher.email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) return;
-            hideAllMainSections();
-            setOrangeTickerVisible(false);
-            document.getElementById('sectionOwnerRequests').classList.remove('hidden');
-            renderOwnerRequestsUI();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        window.openOwnerCodesPage = function() {
-            if (!currentTeacher || currentTeacher.email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) return;
-            hideAllMainSections();
-            setOrangeTickerVisible(false);
-            document.getElementById('sectionOwnerCodes').classList.remove('hidden');
-            renderOwnerCodesUI();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        function renderOwnerRequestsUI() {
-            const pendingUsers = allUsersCache.filter(u => u.trialStatus === 'pending');
-            const historyUsers = allUsersCache.filter(u => ['approved', 'rejected', 'used'].includes(u.trialStatus));
-
-            const count = pendingUsers.length;
-            const c1 = document.getElementById('ownerPendingCounter');
-            const c2 = document.getElementById('hubPendingBadge');
-            if (c1) c1.textContent = count;
-            if (c2) c2.textContent = count;
-
-            const container = document.getElementById('ownerRequestsList');
-            if (!container) return;
-
-            if (pendingUsers.length === 0 && historyUsers.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
-                        <i class="fa-solid fa-inbox text-3xl text-slate-300 mb-2"></i>
-                        <p class="text-xs font-extrabold text-slate-600">لا توجد طلبات تجربة مجانية حالياً</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-
-            pendingUsers.forEach(u => {
-                html += `
-                    <div class="bg-white rounded-2xl p-4 border-2 border-amber-300 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                        <div>
-                            <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-extrabold">طلب جديد بانتظار الموافقة</span>
-                            <h4 class="text-sm font-extrabold text-slate-800 mt-1">${escapeHtml(u.name)}</h4>
-                            <p class="text-[11px] text-slate-500 font-mono" dir="ltr">${escapeHtml(u.email)}</p>
-                        </div>
-                        <div class="flex items-center gap-2 w-full sm:w-auto">
-                            <button onclick="ownerHandleTrialDecision('${escapeHtml(u.email)}', 'approved')" class="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold transition">
-                                <i class="fa-solid fa-check ml-1"></i> قبول
-                            </button>
-                            <button onclick="ownerHandleTrialDecision('${escapeHtml(u.email)}', 'rejected')" class="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-extrabold transition">
-                                <i class="fa-solid fa-xmark ml-1"></i> رفض
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            historyUsers.forEach(u => {
-                let badge = '';
-                if (u.trialStatus === 'approved') badge = '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">تم القبول (لم يستخدمها بعد)</span>';
-                else if (u.trialStatus === 'used') badge = '<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold">أكمل المحاولة المجانية</span>';
-                else if (u.trialStatus === 'rejected') badge = '<span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 text-[10px] font-bold">مرفوض</span>';
-
-                html += `
-                    <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 flex items-center justify-between gap-3">
-                        <div>
-                            ${badge}
-                            <h4 class="text-xs font-bold text-slate-800 mt-1">${escapeHtml(u.name)}</h4>
-                            <p class="text-[11px] text-slate-500 font-mono" dir="ltr">${escapeHtml(u.email)}</p>
-                        </div>
-                        <button onclick="ownerHandleTrialDecision('${escapeHtml(u.email)}', 'approved')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:border-teal-600 text-teal-700 text-[11px] font-bold transition">
-                            منح محاولة جديدة
-                        </button>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-
-        window.ownerHandleTrialDecision = async function(teacherEmail, decision) {
-            try {
-                const userRef = getUserDocRef(teacherEmail);
-                await updateDoc(userRef, { trialStatus: decision });
-                showCustomMessage(
-                    decision === 'approved' ? "تم قبول الطلب" : "تم رفض الطلب",
-                    decision === 'approved' ? "وصلت المحاولة المجانية الواحدة لحساب الأستاذ بنجاح." : "تم رفض طلب التجربة المجانية.",
-                    decision === 'approved' ? "success" : "info"
-                );
-            } catch (err) {
-                console.error("Owner decision error:", err);
-            }
-        };
-
-        window.generateNewSubscriptionCode = async function() {
-            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-            let part1 = "", part2 = "";
-            for (let i = 0; i < 4; i++) {
-                part1 += chars.charAt(Math.floor(Math.random() * chars.length));
-                part2 += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            const newCode = `EXM-${part1}-${part2}`;
-
-            try {
-                const codeRef = getCodeDocRef(newCode);
-                await setDoc(codeRef, {
-                    code: newCode,
-                    status: 'unused',
-                    usedByEmail: '',
-                    usedByName: '',
-                    createdAt: Date.now()
-                });
-            } catch (err) {
-                console.error("Create code error:", err);
-                showCustomMessage("خطأ", "تعذر إنشاء الكود، حاول مجدداً.", "error");
-            }
-        };
-
-        function renderOwnerCodesUI() {
-            const container = document.getElementById('ownerCodesList');
-            if (!container) return;
-
-            const activeAndUnusedCodes = allCodesCache.filter(c => c.status !== 'disabled');
-            const sorted = [...activeAndUnusedCodes].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-
-            if (sorted.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
-                        <i class="fa-solid fa-key text-3xl text-slate-300 mb-2"></i>
-                        <p class="text-xs font-extrabold text-slate-600">لم يتم إنشاء أي أكواد اشتراك بعد</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            sorted.forEach(item => {
-                let statusBadge = '';
-                if (item.status === 'unused') {
-                    statusBadge = `<span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-extrabold">غير مفعل</span>`;
-                } else if (item.status === 'active') {
-                    statusBadge = `<span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold">مفعل للأستاذ (${escapeHtml(item.usedByName || item.usedByEmail)})</span>`;
-                }
-
-                html += `
-                    <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs space-y-3">
-                        <div class="flex flex-wrap items-center justify-between gap-2">
-                            <div class="flex items-center gap-2">
-                                <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-amber-300 font-mono text-xs sm:text-sm font-extrabold tracking-widest" dir="ltr">
-                                    ${escapeHtml(item.code)}
-                                </span>
-                                ${statusBadge}
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-                            <button onclick="copySubscriptionCode('${escapeHtml(item.code)}')" class="flex-1 py-2 px-3 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 font-extrabold text-xs transition flex items-center justify-center gap-1.5">
-                                <i class="fa-regular fa-copy"></i>
-                                <span>نسخ الكود</span>
-                            </button>
-                            <button onclick="disableAndDeleteSubscriptionCode('${escapeHtml(item.code)}', '${escapeHtml(item.usedByEmail || '')}')" 
-                                class="flex-1 py-2 px-3 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white font-extrabold text-xs transition flex items-center justify-center gap-1.5">
-                                <i class="fa-solid fa-trash-can"></i>
-                                <span>تعطيل وحذف الكود</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-
-        window.copySubscriptionCode = function(codeStr) {
-            allowInternalCopy = true;
-            const tempInput = document.createElement('textarea');
-            tempInput.value = codeStr;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            allowInternalCopy = false;
-
-            showCustomMessage("تم نسخ الكود", `تم نسخ الكود (${codeStr}) بنجاح، يمكنك إرساله للأستاذ الآن.`, "success");
-        };
-
-        window.disableAndDeleteSubscriptionCode = async function(codeStr, usedByEmail) {
-            try {
-                if (usedByEmail) {
-                    const userRef = getUserDocRef(usedByEmail);
-                    await updateDoc(userRef, { isSubscribed: false, subscriptionCode: '' }).catch(() => {});
-                }
-                const codeRef = getCodeDocRef(codeStr);
-                await deleteDoc(codeRef);
-
-                showCustomMessage("تم حذف الكود", "تم تعطيل وحذف الكود نهائياً من القائمة وإيقاف اشتراك الحساب المرتبط به.", "warning");
-            } catch (err) {
-                console.error("Delete code error:", err);
-            }
-        };
-
-        // ============================================================================
-        // 12. EXAM HISTORY (سجل الأسئلة المحفوظة: عرض، بحث، تعديل، حذف)
-        // ============================================================================
         const EXAM_TYPE_LABELS = {
             daily: 'امتحان يومي',
             weekly: 'امتحان أسبوعي',
@@ -2706,8 +1118,7 @@
             renderExamHistoryList();
 
             try {
-                const userRef = getUserDocRef(currentTeacher.email);
-                await updateDoc(userRef, { savedExams: updatedList });
+                persistLocalData();
             } catch (err) {
                 console.error("Delete exam history error:", err);
             }
@@ -2717,14 +1128,6 @@
         // 13. EXAM BUILDER ENGINE & FULL-SCREEN WORD-STYLE QUESTION EDITOR
         // ============================================================================
         window.openExamBuilder = function(type) {
-            if (!hasExamAccess()) {
-                showCustomMessage(
-                    "القسم مقفل - يتطلب اشتراك",
-                    "يرجى الذهاب إلى قسم (حسابي) وتفعيل كود الاشتراك أو طلب تجربة مجانية واحدة لفتح أنواع الأسئلة.",
-                    "warning"
-                );
-                return;
-            }
 
             currentEditingHistoryId = null;
             selectedExamType = type;
@@ -3098,10 +1501,6 @@
         };
 
         window.saveAndGenerateExam = async function() {
-            if (!hasExamAccess()) {
-                showCustomMessage("انتهت الصلاحية", "لا تملك صلاحية فعالة لتكوين الأسئلة. يرجى تفعيل اشتراكك.", "error");
-                return;
-            }
 
             const filledQuestions = questionsList.filter(q => q.text.trim() !== '');
             if (filledQuestions.length === 0) {
@@ -3109,10 +1508,6 @@
                 return;
             }
 
-            const isOwner = currentTeacher.email.toLowerCase() === OWNER_EMAIL.toLowerCase();
-            const trialUpdate = (!isOwner && !currentTeacher.isSubscribed && currentTeacher.trialStatus === 'approved')
-                ? { trialStatus: 'used' }
-                : {};
 
             const examRecord = {
                 id: currentEditingHistoryId || crypto.randomUUID(),
@@ -3144,13 +1539,9 @@
                 }
                 currentTeacher.savedExams = existingExams;
 
-                const userRef = getUserDocRef(currentTeacher.email);
-                await updateDoc(userRef, {
-                    savedExams: existingExams,
-                    ...trialUpdate
-                });
+                persistLocalData();
             } catch (err) {
-                console.error("Save exam history error:", err);
+                showCustomMessage("لم يتم الحفظ على الجهاز", "مساحة التخزين ممتلئة أو غير متاحة. نزّل الورقة للاحتفاظ بها.", "warning");
             }
 
             buildAndRenderOfficialExamSheet();
@@ -3197,14 +1588,6 @@
         }
 
         window.backToBuilderFromPreview = function() {
-            if (!hasExamAccess()) {
-                showCustomMessage(
-                    "انتهت التجربة المجانية الواحدة",
-                    "لقد أكملت إنشاء الأسئلة بالتجربة المجانية الواحدة. يمكنك تنزيل ورقتك الحالية كصورة أو PDF، ولإنشاء أسئلة جديدة يرجى تفعيل كود الاشتراك.",
-                    "info"
-                );
-                return;
-            }
             hideAllMainSections();
             setOrangeTickerVisible(false);
             document.getElementById('sectionExamBuilder').classList.remove('hidden');
