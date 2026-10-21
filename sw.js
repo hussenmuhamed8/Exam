@@ -1,4 +1,4 @@
-const CACHE_NAME = 'exam-local-v2';
+const CACHE_NAME = 'exam-pages-v3';
 const CORE_ASSETS = [
   '/Exam/',
   '/Exam/index.html',
@@ -23,7 +23,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if ((cache.startsWith('exam-local-') || cache === 'ostadh-smart-v1') && cache !== CACHE_NAME) {
+          if ((cache.startsWith('exam-local-') || cache.startsWith('exam-pages-') || cache === 'ostadh-smart-v1') && cache !== CACHE_NAME) {
             return caches.delete(cache);
           }
         })
