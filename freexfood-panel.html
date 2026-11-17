@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>freeXfood — لوحة تحكم الاشتراكات وأكواد التفعيل</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-amoled: #090A0F;
+      --bg-card: #121520;
+      --bg-elevated: #191D2C;
+      --border-subtle: #282F46;
+      --fxf-gold: #F0AD28;
+      --fxf-gold-hover: #F7BE49;
+    }
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-amoled);
+      color: #ECF0FA;
+      overflow-x: hidden;
+    }
+    .mono-code {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      direction: ltr;
+      unicode-bidi: embed;
+    }
+    .gold-glow {
+      box-shadow: 0 0 28px rgba(240, 173, 40, 0.14);
+    }
+    .plan-card.active {
+      border-color: #F0AD28;
+      background: linear-gradient(180deg, rgba(240, 173, 40, 0.16) 0%, rgba(240, 173, 40, 0.04) 100%);
+    }
+    .tab-btn.active {
+      background-color: #F0AD28;
+      color: #090A0F;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-amber-400 selection:text-slate-950">
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="fixed bottom-5 left-5 right-5 sm:left-auto sm:right-6 sm:w-96 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- Header -->
+  <header class="border-b border-[#23293E] bg-[#0D0F17]/95 sticky top-0 z-30 backdrop-blur">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <img src="data:image/jpeg;base64,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" alt="freeXfood" class="w-12 h-12 rounded-xl bg-[#0B0D14] p-0.5 border border-[#F0AD28]/40 object-cover max-w-full h-auto" />
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg sm:text-xl font-extrabold tracking-wide text-[#F0AD28]">freeXfood</h1>
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">لوحة الإدارة الرسمية</span>
+            <a href="https://t.me/freexfood" target="_blank" rel="noopener noreferrer" class="mono-code text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#191F31] hover:bg-[#232B44] text-[#F0AD28] border border-[#36405E] transition">@freexfood</a>
+          </div>
+          <p class="text-xs text-slate-400">تم التطوير بواسطة حسين محمد • نظام توليد أكواد التفعيل المشفّرة للزبائن</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center gap-1.5 bg-[#141826] p-1 rounded-xl border border-[#262D45] w-full sm:w-auto justify-between sm:justify-start">
+        <button type="button" id="tabBtnGenerate" data-tab="generate" class="tab-btn active flex-1 sm:flex-initial px-3.5 py-2 rounded-lg text-xs sm:text-sm transition">
+          توليد كود جديد
+        </button>
+        <button type="button" id="tabBtnSubscribers" data-tab="subscribers" class="tab-btn flex-1 sm:flex-initial px-3.5 py-2 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition">
+          سجل المشتركين <span id="navSubCount" class="inline-block mr-1 px-1.5 py-0.2 rounded-full text-[11px] bg-slate-800 text-amber-300">0</span>
+        </button>
+        <button type="button" id="tabBtnVerify" data-tab="verify" class="tab-btn flex-1 sm:flex-initial px-3.5 py-2 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition">
+          فحص كود
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+    <!-- KPI Strip -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="bg-[#121520] border border-[#252C42] rounded-2xl p-4">
+        <p class="text-xs text-slate-400">إجمالي الأكواد المصدرة</p>
+        <p id="kpiTotal" class="text-2xl font-extrabold text-white mt-1">0</p>
+      </div>
+      <div class="bg-[#121520] border border-[#252C42] rounded-2xl p-4">
+        <p class="text-xs text-slate-400">اشتراكات نشطة حالياً</p>
+        <p id="kpiActive" class="text-2xl font-extrabold text-emerald-400 mt-1">0</p>
+      </div>
+      <div class="bg-[#121520] border border-[#252C42] rounded-2xl p-4">
+        <p class="text-xs text-slate-400">تنتهي خلال 48 ساعة</p>
+        <p id="kpiExpiring" class="text-2xl font-extrabold text-amber-400 mt-1">0</p>
+      </div>
+      <div class="bg-[#121520] border border-[#252C42] rounded-2xl p-4">
+        <p class="text-xs text-slate-400">اشتراكات منتهية</p>
+        <p id="kpiExpired" class="text-2xl font-extrabold text-rose-400 mt-1">0</p>
+      </div>
+    </section>
+
+    <!-- TAB 1: GENERATE CODE -->
+    <section id="viewGenerate" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Generator Form -->
+      <div class="lg:col-span-7 bg-[#121520] border border-[#262D45] rounded-2xl p-5 sm:p-6 space-y-5 gold-glow">
+        <div class="flex items-center justify-between gap-2 border-b border-[#22283D] pb-3.5">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white">إصدار كود تفعيل مرتبط بجهاز الزبون</h2>
+            <p class="text-xs text-slate-400 mt-0.5">يعمل الكود حصرياً على معرّف الجهاز المدخل ولا يقبل التشغيل على أي هاتف آخر</p>
+          </div>
+          <button type="button" id="btnFillDemo" class="text-xs px-3 py-1.5 rounded-lg bg-[#1C2133] hover:bg-[#252C44] text-amber-300 border border-[#313A57] transition shrink-0">
+            تجربة آي دي افتراضي
+          </button>
+        </div>
+
+        <!-- Device ID Input -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label for="inputDeviceId" class="text-sm font-semibold text-slate-200">معرّف جهاز الزبون (Device ID)</label>
+            <span id="devIdStatusBadge" class="text-xs px-2 py-0.5 rounded-md bg-slate-800 text-slate-400">بانتظار الإدخال</span>
+          </div>
+          <div class="flex gap-2">
+            <input
+              id="inputDeviceId"
+              type="text"
+              placeholder="FXF-XXXX-XXXX-XXXX"
+              autocomplete="off"
+              spellcheck="false"
+              class="mono-code flex-1 bg-[#0B0D14] border border-[#343D5C] focus:border-[#F0AD28] focus:outline-none rounded-xl px-4 py-3 text-base sm:text-lg font-bold text-center text-white tracking-wider uppercase transition"
+            />
+            <button type="button" id="btnPasteDevId" class="px-4 py-3 rounded-xl bg-[#1C2133] hover:bg-[#262D45] border border-[#343D5C] text-xs sm:text-sm font-semibold text-slate-200 transition shrink-0">
+              لصق
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400">يظهر هذا المعرّف للزبون تلقائياً بصيغة FXF-XXXX-XXXX-XXXX عند فتح تطبيق freeXfood على هاتفه.</p>
+        </div>
+
+        <!-- Customer Name / Note -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1.5">
+            <label for="inputCustomerName" class="text-xs font-semibold text-slate-300">اسم الزبون أو المعرّف (اختياري للسجل)</label>
+            <input
+              id="inputCustomerName"
+              type="text"
+              placeholder="مثال: علي محمد - @ali_iq"
+              class="w-full bg-[#0B0D14] border border-[#2E3652] focus:border-[#F0AD28] focus:outline-none rounded-xl px-3.5 py-2.5 text-sm text-white"
+            />
+          </div>
+          <div class="space-y-1.5">
+            <label for="inputCustomerNote" class="text-xs font-semibold text-slate-300">ملاحظة أو السعر (اختياري)</label>
+            <input
+              id="inputCustomerNote"
+              type="text"
+              placeholder="مثال: تم الدفع زين كاش"
+              class="w-full bg-[#0B0D14] border border-[#2E3652] focus:border-[#F0AD28] focus:outline-none rounded-xl px-3.5 py-2.5 text-sm text-white"
+            />
+          </div>
+        </div>
+
+        <!-- Duration Presets -->
+        <div class="space-y-2.5">
+          <label class="text-sm font-semibold text-slate-200 block">اختر مدة الاشتراك</label>
+          <div id="planGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <button type="button" data-plan="1" data-mins="1440" class="plan-card rounded-xl border border-[#2D3550] bg-[#161A29] p-3 text-right transition hover:border-amber-400/60">
+              <div class="text-xs text-slate-400">تجريبي / سريع</div>
+              <div class="text-base font-extrabold text-white mt-0.5">يوم واحد</div>
+              <div class="text-[11px] text-amber-300 mt-0.5">24 ساعة كاملة</div>
+            </button>
+            <button type="button" data-plan="2" data-mins="10080" class="plan-card rounded-xl border border-[#2D3550] bg-[#161A29] p-3 text-right transition hover:border-amber-400/60">
+              <div class="text-xs text-slate-400">باقة قصيرة</div>
+              <div class="text-base font-extrabold text-white mt-0.5">أسبوع واحد</div>
+              <div class="text-[11px] text-amber-300 mt-0.5">7 أيام</div>
+            </button>
+            <button type="button" data-plan="3" data-mins="43200" class="plan-card active rounded-xl border border-[#2D3550] bg-[#161A29] p-3 text-right transition hover:border-amber-400/60">
+              <div class="text-xs text-amber-300 font-semibold">الأكثر طلباً</div>
+              <div class="text-base font-extrabold text-white mt-0.5">شهر واحد</div>
+              <div class="text-[11px] text-amber-300 mt-0.5">30 يوماً</div>
+            </button>
+            <button type="button" data-plan="4" data-mins="129600" class="plan-card rounded-xl border border-[#2D3550] bg-[#161A29] p-3 text-right transition hover:border-amber-400/60">
+              <div class="text-xs text-slate-400">ربع سنوي</div>
+              <div class="text-base font-extrabold text-white mt-0.5">3 أشهر</div>
+              <div class="text-[11px] text-amber-300 mt-0.5">90 يوماً</div>
+            </button>
+            <button type="button" data-plan="5" data-mins="525600" class="plan-card rounded-xl border border-[#2D3550] bg-[#161A29] p-3 text-right transition hover:border-amber-400/60">
+              <div class="text-xs text-slate-400">باقة VIP</div>
+              <div class="text-base font-extrabold text-white mt-0.5">سنة كاملة</div>
+              <div class="text-[11px] text-amber-300 mt-0.5">365 يوماً</div>
+            </button>
+            <button type="button" data-plan="6" data-mins="custom" class="plan-card rounded-xl border border-[#2D3550] bg-[#161A29] p-3 text-right transition hover:border-amber-400/60">
+              <div class="text-xs text-slate-400">تحديد يدوي</div>
+              <div class="text-base font-extrabold text-white mt-0.5">مدة مخصصة</div>
+              <div class="text-[11px] text-amber-300 mt-0.5">أيام / ساعات</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Duration Box -->
+        <div id="customDurationBox" class="hidden bg-[#0D1019] border border-[#2C3552] rounded-xl p-3.5 grid grid-cols-2 gap-3">
+          <div>
+            <label for="inputCustomDays" class="text-xs text-slate-300 block mb-1">عدد الأيام</label>
+            <input id="inputCustomDays" type="number" min="0" max="1000" value="15" class="w-full bg-[#151928] border border-[#343E5E] rounded-lg px-3 py-2 text-sm text-white text-center mono-code" />
+          </div>
+          <div>
+            <label for="inputCustomHours" class="text-xs text-slate-300 block mb-1">ساعات إضافية</label>
+            <input id="inputCustomHours" type="number" min="0" max="23" value="0" class="w-full bg-[#151928] border border-[#343E5E] rounded-lg px-3 py-2 text-sm text-white text-center mono-code" />
+          </div>
+        </div>
+
+        <!-- Generate Action Button -->
+        <button
+          type="button"
+          id="btnGenerateCode"
+          class="w-full py-3.5 px-5 rounded-xl bg-[#F0AD28] hover:bg-[#F7BE49] active:scale-[0.99] text-[#090A0F] font-extrabold text-base shadow-lg transition flex items-center justify-center gap-2"
+        >
+          <span>توليد كود التفعيل الآن</span>
+        </button>
+      </div>
+
+      <!-- Output Result Card -->
+      <div class="lg:col-span-5 bg-[#121520] border border-[#262D45] rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5">
+        <div class="space-y-4">
+          <div class="border-b border-[#22283D] pb-3">
+            <h3 class="text-base font-bold text-white">بيانات الكود الجاهز للإرسال</h3>
+            <p class="text-xs text-slate-400 mt-0.5">انسخ الكود أو الرسالة الكاملة وأرسلها للزبون عبر واتساب أو تليجرام</p>
+          </div>
+
+          <div id="resultEmptyState" class="py-10 text-center space-y-2 border border-dashed border-[#2A324D] rounded-2xl bg-[#0D1018] px-4">
+            <p class="text-sm font-semibold text-slate-300">لم يتم توليد كود بعد</p>
+            <p class="text-xs text-slate-500">أدخل معرّف جهاز الزبون واختر المدة (يوم، أسبوع، شهر) ثم اضغط «توليد كود التفعيل الآن».</p>
+          </div>
+
+          <div id="resultCardContent" class="hidden space-y-4">
+            <div class="bg-[#0B0D14] border border-amber-500/40 rounded-xl p-4 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-400">كود التفعيل المشفّر:</span>
+                <span id="outPlanBadge" class="font-bold text-amber-300">اشتراك شهري</span>
+              </div>
+              <div id="outActivationCode" class="mono-code text-sm sm:text-base font-bold text-[#F0AD28] break-all text-center py-2 select-all tracking-wider"></div>
+              <button type="button" id="btnCopyCodeOnly" class="w-full py-2.5 rounded-lg bg-[#1D2336] hover:bg-[#272F48] text-amber-300 font-bold text-xs sm:text-sm border border-[#384264] transition">
+                نسخ كود التفعيل فقط
+              </button>
+            </div>
+
+            <div class="bg-[#0E111B] border border-[#262E47] rounded-xl p-3.5 text-xs space-y-1.5">
+              <div class="flex justify-between gap-2">
+                <span class="text-slate-400">معرّف الجهاز المرتبط:</span>
+                <span id="outBoundDevId" class="mono-code font-bold text-white"></span>
+              </div>
+              <div class="flex justify-between gap-2">
+                <span class="text-slate-400">تاريخ الانتهاء:</span>
+                <span id="outExpiryDate" class="font-semibold text-emerald-400"></span>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label for="outWhatsappMsg" class="text-xs font-semibold text-slate-300 block">رسالة جاهزة لإرسالها للزبون:</label>
+              <textarea
+                id="outWhatsappMsg"
+                rows="5"
+                readonly
+                class="w-full bg-[#0B0D14] border border-[#2B334E] rounded-xl p-3 text-xs text-slate-200 leading-relaxed resize-none focus:outline-none"
+              ></textarea>
+              <button type="button" id="btnCopyFullMsg" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs sm:text-sm transition">
+                نسخ الرسالة الكاملة للزبون
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Info Footer -->
+        <div class="bg-[#0D1018] border border-[#222940] rounded-xl p-3.5 text-[11px] text-slate-400 leading-relaxed">
+          <strong class="text-amber-300">حماية مدمجة داخل التطبيق:</strong> الكود موقّع رقمياً بخوارزمية <span class="mono-code text-slate-300">HMAC-SHA256</span> ومرتبط بمعرّف جهاز الزبون وتاريخ الانتهاء؛ لا يمكن إعادة استخدام الكود بعد انتهائه حتى لو مسح الزبون بيانات التطبيق، ويتوقف اتصال الـ VPN تلقائياً فور انتهاء المدة.
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: SUBSCRIBERS LOG -->
+    <section id="viewSubscribers" class="hidden bg-[#121520] border border-[#262D45] rounded-2xl p-5 sm:p-6 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#22283D] pb-4">
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-white">سجل المشتركين والأكواد المصدرة</h2>
+          <p class="text-xs text-slate-400">يُحفظ السجل محلياً على متصفحك مع إمكانية التصدير والاستيراد كنسخة احتياطية</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" id="btnExportJson" class="text-xs px-3 py-2 rounded-lg bg-[#1A2032] hover:bg-[#242C44] text-slate-200 border border-[#323C5C] transition">
+            تصدير نسخة احتياطية (JSON)
+          </button>
+          <label for="inputImportJson" class="cursor-pointer text-xs px-3 py-2 rounded-lg bg-[#1A2032] hover:bg-[#242C44] text-amber-300 border border-[#323C5C] transition">
+            استيراد سجل
+          </label>
+          <input id="inputImportJson" type="file" accept=".json,application/json" class="hidden" />
+        </div>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <input
+          id="inputSearchSubs"
+          type="text"
+          placeholder="ابحث باسم الزبون، معرّف الجهاز، أو الملاحظة..."
+          class="flex-1 bg-[#0B0D14] border border-[#2E3652] focus:border-[#F0AD28] focus:outline-none rounded-xl px-4 py-2.5 text-sm text-white"
+        />
+        <select id="selectFilterSubs" class="bg-[#0B0D14] border border-[#2E3652] rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none">
+          <option value="all">كل الاشتراكات</option>
+          <option value="active">النشطة فقط</option>
+          <option value="expiring">تنتهي قريباً (48 ساعة)</option>
+          <option value="expired">المنتهية فقط</option>
+        </select>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-xs sm:text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-[#252D46] text-slate-400 text-xs">
+              <th class="py-3 px-2">الزبون</th>
+              <th class="py-3 px-2">معرّف الجهاز</th>
+              <th class="py-3 px-2">الباقة</th>
+              <th class="py-3 px-2">الحالة والوقت المتبقي</th>
+              <th class="py-3 px-2">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="subsTableBody" class="divide-y divide-[#1D2336]"></tbody>
+        </table>
+      </div>
+      <div id="subsEmptyMsg" class="py-8 text-center text-xs text-slate-400">لا توجد اشتراكات مسجلة مطابقة للبحث حالياً.</div>
+    </section>
+
+    <!-- TAB 3: CODE INSPECTOR / VERIFIER -->
+    <section id="viewVerify" class="hidden bg-[#121520] border border-[#262D45] rounded-2xl p-5 sm:p-6 space-y-5">
+      <div class="border-b border-[#22283D] pb-3.5">
+        <h2 class="text-base sm:text-lg font-bold text-white">فاحص ومحاكي صلاحية الكود</h2>
+        <p class="text-xs text-slate-400 mt-0.5">تحقق من أي كود تفعيل وتأكد من مطابقته لمعرّف جهاز الزبون والمدة المتبقية فيه تماماً كما يفحصه التطبيق</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-1.5">
+          <label for="verifyDevId" class="text-xs font-semibold text-slate-300">معرّف جهاز الزبون (Device ID)</label>
+          <input id="verifyDevId" type="text" placeholder="FXF-XXXX-XXXX-XXXX" class="mono-code w-full bg-[#0B0D14] border border-[#323B59] rounded-xl px-4 py-3 text-sm text-white text-center uppercase focus:border-[#F0AD28] focus:outline-none" />
+        </div>
+        <div class="space-y-1.5">
+          <label for="verifyCodeInput" class="text-xs font-semibold text-slate-300">كود التفعيل المراد فحصه</label>
+          <input id="verifyCodeInput" type="text" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" class="mono-code w-full bg-[#0B0D14] border border-[#323B59] rounded-xl px-4 py-3 text-sm text-white text-center uppercase focus:border-[#F0AD28] focus:outline-none" />
+        </div>
+      </div>
+
+      <button type="button" id="btnRunVerify" class="px-6 py-3 rounded-xl bg-[#F0AD28] hover:bg-[#F7BE49] text-[#090A0F] font-extrabold text-sm transition">
+        فحص مطابقة وصلاحية الكود
+      </button>
+
+      <div id="verifyResultBox" class="hidden rounded-xl p-4 border text-sm space-y-2"></div>
+    </section>
+      <footer class="pt-2 pb-6 text-center text-xs text-slate-400 space-y-1">
+      <p class="font-bold text-slate-300">تطبيق ولوحة تفعيل <span class="text-[#F0AD28]">freeXfood</span> • تم التطوير بواسطة <span class="text-white">حسين محمد</span></p>
+      <p>الحساب والمعرّف الرسمي: <a href="https://t.me/freexfood" target="_blank" rel="noopener noreferrer" class="mono-code text-[#F0AD28] hover:underline font-bold">@freexfood</a></p>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // =========================================================================
+      // 1. Pure-JS SHA-256 & HMAC-SHA256 (works offline on file:// AND Canvas!)
+      //    Paired with the exact 256-bit Master Key embedded inside freeXfood APK
+      // =========================================================================
+      const MASTER_KEY_HEX = 'c49497dabf89ae37c0cfab0cec93c178f2932d0148a488aa37a1752710bf650f';
+      const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      const EPOCH_2026_MS = 1767225600000; // 2026-01-01T00:00:00Z
+      const STORAGE_KEY = 'freexfood_subscribers_v1';
+
+      function hexToBytes(hex) {
+        const out = new Uint8Array(hex.length / 2);
+        for (let i = 0; i < out.length; i++) {
+          out[i] = parseInt(hex.substr(i * 2, 2), 16);
+        }
+        return out;
+      }
+
+      function utf8ToBytes(str) {
+        return new TextEncoder().encode(str);
+      }
+
+      const SHA256_K = new Uint32Array([
+        0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+        0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+        0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+        0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+        0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+        0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+        0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+        0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+      ]);
+
+      function rotr(x, n) {
+        return (x >>> n) | (x << (32 - n));
+      }
+
+      function sha256Bytes(msgBytes) {
+        const len = msgBytes.length;
+        const bitLenHi = Math.floor((len * 8) / 0x100000000);
+        const bitLenLo = (len * 8) >>> 0;
+        const padLen = ((len + 9 + 63) & ~63);
+        const buf = new Uint8Array(padLen);
+        buf.set(msgBytes);
+        buf[len] = 0x80;
+        const dv = new DataView(buf.buffer);
+        dv.setUint32(padLen - 8, bitLenHi, false);
+        dv.setUint32(padLen - 4, bitLenLo, false);
+
+        let h0 = 0x6a09e667, h1 = 0xbb67ae85, h2 = 0x3c6ef372, h3 = 0xa54ff53a;
+        let h4 = 0x510e527f, h5 = 0x9b05688c, h6 = 0x1f83d9ab, h7 = 0x5be0cd19;
+        const w = new Uint32Array(64);
+
+        for (let off = 0; off < padLen; off += 64) {
+          for (let i = 0; i < 16; i++) {
+            w[i] = dv.getUint32(off + i * 4, false);
+          }
+          for (let i = 16; i < 64; i++) {
+            const s0 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+            const s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+            w[i] = (w[i - 16] + s0 + w[i - 7] + s1) >>> 0;
+          }
+          let a = h0, b = h1, c = h2, d = h3, e = h4, f = h5, g = h6, h = h7;
+          for (let i = 0; i < 64; i++) {
+            const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+            const ch = (e & f) ^ (~e & g);
+            const temp1 = (h + S1 + ch + SHA256_K[i] + w[i]) >>> 0;
+            const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+            const maj = (a & b) ^ (a & c) ^ (b & c);
+            const temp2 = (S0 + maj) >>> 0;
+            h = g; g = f; f = e;
+            e = (d + temp1) >>> 0;
+            d = c; c = b; b = a;
+            a = (temp1 + temp2) >>> 0;
+          }
+          h0 = (h0 + a) >>> 0; h1 = (h1 + b) >>> 0; h2 = (h2 + c) >>> 0; h3 = (h3 + d) >>> 0;
+          h4 = (h4 + e) >>> 0; h5 = (h5 + f) >>> 0; h6 = (h6 + g) >>> 0; h7 = (h7 + h) >>> 0;
+        }
+
+        const out = new Uint8Array(32);
+        const odv = new DataView(out.buffer);
+        odv.setUint32(0, h0, false); odv.setUint32(4, h1, false);
+        odv.setUint32(8, h2, false); odv.setUint32(12, h3, false);
+        odv.setUint32(16, h4, false); odv.setUint32(20, h5, false);
+        odv.setUint32(24, h6, false); odv.setUint32(28, h7, false);
+        return out;
+      }
+
+      function hmacSha256(keyBytes, msgBytes) {
+        const block = new Uint8Array(64);
+        if (keyBytes.length > 64) {
+          block.set(sha256Bytes(keyBytes));
+        } else {
+          block.set(keyBytes);
+        }
+        const oKeyPad = new Uint8Array(64);
+        const iKeyPad = new Uint8Array(64);
+        for (let i = 0; i < 64; i++) {
+          oKeyPad[i] = block[i] ^ 0x5c;
+          iKeyPad[i] = block[i] ^ 0x36;
+        }
+        const inner = new Uint8Array(64 + msgBytes.length);
+        inner.set(iKeyPad, 0);
+        inner.set(msgBytes, 64);
+        const innerHash = sha256Bytes(inner);
+
+        const outer = new Uint8Array(64 + 32);
+        outer.set(oKeyPad, 0);
+        outer.set(innerHash, 64);
+        return sha256Bytes(outer);
+      }
+
+      const MASTER_KEY = hexToBytes(MASTER_KEY_HEX);
+
+      function normalizeDeviceId(raw) {
+        let s = (raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+        if (s.length === 15 && s.startsWith('FXF')) {
+          s = s.slice(3);
+        }
+        if (s.length !== 12) return null;
+        for (let i = 0; i < 12; i++) {
+          if (ALPHABET.indexOf(s[i]) < 0) return null;
+        }
+        return s;
+      }
+
+      function formatDeviceId(canonical12) {
+        return 'FXF-' + canonical12.slice(0, 4) + '-' + canonical12.slice(4, 8) + '-' + canonical12.slice(8, 12);
+      }
+
+      function encodeBase32_20(bytes20) {
+        let bitBuffer = 0;
+        let bitCount = 0;
+        let out = '';
+        for (let i = 0; i < 20; i++) {
+          bitBuffer = (bitBuffer << 8) | bytes20[i];
+          bitCount += 8;
+          while (bitCount >= 5) {
+            bitCount -= 5;
+            out += ALPHABET[(bitBuffer >>> bitCount) & 0x1f];
+          }
+        }
+        return out.match(/.{1,4}/g).join('-');
+      }
+
+      function decodeBase32_32(rawCode) {
+        let s = (rawCode || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+        if (s.length === 41 && s.startsWith('FREEXFOOD')) s = s.slice(9);
+        else if (s.length === 35 && s.startsWith('FXF')) s = s.slice(3);
+        if (s.length !== 32) return null;
+        const out = new Uint8Array(20);
+        let bitBuffer = 0, bitCount = 0, idx = 0;
+        for (let i = 0; i < 32; i++) {
+          const val = ALPHABET.indexOf(s[i]);
+          if (val < 0) return null;
+          bitBuffer = (bitBuffer << 5) | val;
+          bitCount += 5;
+          while (bitCount >= 8) {
+            bitCount -= 8;
+            out[idx++] = (bitBuffer >>> bitCount) & 0xff;
+          }
+        }
+        return out;
+      }
+
+      function getPlanLabel(planCode) {
+        const map = {
+          1: 'يوم واحد (24 ساعة)',
+          2: 'أسبوع واحد (7 أيام)',
+          3: 'شهر واحد (30 يوماً)',
+          4: '3 أشهر (90 يوماً)',
+          5: 'سنة كاملة (365 يوماً)',
+          6: 'مدة مخصصة'
+        };
+        return map[planCode] || 'اشتراك مخصص';
+      }
+
+      function generateSignedCode(canonicalDevId, planCode, durationMins) {
+        const nowMs = Date.now();
+        const issuedMins = Math.max(1, Math.floor((nowMs - EPOCH_2026_MS) / 60000));
+        // Add 15 minutes courtesy buffer so customer gets full duration after pasting
+        const totalDurationMins = durationMins + 15;
+
+        const payload9 = new Uint8Array(9);
+        const dv = new DataView(payload9.buffer);
+        payload9[0] = (1 << 4) | (planCode & 0x0f);
+        dv.setUint32(1, issuedMins >>> 0, false);
+        dv.setUint32(5, totalDurationMins >>> 0, false);
+
+        const prefixBytes = utf8ToBytes(canonicalDevId + ':FXF-SUB-v1:');
+        const toSign = new Uint8Array(prefixBytes.length + 9);
+        toSign.set(prefixBytes, 0);
+        toSign.set(payload9, prefixBytes.length);
+
+        const mac = hmacSha256(MASTER_KEY, toSign);
+        const full20 = new Uint8Array(20);
+        full20.set(payload9, 0);
+        full20.set(mac.subarray(0, 11), 9);
+
+        const codeFormatted = encodeBase32_20(full20);
+        const issuedAtMs = EPOCH_2026_MS + issuedMins * 60000;
+        const expiresAtMs = issuedAtMs + totalDurationMins * 60000;
+        return { codeFormatted, issuedAtMs, expiresAtMs, planCode, durationMins: totalDurationMins };
+      }
+
+      function inspectCode(canonicalDevId, rawCode) {
+        const raw20 = decodeBase32_32(rawCode);
+        if (!raw20) return { ok: false, reason: 'صيغة الكود غير صحيحة (يجب أن يتكون من 32 محرفاً).' };
+        const version = (raw20[0] >>> 4) & 0x0f;
+        const planCode = raw20[0] & 0x0f;
+        if (version !== 1 || planCode < 1 || planCode > 6) {
+          return { ok: false, reason: 'إصدار الكود غير معروف أو تالف.' };
+        }
+        const payload9 = raw20.subarray(0, 9);
+        const prefixBytes = utf8ToBytes(canonicalDevId + ':FXF-SUB-v1:');
+        const toSign = new Uint8Array(prefixBytes.length + 9);
+        toSign.set(prefixBytes, 0);
+        toSign.set(payload9, prefixBytes.length);
+        const expected = hmacSha256(MASTER_KEY, toSign);
+        let diff = 0;
+        for (let i = 0; i < 11; i++) diff |= (raw20[9 + i] ^ expected[i]);
+        if (diff !== 0) {
+          return { ok: false, reason: 'التوقيع الرقمي لا يطابق معرّف الجهاز هذا! الكود مخصص لجهاز آخر أو تم التلاعب به.' };
+        }
+        const dv = new DataView(raw20.buffer, raw20.byteOffset, 20);
+        const issuedMins = dv.getUint32(1, false);
+        const durationMins = dv.getUint32(5, false);
+        const issuedAtMs = EPOCH_2026_MS + issuedMins * 60000;
+        const expiresAtMs = issuedAtMs + durationMins * 60000;
+        const remMs = expiresAtMs - Date.now();
+        return {
+          ok: true,
+          expired: remMs <= 0,
+          planCode,
+          issuedAtMs,
+          expiresAtMs,
+          remMs
+        };
+      }
+
+      // Expose for automated verification tests if needed
+      window.FREEXFOOD_CRYPTO = { normalizeDeviceId, generateSignedCode, inspectCode };
+
+      // =========================================================================
+      // 2. State & Storage Helpers
+      // =========================================================================
+      let subscribers = [];
+      let selectedPlanCode = 3;
+      let selectedPlanMins = 43200;
+      let pendingDeleteId = null;
+
+      function loadSubscribers() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) subscribers = parsed;
+          }
+        } catch (e) {
+          subscribers = [];
+        }
+      }
+
+      function saveSubscribers() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(subscribers));
+        } catch (e) {}
+      }
+
+      function showToast(msg, type) {
+        const container = document.getElementById('toastContainer');
+        const el = document.createElement('div');
+        const colors = type === 'error'
+          ? 'bg-rose-950/95 border-rose-500/50 text-rose-200'
+          : 'bg-[#171C2C]/95 border-[#F0AD28]/60 text-amber-200';
+        el.className = 'px-4 py-3 rounded-xl border shadow-xl text-xs sm:text-sm font-semibold transition-all ' + colors;
+        el.textContent = msg;
+        container.appendChild(el);
+        setTimeout(function () {
+          el.style.opacity = '0';
+          setTimeout(function () {
+            if (el.parentNode) el.parentNode.removeChild(el);
+          }, 250);
+        }, 2800);
+      }
+
+      function copyTextCrossBrowser(text, successMsg) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            showToast(successMsg, 'ok');
+          }).catch(function () {
+            fallbackCopy(text, successMsg);
+          });
+        } else {
+          fallbackCopy(text, successMsg);
+        }
+      }
+
+      function fallbackCopy(text, successMsg) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast(successMsg, 'ok');
+        } catch (e) {
+          showToast('تعذر النسخ التلقائي، يرجى التحديد والنسخ يدوياً', 'error');
+        }
+        document.body.removeChild(ta);
+      }
+
+      function formatArabicDateTime(ms) {
+        try {
+          return new Date(ms).toLocaleString('ar-IQ', {
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          });
+        } catch (e) {
+          return new Date(ms).toISOString().slice(0, 16).replace('T', ' ');
+        }
+      }
+
+      function formatRemaining(expiresAtMs) {
+        const diff = expiresAtMs - Date.now();
+        if (diff <= 0) return 'منتهي الصلاحية';
+        const mins = Math.floor(diff / 60000);
+        const days = Math.floor(mins / 1440);
+        const hours = Math.floor((mins % 1440) / 60);
+        const remM = mins % 60;
+        if (days > 0) return 'متبقي ' + days + ' يوم و ' + hours + ' ساعة';
+        if (hours > 0) return 'متبقي ' + hours + ' ساعة و ' + remM + ' دقيقة';
+        return 'متبقي ' + Math.max(1, remM) + ' دقيقة';
+      }
+
+      // =========================================================================
+      // 3. UI Rendering & Event Wiring
+      // =========================================================================
+      function updateKpisAndTable() {
+        const now = Date.now();
+        let active = 0, expiring = 0, expired = 0;
+        for (let i = 0; i < subscribers.length; i++) {
+          const s = subscribers[i];
+          const diff = s.expiresAtMs - now;
+          if (diff <= 0) {
+            expired++;
+          } else {
+            active++;
+            if (diff <= 48 * 3600 * 1000) expiring++;
+          }
+        }
+        document.getElementById('kpiTotal').textContent = String(subscribers.length);
+        document.getElementById('kpiActive').textContent = String(active);
+        document.getElementById('kpiExpiring').textContent = String(expiring);
+        document.getElementById('kpiExpired').textContent = String(expired);
+        document.getElementById('navSubCount').textContent = String(subscribers.length);
+
+        const q = (document.getElementById('inputSearchSubs').value || '').trim().toLowerCase();
+        const filter = document.getElementById('selectFilterSubs').value;
+
+        const filtered = subscribers.filter(function (s) {
+          const diff = s.expiresAtMs - now;
+          if (filter === 'active' && diff <= 0) return false;
+          if (filter === 'expiring' && (diff <= 0 || diff > 48 * 3600 * 1000)) return false;
+          if (filter === 'expired' && diff > 0) return false;
+          if (!q) return true;
+          return (
+            (s.name || '').toLowerCase().includes(q) ||
+            (s.note || '').toLowerCase().includes(q) ||
+            (s.formattedDevId || '').toLowerCase().includes(q)
+          );
+        });
+
+        const tbody = document.getElementById('subsTableBody');
+        const emptyMsg = document.getElementById('subsEmptyMsg');
+        tbody.innerHTML = '';
+
+        if (filtered.length === 0) {
+          emptyMsg.classList.remove('hidden');
+          return;
+        }
+        emptyMsg.classList.add('hidden');
+
+        filtered.forEach(function (sub) {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-[#171B2A] transition';
+          const isExp = sub.expiresAtMs <= now;
+          const isSoon = !isExp && (sub.expiresAtMs - now <= 48 * 3600 * 1000);
+
+          const tdName = document.createElement('td');
+          tdName.className = 'py-3 px-2';
+          const nameDiv = document.createElement('div');
+          nameDiv.className = 'font-bold text-white';
+          nameDiv.textContent = sub.name || 'زبون بدون اسم';
+          tdName.appendChild(nameDiv);
+          if (sub.note) {
+            const noteDiv = document.createElement('div');
+            noteDiv.className = 'text-[11px] text-slate-400';
+            noteDiv.textContent = sub.note;
+            tdName.appendChild(noteDiv);
+          }
+
+          const tdDev = document.createElement('td');
+          tdDev.className = 'py-3 px-2 mono-code text-xs text-slate-200';
+          tdDev.textContent = sub.formattedDevId;
+
+          const tdPlan = document.createElement('td');
+          tdPlan.className = 'py-3 px-2 text-xs text-amber-300 font-semibold';
+          tdPlan.textContent = sub.planLabel;
+
+          const tdStatus = document.createElement('td');
+          tdStatus.className = 'py-3 px-2 text-xs';
+          const badge = document.createElement('span');
+          badge.className = 'inline-block px-2 py-0.5 rounded-full font-bold ' + (
+            isExp ? 'bg-rose-500/15 text-rose-300'
+            : isSoon ? 'bg-amber-500/20 text-amber-300'
+            : 'bg-emerald-500/15 text-emerald-300'
+          );
+          badge.textContent = formatRemaining(sub.expiresAtMs);
+          const expSub = document.createElement('div');
+          expSub.className = 'text-[11px] text-slate-400 mt-0.5';
+          expSub.textContent = 'ينتهي: ' + formatArabicDateTime(sub.expiresAtMs);
+          tdStatus.appendChild(badge);
+          tdStatus.appendChild(expSub);
+
+          const tdActions = document.createElement('td');
+          tdActions.className = 'py-3 px-2';
+          const actWrap = document.createElement('div');
+          actWrap.className = 'flex flex-wrap items-center gap-1.5';
+
+          const btnCopy = document.createElement('button');
+          btnCopy.type = 'button';
+          btnCopy.className = 'px-2.5 py-1 rounded-lg bg-[#1E2438] hover:bg-[#2A324D] text-xs text-slate-200';
+          btnCopy.textContent = 'نسخ الكود';
+          btnCopy.addEventListener('click', function () {
+            copyTextCrossBrowser(sub.code, 'تم نسخ كود الزبون');
+          });
+
+          const btnRenew = document.createElement('button');
+          btnRenew.type = 'button';
+          btnRenew.className = 'px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-xs text-amber-300 font-bold';
+          btnRenew.textContent = 'تجديد';
+          btnRenew.addEventListener('click', function () {
+            switchTab('generate');
+            document.getElementById('inputDeviceId').value = sub.formattedDevId;
+            document.getElementById('inputCustomerName').value = sub.name || '';
+            document.getElementById('inputCustomerNote').value = sub.note || '';
+            validateDeviceIdLive();
+            showToast('تم تعبئة بيانات الزبون — اختر المدة واضغط توليد الكود', 'ok');
+          });
+
+          const btnDel = document.createElement('button');
+          btnDel.type = 'button';
+          const confirming = pendingDeleteId === sub.id;
+          btnDel.className = confirming
+            ? 'px-2.5 py-1 rounded-lg bg-rose-600 text-xs text-white font-bold'
+            : 'px-2.5 py-1 rounded-lg bg-rose-950/60 hover:bg-rose-900/60 text-xs text-rose-300';
+          btnDel.textContent = confirming ? 'تأكيد الحذف؟' : 'حذف';
+          btnDel.addEventListener('click', function () {
+            if (pendingDeleteId === sub.id) {
+              subscribers = subscribers.filter(function (x) { return x.id !== sub.id; });
+              pendingDeleteId = null;
+              saveSubscribers();
+              updateKpisAndTable();
+              showToast('تم حذف السجل', 'ok');
+            } else {
+              pendingDeleteId = sub.id;
+              updateKpisAndTable();
+            }
+          });
+
+          actWrap.appendChild(btnCopy);
+          actWrap.appendChild(btnRenew);
+          actWrap.appendChild(btnDel);
+          tdActions.appendChild(actWrap);
+
+          tr.appendChild(tdName);
+          tr.appendChild(tdDev);
+          tr.appendChild(tdPlan);
+          tr.appendChild(tdStatus);
+          tr.appendChild(tdActions);
+          tbody.appendChild(tr);
+        });
+      }
+
+      function switchTab(tabName) {
+        const views = {
+          generate: document.getElementById('viewGenerate'),
+          subscribers: document.getElementById('viewSubscribers'),
+          verify: document.getElementById('viewVerify')
+        };
+        const btns = {
+          generate: document.getElementById('tabBtnGenerate'),
+          subscribers: document.getElementById('tabBtnSubscribers'),
+          verify: document.getElementById('tabBtnVerify')
+        };
+        Object.keys(views).forEach(function (k) {
+          if (k === tabName) {
+            views[k].classList.remove('hidden');
+            btns[k].classList.add('active');
+            btns[k].classList.remove('text-slate-300');
+          } else {
+            views[k].classList.add('hidden');
+            btns[k].classList.remove('active');
+            btns[k].classList.add('text-slate-300');
+          }
+        });
+        if (tabName === 'subscribers') updateKpisAndTable();
+      }
+
+      function validateDeviceIdLive() {
+        const input = document.getElementById('inputDeviceId');
+        const badge = document.getElementById('devIdStatusBadge');
+        const canonical = normalizeDeviceId(input.value);
+        if (!input.value.trim()) {
+          badge.textContent = 'بانتظار الإدخال';
+          badge.className = 'text-xs px-2 py-0.5 rounded-md bg-slate-800 text-slate-400';
+          return null;
+        }
+        if (canonical) {
+          badge.textContent = 'معرّف جهاز صحيح ✓';
+          badge.className = 'text-xs px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-semibold';
+          return canonical;
+        } else {
+          badge.textContent = 'غير مكتمل (12 رمزاً بعد FXF)';
+          badge.className = 'text-xs px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300';
+          return null;
+        }
+      }
+
+      // Wire Navigation Tabs
+      ['tabBtnGenerate', 'tabBtnSubscribers', 'tabBtnVerify'].forEach(function (id) {
+        const btn = document.getElementById(id);
+        btn.addEventListener('click', function () {
+          switchTab(btn.getAttribute('data-tab'));
+        });
+      });
+
+      // Wire Plan Selection Cards
+      const planCards = document.querySelectorAll('#planGrid .plan-card');
+      planCards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          planCards.forEach(function (c) { c.classList.remove('active'); });
+          card.classList.add('active');
+          selectedPlanCode = parseInt(card.getAttribute('data-plan'), 10);
+          const minsAttr = card.getAttribute('data-mins');
+          const customBox = document.getElementById('customDurationBox');
+          if (minsAttr === 'custom') {
+            customBox.classList.remove('hidden');
+          } else {
+            customBox.classList.add('hidden');
+            selectedPlanMins = parseInt(minsAttr, 10);
+          }
+        });
+      });
+
+      // Wire Device ID Input & Buttons
+      document.getElementById('inputDeviceId').addEventListener('input', validateDeviceIdLive);
+
+      document.getElementById('btnFillDemo').addEventListener('click', function () {
+        document.getElementById('inputDeviceId').value = 'FXF-XK8S-QGC5-8W25';
+        if (!document.getElementById('inputCustomerName').value) {
+          document.getElementById('inputCustomerName').value = 'زبون تجريبي';
+        }
+        validateDeviceIdLive();
+        showToast('تم وضع معرّف جهاز تجريبي — اضغط توليد الكود للتجربة', 'ok');
+      });
+
+      document.getElementById('btnPasteDevId').addEventListener('click', function () {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          navigator.clipboard.readText().then(function (txt) {
+            if (txt) {
+              document.getElementById('inputDeviceId').value = txt.trim();
+              validateDeviceIdLive();
+              showToast('تم لصق معرّف الجهاز', 'ok');
+            }
+          }).catch(function () {
+            showToast('يرجى اللصق مطولاً داخل الحقل مباشرة', 'error');
+          });
+        } else {
+          showToast('يرجى اللصق مطولاً داخل الحقل مباشرة', 'error');
+        }
+      });
+
+      // Wire Generate Code
+      document.getElementById('btnGenerateCode').addEventListener('click', function () {
+        const canonical = validateDeviceIdLive();
+        if (!canonical) {
+          showToast('يرجى إدخال معرّف جهاز الزبون بصيغة صحيحة مثل FXF-XXXX-XXXX-XXXX', 'error');
+          document.getElementById('inputDeviceId').focus();
+          return;
+        }
+        let durationMins = selectedPlanMins;
+        let planLabel = getPlanLabel(selectedPlanCode);
+        if (selectedPlanCode === 6) {
+          const days = Math.max(0, parseInt(document.getElementById('inputCustomDays').value || '0', 10));
+          const hours = Math.max(0, parseInt(document.getElementById('inputCustomHours').value || '0', 10));
+          durationMins = days * 1440 + hours * 60;
+          if (durationMins <= 0 || durationMins > 5256000) {
+            showToast('يرجى تحديد مدة مخصصة لا تقل عن ساعة واحدة', 'error');
+            return;
+          }
+          planLabel = 'مخصص (' + (days > 0 ? days + ' يوم ' : '') + (hours > 0 ? hours + ' ساعة' : '') + ')';
+        }
+
+        const formattedDev = formatDeviceId(canonical);
+        document.getElementById('inputDeviceId').value = formattedDev;
+
+        const gen = generateSignedCode(canonical, selectedPlanCode, durationMins);
+        const customerName = document.getElementById('inputCustomerName').value.trim();
+        const customerNote = document.getElementById('inputCustomerNote').value.trim();
+        const expText = formatArabicDateTime(gen.expiresAtMs);
+
+        // Display Output
+        document.getElementById('resultEmptyState').classList.add('hidden');
+        document.getElementById('resultCardContent').classList.remove('hidden');
+        document.getElementById('outPlanBadge').textContent = planLabel;
+        document.getElementById('outActivationCode').textContent = gen.codeFormatted;
+        document.getElementById('outBoundDevId').textContent = formattedDev;
+        document.getElementById('outExpiryDate').textContent = expText;
+
+        const msgLines = [
+          'تفعيل اشتراك تطبيق freeXfood ⚡',
+          customerName ? ('المشترك: ' + customerName) : null,
+          'معرّف الجهاز: ' + formattedDev,
+          'الباقة: ' + planLabel,
+          'صالح لغاية: ' + expText,
+          '',
+          'كود التفعيل الخاص بجهازك:',
+          gen.codeFormatted,
+          '',
+          'تم التطوير بواسطة حسين محمد • @freexfood'
+        ].filter(Boolean).join('\n');
+        document.getElementById('outWhatsappMsg').value = msgLines;
+
+        // Also pre-populate verifier tab for instant testing
+        document.getElementById('verifyDevId').value = formattedDev;
+        document.getElementById('verifyCodeInput').value = gen.codeFormatted;
+
+        // Save to Subscriber Log
+        subscribers.unshift({
+          id: 'sub_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+          name: customerName,
+          note: customerNote,
+          formattedDevId: formattedDev,
+          planCode: selectedPlanCode,
+          planLabel: planLabel,
+          code: gen.codeFormatted,
+          issuedAtMs: gen.issuedAtMs,
+          expiresAtMs: gen.expiresAtMs
+        });
+        saveSubscribers();
+        updateKpisAndTable();
+        showToast('تم توليد كود التفعيل وحفظه في سجل المشتركين', 'ok');
+      });
+
+      document.getElementById('btnCopyCodeOnly').addEventListener('click', function () {
+        const code = document.getElementById('outActivationCode').textContent;
+        if (code) copyTextCrossBrowser(code, 'تم نسخ كود التفعيل');
+      });
+
+      document.getElementById('btnCopyFullMsg').addEventListener('click', function () {
+        const msg = document.getElementById('outWhatsappMsg').value;
+        if (msg) copyTextCrossBrowser(msg, 'تم نسخ الرسالة الكاملة للزبون');
+      });
+
+      // Search & Filter Subscribers
+      document.getElementById('inputSearchSubs').addEventListener('input', updateKpisAndTable);
+      document.getElementById('selectFilterSubs').addEventListener('change', updateKpisAndTable);
+
+      // Export & Import JSON Backup
+      document.getElementById('btnExportJson').addEventListener('click', function () {
+        const dataStr = JSON.stringify(subscribers, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'freexfood-subscribers-backup.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('تم تنزيل النسخة الاحتياطية للسجل', 'ok');
+      });
+
+      document.getElementById('inputImportJson').addEventListener('change', function (ev) {
+        const file = ev.target.files && ev.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function () {
+          try {
+            const arr = JSON.parse(String(reader.result || '[]'));
+            if (Array.isArray(arr)) {
+              subscribers = arr;
+              saveSubscribers();
+              updateKpisAndTable();
+              showToast('تم استيراد سجل المشتركين بنجاح', 'ok');
+            } else {
+              showToast('ملف السجل غير صالح', 'error');
+            }
+          } catch (e) {
+            showToast('تعذر قراءة ملف JSON', 'error');
+          }
+        };
+        reader.readAsText(file);
+        ev.target.value = '';
+      });
+
+      // Wire Code Verifier
+      document.getElementById('btnRunVerify').addEventListener('click', function () {
+        const box = document.getElementById('verifyResultBox');
+        const devRaw = document.getElementById('verifyDevId').value;
+        const codeRaw = document.getElementById('verifyCodeInput').value;
+        const canonical = normalizeDeviceId(devRaw);
+        box.classList.remove('hidden');
+
+        if (!canonical) {
+          box.className = 'rounded-xl p-4 border border-rose-500/40 bg-rose-950/40 text-rose-200 text-sm';
+          box.textContent = 'يرجى إدخال معرّف جهاز صحيح أولاً (مثل FXF-XXXX-XXXX-XXXX).';
+          return;
+        }
+        const res = inspectCode(canonical, codeRaw);
+        if (!res.ok) {
+          box.className = 'rounded-xl p-4 border border-rose-500/40 bg-rose-950/40 text-rose-200 text-sm';
+          box.textContent = 'الكود مرفوض: ' + res.reason;
+          return;
+        }
+        if (res.expired) {
+          box.className = 'rounded-xl p-4 border border-amber-500/40 bg-amber-950/40 text-amber-200 text-sm space-y-1';
+          box.innerHTML = '<div class="font-bold">الكود صحيح لهذا الجهاز لكنه منتهي الصلاحية!</div>'
+            + '<div class="text-xs">تاريخ الانتهاء كان: ' + formatArabicDateTime(res.expiresAtMs) + '</div>';
+          return;
+        }
+        box.className = 'rounded-xl p-4 border border-emerald-500/40 bg-emerald-950/40 text-emerald-200 text-sm space-y-1';
+        box.innerHTML = '<div class="font-bold text-emerald-300">الكود صالح ومطابق 100% لهذا الجهاز ✓</div>'
+          + '<div class="text-xs">نوع الاشتراك: ' + getPlanLabel(res.planCode) + ' • ' + formatRemaining(res.expiresAtMs) + '</div>'
+          + '<div class="text-xs">ينتهي في: ' + formatArabicDateTime(res.expiresAtMs) + '</div>';
+      });
+
+      // Init
+      loadSubscribers();
+      updateKpisAndTable();
+    })();
+  </script>
+</body>
+</html>
