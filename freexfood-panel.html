@@ -75,30 +75,6 @@
       </nav>
     </div>
   </header>
-    <section class="max-w-5xl mx-auto px-4 pt-5">
-      <details class="bg-[#121520] border border-[#343D5C] rounded-2xl p-4">
-        <summary class="cursor-pointer font-bold text-amber-300">الحفظ التلقائي على GitHub <span id="ghStatus" role="status" aria-live="polite" class="block text-xs text-slate-300 mt-2">غير متصل — الحفظ على هذا الجهاز فقط</span></summary>
-        <div class="space-y-3 mt-4 text-sm">
-          <p class="text-slate-300">اربط مستودعك ليُحفظ سجل المشتركين تلقائياً بعد التوليد أو الحذف أو الاستيراد. عند الاتصال يُسترجع السجل وتُدمج التغييرات. اختر مستودعاً خاصاً لحماية أسماء الزبائن وأكوادهم.</p>
-          <label class="block">المستودع (اسم الحساب/اسم المستودع)
-            <input id="ghRepo" dir="ltr" placeholder="hussenmuhamed8/Novaaii" class="block w-full bg-[#0B0D14] border border-[#343D5C] rounded-lg p-2 mt-1" />
-          </label>
-          <label class="block">رمز الوصول (Token)
-            <input id="ghToken" type="password" autocomplete="off" spellcheck="false" dir="ltr" placeholder="Fine-grained personal access token" class="block w-full bg-[#0B0D14] border border-[#343D5C] rounded-lg p-2 mt-1" />
-          </label>
-          <p class="text-xs text-slate-400">الرمز يُستخدم في ذاكرة هذه الصفحة فقط ولا يُرفع إلى المستودع. أدخله مجدداً بعد إعادة تحميل الصفحة. لا ترسله بالدردشة.</p>
-          <label class="flex items-start gap-2 text-xs text-amber-200"><input id="ghAllowPublic" type="checkbox" class="mt-1" /> أسمح بحفظ السجل في مستودع عام، وأفهم أن أي شخص يمكنه قراءة أسماء الزبائن وأكواد التفعيل.</label>
-          <div class="flex flex-wrap gap-2">
-            <button id="ghConnect" type="button" class="bg-amber-400 text-black font-bold rounded-lg px-4 py-2">اتصال وتفعيل الحفظ</button>
-            <button id="ghSync" type="button" disabled class="bg-slate-700 rounded-lg px-4 py-2 disabled:opacity-40">مزامنة الآن / إعادة المحاولة</button>
-            <button id="ghDisconnect" type="button" disabled class="bg-slate-700 rounded-lg px-4 py-2 disabled:opacity-40">قطع الاتصال</button>
-          </div>
-          <p class="text-xs text-slate-400">انتظر ظهور «محفوظ على GitHub» قبل إغلاق الصفحة. تبقى نسخة محلية عند انقطاع الإنترنت؛ اضغط إعادة المحاولة عند عودته. حذف سجل لا يمحو نسخه من تاريخ GitHub.</p>
-          <details class="text-xs text-slate-300"><summary class="cursor-pointer">شلون أحصل على الرمز؟</summary><p class="mt-2">افتح <a class="text-amber-300 underline" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">إنشاء رمز GitHub</a>، اختر حسابك في Resource owner، ثم Only select repositories وحدد مستودع الحفظ فقط. من Repository permissions اختر Contents: Read and write. حدّد تاريخ انتهاء، واضغط Generate token، ثم الصقه هنا. لازم المستودع يكون موجود وبيه ملف واحد على الأقل.</p></details>
-        </div>
-      </details>
-    </section>
-
 
   <main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
     <!-- KPI Strip -->
@@ -644,8 +620,9 @@
       }
 
       function saveSubscribers() {
-        ghRememberRecords(subscribers);
-        ghScheduleSave();
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(subscribers));
+        } catch (e) {}
       }
 
       function showToast(msg, type) {
@@ -1119,160 +1096,6 @@
         box.innerHTML = '<div class="font-bold text-emerald-300">الكود صالح ومطابق 100% لهذا الجهاز ✓</div>'
           + '<div class="text-xs">نوع الاشتراك: ' + getPlanLabel(res.planCode) + ' • ' + formatRemaining(res.expiresAtMs) + '</div>'
           + '<div class="text-xs">ينتهي في: ' + formatArabicDateTime(res.expiresAtMs) + '</div>';
-      });
-
-      // GitHub backup: credentials stay in this page's memory, never in commits.
-      const GH_PATH = 'freexfood-data/subscribers.json';
-      let gh = null, ghBusy = false, ghTimer = null, ghPending = false;
-      const ghEl = id => document.getElementById(id);
-      function ghStatus(message) { ghEl('ghStatus').textContent = message; }
-      function ghRememberRecords(records) {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); }
-        catch (_) { showToast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية قبل الإغلاق', 'error'); }
-      }
-      function ghValidate(records) {
-        if (!Array.isArray(records)) throw new Error('ملف السجل ليس قائمة صالحة. لم يتم استبداله.');
-        const ids = new Set();
-        for (const r of records) {
-          if (!r || typeof r.id !== 'string' || !r.id || ids.has(r.id) ||
-              typeof r.code !== 'string' || typeof r.formattedDevId !== 'string' ||
-              typeof r.planLabel !== 'string' || !Number.isFinite(r.expiresAtMs)) {
-            throw new Error('السجل يحتوي بيانات غير صالحة أو معرّفات مكررة. لم يتم استبداله.');
-          }
-          ids.add(r.id);
-        }
-        return records;
-      }
-      function ghMerge(base, local, remote) {
-        const b = new Map(base.map(r => [r.id, r]));
-        const l = new Map(local.map(r => [r.id, r]));
-        const r = new Map(remote.map(r => [r.id, r]));
-        const result = [];
-        const same = (a, z) => JSON.stringify(a) === JSON.stringify(z);
-        for (const id of new Set([...b.keys(), ...l.keys(), ...r.keys()])) {
-          const old = b.get(id), here = l.get(id), there = r.get(id);
-          let chosen;
-          if (same(here, old)) chosen = there;
-          else if (same(there, old) || same(here, there)) chosen = here;
-          else throw new Error('تعارض: نفس السجل تغيّر على جهازين. صدّر النسخة المحلية قبل مراجعة السجل على GitHub.');
-          if (chosen) result.push(chosen);
-        }
-        return result.sort((a, b) => (b.issuedAtMs || 0) - (a.issuedAtMs || 0) || a.id.localeCompare(b.id));
-      }
-      function ghEncode(value) {
-        const bytes = new TextEncoder().encode(JSON.stringify(value, null, 2));
-        if (bytes.length > 900000) throw new Error('السجل أكبر من حد المزامنة (900 كيلوبايت). صدّر نسخة احتياطية.');
-        let binary = '';
-        for (const byte of bytes) binary += String.fromCharCode(byte);
-        return btoa(binary);
-      }
-      async function ghRequest(session, path, options = {}) {
-        const response = await fetch('https://api.github.com/repos/' + session.repo + path, {
-          ...options, cache: 'no-store', signal: AbortSignal.timeout(30000),
-          headers: {Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + session.token,
-            'Content-Type': 'application/json'}
-        });
-        if (!response.ok) {
-          const error = new Error(response.status === 401 ? 'رمز الوصول غير صالح أو منتهي.' :
-            response.status === 403 ? 'الصلاحيات غير كافية أو تم بلوغ حد الطلبات. تحقق من Contents: Read and write.' :
-            response.status === 404 ? 'المستودع أو الفرع غير متاح لهذا الرمز.' :
-            response.status === 409 ? 'تغيّر السجل أثناء الحفظ. اضغط إعادة المحاولة.' :
-            'تعذر الحفظ على GitHub (HTTP ' + response.status + ').');
-          error.status = response.status;
-          throw error;
-        }
-        return response.json();
-      }
-      function ghScheduleSave() {
-        ghPending = true;
-        if (!gh) { ghStatus('تغييرات محفوظة محلياً — اتصل بـ GitHub لرفعها'); return; }
-        ghStatus('تغييرات بانتظار الحفظ على GitHub…');
-        clearTimeout(ghTimer);
-        ghTimer = setTimeout(ghSynchronize, 1200);
-      }
-      async function ghSynchronize() {
-        if (!gh || ghBusy) return;
-        ghBusy = true;
-        const session = gh;
-        ghStatus('جارٍ مزامنة السجل مع GitHub…');
-        let success = false;
-        try {
-          // Recheck visibility before every write, including after repository changes.
-          const meta = await ghRequest(session, '');
-          if (!meta.private && !session.allowPublic) throw new Error('المستودع عام. اختر مستودعاً خاصاً أو وافق صراحة على نشر بيانات السجل.');
-          const branch = meta.default_branch;
-          if (!branch) throw new Error('المستودع فارغ. أضف README على GitHub أولاً.');
-          await ghRequest(session, '/branches/' + encodeURIComponent(branch));
-          let remote = [], sha;
-          try {
-            const file = await ghRequest(session, '/contents/' + GH_PATH + '?ref=' + encodeURIComponent(branch));
-            if (file.type !== 'file' || file.encoding !== 'base64' || !file.content) throw new Error('صيغة ملف GitHub غير مدعومة أو حجمه كبير.');
-            const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(file.content.replace(/\s/g, '')), c => c.charCodeAt(0))));
-            if (data.version !== 1) throw new Error('إصدار ملف السجل غير مدعوم.');
-            remote = ghValidate(data.subscribers);
-            sha = file.sha;
-          } catch (e) { if (e.status !== 404) throw e; }
-          const localSnapshot = JSON.parse(JSON.stringify(ghValidate(subscribers)));
-          const merged = ghMerge(session.base, localSnapshot, remote);
-          if (JSON.stringify(merged) !== JSON.stringify(remote) || !sha) {
-            await ghRequest(session, '/contents/' + GH_PATH, {
-              method: 'PUT', body: JSON.stringify({message: 'Sync freeXfood subscriber records', branch,
-                ...(sha ? {sha} : {}), content: ghEncode({version: 1, updatedAt: new Date().toISOString(), subscribers: merged})})
-            });
-          }
-          // Preserve edits made while a request was in flight.
-          const current = ghValidate(subscribers);
-          subscribers = ghMerge(localSnapshot, current, merged);
-          session.base = merged;
-          try { localStorage.setItem(session.baseKey, JSON.stringify(merged)); } catch (_) {}
-          ghRememberRecords(subscribers);
-          updateKpisAndTable();
-          ghPending = JSON.stringify(subscribers) !== JSON.stringify(merged);
-          ghStatus(ghPending ? 'تغييرات جديدة بانتظار الحفظ…' : 'محفوظ على GitHub ✓ — ' + new Date().toLocaleTimeString('ar-IQ'));
-          success = true;
-        } catch (e) {
-          ghPending = true;
-          ghStatus('لم تكتمل المزامنة: ' + (e instanceof TypeError || e.name === 'TimeoutError' ? 'تحقق من الإنترنت ثم اضغط إعادة المحاولة.' : e.message));
-        } finally {
-          ghBusy = false;
-          if (success && ghPending) ghScheduleSave();
-        }
-      }
-      ghEl('ghConnect').addEventListener('click', async function () {
-        if (ghBusy) return;
-        const repo = ghEl('ghRepo').value.trim();
-        const token = ghEl('ghToken').value.trim();
-        if (!/^[A-Za-z0-9-]+\/[A-Za-z0-9_.-]+$/.test(repo) || !token) {
-          ghStatus('أدخل المستودع بصيغة account/repo ورمز الوصول.'); return;
-        }
-        const baseKey = 'freexfood_github_base_v1:' + repo.toLowerCase();
-        let base = [];
-        try {
-          const raw = localStorage.getItem(baseKey);
-          if (raw) base = ghValidate(JSON.parse(raw));
-        } catch (_) { ghStatus('تعذر قراءة نسخة المزامنة المحلية. صدّر سجلك قبل المتابعة.'); return; }
-        gh = {repo, token, baseKey, base, allowPublic: ghEl('ghAllowPublic').checked};
-        ghEl('ghToken').value = '';
-        try { localStorage.setItem('freexfood_github_repo', repo); } catch (_) {}
-        ['ghConnect', 'ghRepo', 'ghToken', 'ghAllowPublic'].forEach(id => { ghEl(id).disabled = true; });
-        ghEl('ghSync').disabled = false;
-        ghEl('ghDisconnect').disabled = false;
-        await ghSynchronize();
-      });
-      ghEl('ghSync').addEventListener('click', ghSynchronize);
-      ghEl('ghDisconnect').addEventListener('click', function () {
-        if (ghBusy) { ghStatus('انتظر انتهاء محاولة الحفظ قبل قطع الاتصال.'); return; }
-        gh = null;
-        clearTimeout(ghTimer);
-        ['ghConnect', 'ghRepo', 'ghToken', 'ghAllowPublic'].forEach(id => { ghEl(id).disabled = false; });
-        ghEl('ghSync').disabled = true;
-        ghEl('ghDisconnect').disabled = true;
-        ghStatus('تم قطع الاتصال — الحفظ على هذا الجهاز فقط');
-      });
-      try { ghEl('ghRepo').value = localStorage.getItem('freexfood_github_repo') || ''; } catch (_) {}
-      window.addEventListener('online', function () { if (gh) ghSynchronize(); });
-      window.addEventListener('beforeunload', function (event) {
-        if (gh && (ghBusy || ghPending)) { event.preventDefault(); event.returnValue = ''; }
       });
 
       // Init
