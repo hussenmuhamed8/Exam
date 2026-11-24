@@ -658,7 +658,7 @@
               <button class="qd-choice" onclick="showSection('offer')"><span class="qd-choice-icon gold"><i class="fa-solid fa-crown"></i></span><span class="flex-1"><b>أرغب بالحصول على كود اشتراك</b><small>تعرّف على السعر والمميزات</small></span><i class="fa-solid fa-chevron-left"></i></button>
             </section>
             <section id="sectionOffer" class="hidden space-y-4">
-              <button class="qd-btn secondary" onclick="showSection('subscription')"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
+              
               <div class="qd-offer"><div class="qd-eyebrow">عضوية مدى الحياة</div><div class="qd-price">10 <span>ماستر</span></div><p>دفعة واحدة فقط • بدون تجديد شهري أو سنوي</p><div class="qd-offer-rule"></div>
               <div class="qd-benefit"><i class="fa-solid fa-file-pen"></i><div><b>إنشاء الأسئلة الامتحانية</b><small>تصميم وتصدير الأسئلة بكل سهولة</small></div></div>
               <div class="qd-benefit"><i class="fa-solid fa-users"></i><div><b>إدارة الشعب</b><small>طلابك ودرجاتهم وكشوفهم في حسابك</small></div></div>
@@ -957,26 +957,10 @@
                 <div class="grid grid-cols-1 gap-2.5">
                     
                     <!-- Button 1: Request 1 Free Trial -->
-                    <button onclick="handleFreeTrialButtonClick()" class="h-13 bg-white hover:bg-teal-50/40 px-4 py-3 rounded-xl border border-slate-200 hover:border-teal-500 shadow-2xs transition flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-sm shrink-0">
-                                <i class="fa-solid fa-gift"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-800">طلب 4 تجارب مجانية</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-slate-400 text-xs"></i>
-                    </button>
+                    
 
                     <!-- Button 2: Subscribe with Code -->
-                    <button onclick="showSection('subscription')" class="h-13 bg-white hover:bg-amber-50/40 px-4 py-3 rounded-xl border border-slate-200 hover:border-amber-500 shadow-2xs transition flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm shrink-0">
-                                <i class="fa-solid fa-key"></i>
-                            </div>
-                            <span class="text-xs sm:text-sm font-extrabold text-slate-800">اشتراك</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-slate-400 text-xs"></i>
-                    </button>
+                    
 
                     <button onclick="showSection('install')" class="h-13 bg-white hover:bg-teal-50/40 px-4 py-3 rounded-xl border border-slate-200 hover:border-teal-500 shadow-2xs transition flex items-center justify-between gap-3 sm:col-span-2"><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-sm"><i class="fa-solid fa-mobile-screen-button"></i></div><span class="text-xs sm:text-sm font-extrabold">تحويل إلى تطبيق</span></div><i class="fa-solid fa-chevron-left text-slate-400 text-xs"></i></button>
                     <!-- Button 3: Owner Control Panel -->
@@ -2255,7 +2239,8 @@
         // ============================================================================
         const qFeatures={exam:'إنشاء الأسئلة',classes:'إدارة الشعب',board:'السبورة الذكية',plans:'الخطط السنوية'};
         let qTrialSession=null,qClaimBusy=false,qEpoch=0;
-        function qPaid(u=currentTeacher){return !!u&&(u.email?.toLowerCase()===OWNER_EMAIL.toLowerCase()||u.isSubscribed===true);}
+        // This deployment provides all teaching tools free to every signed-in account.
+        function qPaid(u=currentTeacher){return !!u;}
         function qUsed(u=currentTeacher){return {...(u?.trialStatus==='used'?{exam:true}:{}),...(u?.qdTrialsUsed||{})};}
         function qApproved(u=currentTeacher){return ['approved','used'].includes(u?.trialStatus);}
         function qRemaining(u=currentTeacher){return qApproved(u)?Object.keys(qFeatures).filter(k=>!qUsed(u)[k]).length:0;}
@@ -2325,10 +2310,10 @@
             const profileStatus = document.getElementById('profileStatusText');
             const lockBadges = document.querySelectorAll('.exam-lock-badge');
 
-            if (isOwner || currentTeacher.isSubscribed) {
+            if (qPaid()) {
                 topBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300";
-                topBadge.innerHTML = '<i class="fa-solid fa-circle-check ml-1"></i> اشتراك دائمي';
-                profileStatus.textContent = isOwner ? "حالة الحساب: مالك المنصة (وصول كامل)" : "حالة الحساب: مشترك دائمي مفعل";
+                topBadge.innerHTML = '<i class="fa-solid fa-circle-check ml-1"></i> وصول مجاني كامل';
+                profileStatus.textContent = isOwner ? "حالة الحساب: مالك المنصة (وصول كامل)" : "حالة الحساب: جميع الميزات مجانية ومفتوحة";
 
                 lockBadges.forEach(b => {
                     b.className = "exam-lock-badge px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1 shrink-0";
@@ -2443,7 +2428,7 @@
 
         window.handleFreeTrialButtonClick = function(){
             if(!currentTeacher)return;
-            if(qPaid()){showCustomMessage('اشتراكك مفعل','كل الميزات الأربع مفتوحة لك مدى الحياة.','success');return;}
+            if(qPaid()){showCustomMessage('نسخة مجانية','كل الميزات الأربع مفتوحة مجاناً.','success');return;}
             if(currentTeacher.trialStatus==='pending'){showCustomMessage('الطلب قيد المراجعة','بانتظار موافقة الإدارة على التجارب الأربع.','info');return;}
             if(qApproved()){showCustomMessage('التجارب المجانية',Object.keys(qFeatures).map(k=>qFeatures[k]+': '+(qUsed()[k]?'مستخدمة':'متاحة')).join(' | '),qRemaining()?'success':'warning');return;}
             Q('freeTrialModal').classList.remove('hidden');
@@ -2469,6 +2454,7 @@
         };
 
         window.openSubscriptionModal = function() {
+            showCustomMessage('نسخة مجانية', 'جميع الميزات مفتوحة بدون اشتراك أو كود.', 'success'); return;
             document.getElementById('subscriptionCodeInput').value = '';
             document.getElementById('subscriptionModal').classList.remove('hidden');
         };
