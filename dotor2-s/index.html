@@ -258,7 +258,7 @@
     
 .qd-hero{background:linear-gradient(135deg,#064e3b,#0f766e);color:#fff;border-radius:22px;padding:24px;position:relative;overflow:hidden;box-shadow:0 9px 24px #064e3b20}.qd-hero h2{font-size:23px;font-weight:900;margin:8px 0}.qd-hero p{font-size:12px;color:#d1fae5;line-height:1.8}.qd-eyebrow{font-size:11px;font-weight:800;letter-spacing:.2px;color:#a7f3d0}.qd-choice{display:flex;align-items:center;gap:12px;width:100%;text-align:right;background:white;border:1px solid #dce5e5;border-radius:16px;padding:14px;color:#134e3a;transition:.2s}.qd-choice:hover{border-color:#0f766e;transform:translateY(-1px)}.qd-choice b{display:block;font-size:13px;font-weight:900;overflow-wrap:anywhere}.qd-choice small{display:block;font-size:11px;color:#64748b;margin-top:3px}.qd-choice-icon{width:43px;height:43px;border-radius:14px;background:#e0f2ec;color:#0f766e;display:grid;place-items:center;flex-shrink:0;font-size:18px}.qd-choice-icon.gold{background:#fff2d9;color:#b45309}.qd-install-label{font-size:11px;font-weight:900;color:#0f766e;white-space:nowrap}.qd-offer{background:radial-gradient(circle at 10% 5%,#147d67,#064e3b 55%,#022c22);color:white;border:1px solid #15806b;border-radius:24px;padding:26px;max-width:560px;margin:auto;box-shadow:0 12px 30px #064e3b30}.qd-price{font-weight:900;font-size:58px;line-height:1.2;color:#fef3c7;margin:12px 0}.qd-price span{font-size:24px}.qd-offer>p{font-size:13px;color:#d1fae5}.qd-offer-rule{height:1px;background:#ffffff30;margin:20px 0}.qd-benefit{display:flex;align-items:center;gap:13px;margin:17px 0}.qd-benefit>i{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:#ffffff18;color:#fde68a}.qd-benefit b,.qd-benefit small{display:block}.qd-benefit b{font-size:14px;font-weight:900}.qd-benefit small{font-size:11px;color:#d1fae5;margin-top:3px}.qd-wa{display:flex;gap:10px;justify-content:center;align-items:center;background:#fef3c7;color:#064e3b;font-weight:900;border-radius:14px;padding:14px;margin-top:22px;font-size:15px}.qd-wa i{font-size:22px}.qd-class-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:13px}.qd-class-card{background:white;border:1px solid #dce6e5;border-radius:19px;overflow:hidden;box-shadow:0 4px 14px #0f172a08}.qd-class-top{padding:17px;display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#f0fdfa,#fff);border-bottom:1px solid #e6eeed}.qd-class-top h3{font-size:16px;font-weight:900;color:#134e3a;overflow-wrap:anywhere}.qd-class-top p{font-size:11px;color:#64748b;overflow-wrap:anywhere}.qd-class-body{padding:15px;display:grid;gap:10px}.qd-class-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.qd-class-meta>div{background:#f8fafc;border-radius:10px;padding:9px;min-width:0}.qd-class-meta small{display:block;font-size:10px;color:#64748b}.qd-class-meta b{display:block;font-size:12px;overflow-wrap:anywhere}.qd-card-actions{display:flex;align-items:center;gap:7px}.qd-card-actions .qd-btn:first-child{flex:1}.qd-icon-btn{border:1px solid #e2e8f0;border-radius:10px;padding:9px;color:#475569;background:#fff}.qd-icon-btn.danger{color:#be123c}.qd-empty{border:1px dashed #cbd5e1;background:#fff;border-radius:19px;padding:30px;text-align:center;color:#64748b;font-size:13px}.qd-student-row{display:flex;align-items:center;gap:8px;border-bottom:1px solid #eef2f6;padding:10px 0}.qd-student-row[hidden]{display:none}.qd-student-name{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:800;font-size:12px}.qd-student-index{display:grid;place-items:center;min-width:27px;height:27px;background:#ecfdf5;color:#0f766e;border-radius:9px;font-weight:900;font-size:11px}.qd-student-row .qd-btn{font-size:11px;padding:7px 10px}.qd-lock{padding:25px;text-align:center;background:white;border-radius:18px;border:1px solid #dce6e5;display:grid;gap:12px}.qd-lock h3{font-size:17px;font-weight:900}.qd-lock p{font-size:12px;color:#64748b}.qd-lock .qd-btn{justify-content:center}.qd-sync{font-size:11px;color:#0f766e;display:flex;align-items:center;gap:6px}.qd-sync.error{color:#be123c}
 </style>
-</head>
+<style>#btnOwnerDashboard,button[onclick="handleLogout()"]{display:none!important}</style></head>
 <body class="bg-slate-100 text-slate-800">
 
     <!-- 1. SPLASH SCREEN -->
@@ -558,7 +558,8 @@
     </div>
 
     <!-- 3. MAIN APPLICATION CONTAINER -->
-    <div id="appContainer" class="hidden min-h-screen flex flex-col pb-24">
+    <aside style="padding:10px;text-align:center;background:#ecfdf5;color:#065f46;font-size:13px">نسخة مجانية — الحفظ داخل هذا المتصفح فقط. مسح بيانات الموقع يحذف السجلات. يمكنك تعديل اسمك من حسابي.</aside>
+<div id="appContainer" class="hidden min-h-screen flex flex-col pb-24">
         
         <!-- Compact Top App Header -->
         <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3 sm:px-5 py-2.5 shadow-2xs">
@@ -1468,11 +1469,11 @@
     </div>
 
     <div id="qdModal" class="hidden fixed inset-0 z-40 bg-slate-900/60 flex items-center justify-center p-3"><div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-xl"><div class="p-3 border-b flex items-center justify-between"><h2 id="qdModalTitle" class="font-extrabold text-teal-900"></h2><button class="qd-btn secondary" onclick="qClose()">إغلاق</button></div><div id="qdModalBody" class="p-4 overflow-y-auto flex flex-col gap-3"></div></div></div><div id="qdExportStage" aria-hidden="true"></div>
-    <!-- APPLICATION LOGIC & FIREBASE INTEGRATION -->
+    <!-- APPLICATION LOGIC & LOCAL STORAGE INTEGRATION -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc, onSnapshot, collection, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+
+
 
         // ============================================================================
         // 1. SMART COPY / PASTE / CUT PROTECTION (مسموح فقط داخل حقول الكتابة)
@@ -1569,26 +1570,39 @@
         });
 
         // ============================================================================
-        // 2. FIREBASE INITIALIZATION
+        // 2. LOCAL STORAGE INITIALIZATION
         // ============================================================================
-        const fallbackFirebaseConfig = {
-            apiKey: "AIzaSyC-aOdWkAcL5MB_7rBnme_7eFqXJd1RBaU",
-            authDomain: "travel-company-699a5.firebaseapp.com",
-            projectId: "travel-company-699a5",
-            storageBucket: "travel-company-699a5.firebasestorage.app",
-            messagingSenderId: "503808638609",
-            appId: "1:503808638609:web:55213354ee692cad1b0930",
-            measurementId: "G-LECHXHH49C"
-        };
-
-        const activeConfig = typeof __firebase_config !== 'undefined'
-            ? JSON.parse(__firebase_config)
-            : fallbackFirebaseConfig;
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'exam-builder-pro-v1';
-        const app = initializeApp(activeConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        const db = {}, appId = 'local-teacher-v1';
+        const LOCAL_DB_KEY = 'exam_dotor2_local_data_v1';
+        const localListeners = new Set();
+        const clone = value => value === undefined ? undefined : JSON.parse(JSON.stringify(value));
+        function readLocalDB() { return JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || '{}'); }
+        function localSnapshot(ref, data=readLocalDB()) {
+            if (ref.kind === 'collection') {
+                const prefix=ref.path+'/';
+                const docs=Object.keys(data).filter(k=>k.startsWith(prefix)&&!k.slice(prefix.length).includes('/')).map(k=>localSnapshot({path:k},data));
+                return {docs, forEach: fn=>docs.forEach(fn), empty:!docs.length};
+            }
+            return {id:ref.path.split('/').pop(), exists:()=>Object.hasOwn(data,ref.path), data:()=>clone(data[ref.path])};
+        }
+        function notifyLocal(){queueMicrotask(()=>{for(const listener of localListeners){try{listener.fn(localSnapshot(listener.ref));}catch(e){if(listener.error)listener.error(e);}}});}
+        function doc(_, ...parts){return {path:parts.join('/'),kind:'doc'};}
+        function collection(_, ...parts){return {path:parts.join('/'),kind:'collection'};}
+        async function getDoc(ref){return localSnapshot(ref);}
+        async function runTransaction(_, callback){
+            const execute=async()=>{const data=readLocalDB();let dirty=false;const tx={
+                get:async ref=>localSnapshot(ref,data),
+                set:(ref,value)=>{data[ref.path]=clone(value);dirty=true;},
+                update:(ref,value)=>{if(!data[ref.path])throw Error('السجل المحلي غير موجود');data[ref.path]={...data[ref.path],...clone(value)};dirty=true;},
+                delete:ref=>{delete data[ref.path];dirty=true;}
+            };const result=await callback(tx);if(dirty){try{localStorage.setItem(LOCAL_DB_KEY,JSON.stringify(data));}catch(e){throw Error('تعذر الحفظ في المتصفح. قد تكون المساحة ممتلئة؛ لا تغلق الصفحة قبل نسخ بياناتك.');}notifyLocal();}return result;};
+            return navigator.locks ? navigator.locks.request(LOCAL_DB_KEY,execute) : execute();
+        }
+        async function setDoc(ref,value){return runTransaction(db,tx=>tx.set(ref,value));}
+        async function updateDoc(ref,value){return runTransaction(db,tx=>tx.update(ref,value));}
+        async function deleteDoc(ref){return runTransaction(db,tx=>tx.delete(ref));}
+        function onSnapshot(ref,fn,error){const listener={ref,fn,error};localListeners.add(listener);queueMicrotask(()=>{if(localListeners.has(listener)){try{fn(localSnapshot(ref));}catch(e){if(error)error(e);}}});return ()=>localListeners.delete(listener);}
+        window.addEventListener('storage',e=>{if(e.key===LOCAL_DB_KEY)notifyLocal();});
 
         // LocalStorage Keys for Persistent Auto-Login on the Same Device
         const LS_SAVED_EMAIL_KEY = 'smart_teacher_saved_email_v2';
@@ -1596,7 +1610,7 @@
         const LS_DEVICE_ID_KEY = 'smart_teacher_browser_device_id_v3';
 
         // State Variables
-        let firebaseUser = null;
+        let localUser = null;
         let currentTeacher = null;
         let currentHardwareFingerprint = null;
         let selectedRegisterRole = 'مدرس';
@@ -1835,89 +1849,21 @@
         // 6. BOOTSTRAP, SPLASH SCREEN & AUTOMATIC PERSISTENT LOGIN
         // ============================================================================
         async function initAppAuth() {
-            currentHardwareFingerprint = await getHardwareDeviceFingerprint();
-            let authReady = false;
-            let autoLoggedUser = null;
-            let shouldShowReconnectWarning = false;
-
             try {
-                // Keep the Firebase anonymous transport authenticated across Chrome restarts.
-                await setPersistence(auth, browserLocalPersistence);
-                if (typeof auth.authStateReady === 'function') await auth.authStateReady();
-                if (!auth.currentUser) {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                }
-                firebaseUser = auth.currentUser;
-                authReady = !!firebaseUser;
-            } catch (err) {
-                console.error('Auth init error:', err);
-                shouldShowReconnectWarning = true;
+                currentHardwareFingerprint = await getHardwareDeviceFingerprint();
+                localUser = {uid:'local'};
+                const email='teacher@local.invalid';
+                const ref=getUserDocRef(email), snap=await getDoc(ref);
+                const profile=snap.exists()?snap.data():{email,name:'الأستاذ',teacherRole:'مدرس',savedExams:[],createdAt:Date.now()};
+                profile.activeDeviceFingerprint=currentHardwareFingerprint;
+                await setDoc(ref,profile);
+                document.getElementById('splashScreen').classList.add('hidden');
+                enterApplication(profile);
+            } catch(e) {
+                document.getElementById('splashScreen').classList.add('hidden');
+                showCustomMessage('تعذر فتح الحفظ المحلي',e.message,'error');
             }
-
-            let savedEmail = null;
-            try { savedEmail = localStorage.getItem(LS_SAVED_EMAIL_KEY); } catch(e) {}
-            if (savedEmail && authReady) {
-                let snap;
-                // Don't mistake a brief offline period for an explicit logout or changed device.
-                for (let attempt = 0; attempt < 3; attempt++) {
-                    try { snap = await getDoc(getUserDocRef(savedEmail)); break; }
-                    catch(e) {
-                        console.warn('Auto-login retry:', attempt + 1, e);
-                        if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 500 * (attempt + 1)));
-                    }
-                }
-                if (snap) {
-                    if (snap.exists()) {
-                        const userData = snap.data();
-                        if (matchesThisBrowserDevice(userData.activeDeviceFingerprint)) {
-                            if (userData.activeDeviceFingerprint !== currentHardwareFingerprint) {
-                                try {
-                                    await updateDoc(getUserDocRef(savedEmail), { activeDeviceFingerprint: currentHardwareFingerprint });
-                                    userData.activeDeviceFingerprint = currentHardwareFingerprint;
-                                } catch (err) {
-                                    console.error('Device migration error:', err);
-                                    shouldShowReconnectWarning = true;
-                                }
-                            }
-                            // Enter only if the device was fully validated and upgraded successfully.
-                            if (userData.activeDeviceFingerprint === currentHardwareFingerprint) autoLoggedUser = userData;
-                        } else {
-                            try { localStorage.removeItem(LS_SAVED_EMAIL_KEY); } catch(e) {}
-                        }
-                    } else {
-                        try { localStorage.removeItem(LS_SAVED_EMAIL_KEY); } catch(e) {}
-                    }
-                } else {
-                    shouldShowReconnectWarning = true;
-                }
-            } else if (savedEmail && !authReady) {
-                shouldShowReconnectWarning = true;
-            }
-
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                splash.classList.add('opacity-0');
-                setTimeout(() => {
-                    splash.classList.add('hidden');
-                    if (autoLoggedUser) {
-                        enterApplication(autoLoggedUser);
-                    } else {
-                        document.getElementById('authScreen').classList.remove('hidden');
-                        if (shouldShowReconnectWarning && savedEmail) {
-                            showCustomMessage('الاتصال غير متاح', 'تعذّر التحقق من الجلسة المحفوظة. لم يتم تسجيل خروجك، تأكد من الإنترنت وأعد فتح الموقع؛ بيانات دخولك محفوظة في المتصفح.', 'warning');
-                        }
-                    }
-                }, 500);
-            }, 1300);
         }
-
-        onAuthStateChanged(auth, (u) => {
-            if (u) firebaseUser = u;
-        });
 
         window.addEventListener('load', initAppAuth);
         window.addEventListener('resize', adjustA4PreviewScale);
@@ -1960,7 +1906,7 @@
         };
 
         window.handleRegister = async function() {
-            if (!firebaseUser) {
+            if (!localUser) {
                 showCustomMessage("يرجى الانتظار", "جاري الاتصال بقاعدة البيانات الآمنة...", "info");
                 return;
             }
@@ -2030,7 +1976,7 @@
         };
 
         window.handleLogin = async function() {
-            if (!firebaseUser) {
+            if (!localUser) {
                 showCustomMessage("يرجى الانتظار", "جاري الاتصال بقاعدة البيانات الآمنة...", "info");
                 return;
             }
@@ -3848,7 +3794,7 @@
                 } else {
                     existingExams.unshift(examRecord);
                 }
-                // Firestore has a 1 MiB document limit; images are compressed on upload.
+                // Local storage has a 1 MiB document limit; images are compressed on upload.
                 // Protect existing history instead of silently exceeding the document limit.
                 const estimatedBytes = new Blob([JSON.stringify({...currentTeacher,savedExams:existingExams})]).size;
                 if (estimatedBytes > 850000) {
@@ -4428,7 +4374,7 @@
                 return true;
             }catch(e){qSyncError=e.message||'تعذر الاتصال بقاعدة البيانات';return false;}finally{if(qLoading?.key===key)qLoading=null;}})();qLoading={key,promise};return promise;}
         function qLoad(){return !!currentTeacher&&qAllowed()&&qAccount===qKey();}
-        function qCheckSize(u,next){const bytes=new Blob([JSON.stringify({...u,qdRecords:next})]).size;if(bytes>850000)throw Error('مساحة حساب Firebase غير كافية لحفظ هذه البيانات. احذف عناصر غير لازمة من السجل أو الشعب.');}
+        function qCheckSize(u,next){const bytes=new Blob([JSON.stringify({...u,qdRecords:next})]).size;if(bytes>850000)throw Error('مساحة التخزين المحلي غير كافية لحفظ هذه البيانات. احذف عناصر غير لازمة من السجل أو الشعب.');}
         async function qEdit(fn){if(!qLoad()||qWriteBusy)return false;const email=currentTeacher.email,key=qAccount,epoch=qEpoch,feature=Q('sectionClasses').classList.contains('hidden')?qTab:'classes';qWriteBusy=true;
             try{const data=await runTransaction(db,async tx=>{const ref=getUserDocRef(email),snap=await tx.get(ref),u=snap.data();if(!u||u.activeDeviceFingerprint!==currentHardwareFingerprint||(!qPaid(u)&&!qApproved(u)))throw Error('صلاحية الحساب غير متاحة.');const next=JSON.parse(JSON.stringify(qValid(u.qdRecords)?u.qdRecords:qState));fn(next);qCheckSize(u,next);tx.update(ref,{qdRecords:next});return next;});
                 if(currentTeacher?.email!==email||qAccount!==key||qEpoch!==epoch||!qActive(feature))return false;qState=data;currentTeacher.qdRecords=data;qSyncError='';return true;
